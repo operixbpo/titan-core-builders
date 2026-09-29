@@ -1,0 +1,489 @@
+---
+import { US_STATES } from "../lib/site";
+---
+
+<section
+  class="gutter grid grid-cols-1 gap-10 pb-24 md:pb-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16"
+  id="quote"
+>
+  <div>
+    <h2
+      class="max-w-[11ch] text-[clamp(2.4rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
+    >
+      Tell us the address. We’ll send the crew.
+    </h2>
+    <ol class="mt-10 grid gap-4">
+      <li class="flex gap-4">
+        <span
+          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis text-sm font-semibold"
+          >1</span
+        >
+        <p class="text-muted">
+          <b class="font-medium text-ink">We confirm coverage</b> for the address
+          and ask anything missing.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span
+          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold"
+          >2</span
+        >
+        <p class="text-muted">
+          <b class="font-medium text-ink">You get an itemised quote</b> and a date
+          for the crew.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span
+          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold"
+          >3</span
+        >
+        <p class="text-muted">
+          <b class="font-medium text-ink">Photos come back</b> when the job is done.
+        </p>
+      </li>
+    </ol>
+    <div class="mt-10 grid gap-1 text-sm text-muted">
+      <p>Phone and email are added at launch.</p>
+      <p>Prefer to talk first? Leave a phone number in the form.</p>
+    </div>
+  </div>
+
+  <div
+    class="rounded-[34px] bg-surface p-3 shadow-[0_30px_80px_-50px_rgb(30_34_39/0.45),inset_0_0_0_1px_rgb(30_34_39/0.05)]"
+  >
+    <div class="rounded-[22px] p-4 md:p-8">
+      <div
+        class="tabs"
+        role="tablist"
+        aria-label="Form type"
+        id="tabs"
+        data-active="0"
+      >
+        <span class="slide" aria-hidden="true"></span>
+        <button
+          role="tab"
+          aria-selected="true"
+          aria-controls="formQuote"
+          id="tabQuote">Request a quote</button
+        >
+        <button
+          role="tab"
+          aria-selected="false"
+          aria-controls="formVendor"
+          id="tabVendor"
+          tabindex="-1">Join as a vendor</button
+        >
+      </div>
+
+      <form
+        class="lead-form mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2"
+        id="formQuote"
+        role="tabpanel"
+        aria-labelledby="tabQuote"
+        data-form="quote_request"
+        novalidate
+      >
+        <div class="banner sm:col-span-2" role="alert" data-banner>
+          Something went wrong sending this. Check your connection and try again.
+        </div>
+        <div class="field">
+          <label for="q-name">Full name</label>
+          <input
+            class="input"
+            id="q-name"
+            name="name"
+            autocomplete="name"
+            required
+            aria-describedby="q-name-e"
+          />
+          <span class="err" id="q-name-e">Enter your name.</span>
+        </div>
+        <div class="field">
+          <label for="q-company"
+            >Company <span class="opt">(optional)</span></label
+          >
+          <input
+            class="input"
+            id="q-company"
+            name="company"
+            autocomplete="organization"
+          />
+        </div>
+        <div class="field">
+          <label for="q-email">Email</label>
+          <input
+            class="input"
+            id="q-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            aria-describedby="q-email-e"
+          />
+          <span class="err" id="q-email-e"
+            >Enter an email like name@company.com.</span
+          >
+        </div>
+        <div class="field">
+          <label for="q-phone"
+            >Phone <span class="opt">(optional)</span></label
+          >
+          <input
+            class="input"
+            id="q-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+          />
+        </div>
+        <div class="field sm:col-span-2">
+          <label for="q-address">Property address</label>
+          <input
+            class="input"
+            id="q-address"
+            name="property_address"
+            autocomplete="street-address"
+            placeholder="Street, city"
+            required
+            aria-describedby="q-address-e"
+          />
+          <span class="err" id="q-address-e">Enter the property address.</span>
+        </div>
+        <div class="field">
+          <label for="q-state">State</label>
+          <select
+            class="input"
+            id="q-state"
+            name="state"
+            required
+            aria-describedby="q-state-e"
+          >
+            <option value="">Select a state</option>
+            {US_STATES.map((s) => <option value={s}>{s}</option>)}
+          </select>
+          <span class="err" id="q-state-e">Choose the property’s state.</span>
+        </div>
+        <div class="field">
+          <span class="legend" id="q-status-l">Property is</span>
+          <div class="chips" role="radiogroup" aria-labelledby="q-status-l">
+            <label class="chip"
+              ><input type="radio" name="occupancy" value="vacant" checked /><span
+                >Vacant</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="radio" name="occupancy" value="occupied" /><span
+                >Occupied</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="radio" name="occupancy" value="unknown" /><span
+                >Not sure</span
+              ></label
+            >
+          </div>
+        </div>
+        <fieldset class="field sm:col-span-2" aria-describedby="q-services-e">
+          <legend class="legend mb-2">Services needed</legend>
+          <div class="chips">
+            <label class="chip"
+              ><input type="checkbox" name="services" value="winterization" /><span
+                >Winterization</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="lock_change" /><span
+                >Lock change</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="board_up" /><span
+                >Board-up</span
+              ></label
+            >
+            <label class="chip"
+              ><input
+                type="checkbox"
+                name="services"
+                value="debris_removal"
+              /><span>Debris removal</span></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="lawn" /><span
+                >Lawn cycles</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="repairs" /><span
+                >Repairs</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="inspection" /><span
+                >Inspection</span
+              ></label
+            >
+          </div>
+          <span class="err" id="q-services-e">Pick at least one service.</span>
+        </fieldset>
+        <div class="field sm:col-span-2">
+          <label for="q-msg"
+            >Anything we should know? <span class="opt">(optional)</span></label
+          >
+          <textarea
+            class="input"
+            id="q-msg"
+            name="message"
+            placeholder="Deadlines, access notes, lockbox code arrangements"
+          ></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="q-web">Website</label>
+          <input id="q-web" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="field sm:col-span-2">
+          <label class="consent">
+            <input
+              type="checkbox"
+              name="consent"
+              required
+              aria-describedby="q-consent-e"
+            />
+            <span
+              >You can contact me about this request by email or phone. I’ve
+              read the privacy policy.</span
+            >
+          </label>
+          <span class="err" id="q-consent-e">Please agree so we can reply.</span>
+        </div>
+        <div class="turnstile sm:col-span-2" aria-hidden="true">
+          <i></i>Security check (Cloudflare Turnstile) appears here
+        </div>
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"
+        >
+          <p class="text-sm text-muted">
+            We reply by email with questions or a quote.
+          </p>
+          <button class="btn btn-ink" type="submit" data-submit>
+            <span data-label>Send request</span>
+            <span class="ic" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </form>
+
+      <form
+        class="lead-form mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2"
+        id="formVendor"
+        role="tabpanel"
+        aria-labelledby="tabVendor"
+        data-form="vendor_application"
+        novalidate
+        hidden
+      >
+        <div class="banner sm:col-span-2" role="alert" data-banner>
+          Something went wrong sending this. Check your connection and try again.
+        </div>
+        <div class="field">
+          <label for="v-name">Full name</label>
+          <input
+            class="input"
+            id="v-name"
+            name="name"
+            autocomplete="name"
+            required
+            aria-describedby="v-name-e"
+          />
+          <span class="err" id="v-name-e">Enter your name.</span>
+        </div>
+        <div class="field">
+          <label for="v-company"
+            >Business name <span class="opt">(optional)</span></label
+          >
+          <input
+            class="input"
+            id="v-company"
+            name="company"
+            autocomplete="organization"
+          />
+        </div>
+        <div class="field">
+          <label for="v-email">Email</label>
+          <input
+            class="input"
+            id="v-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            aria-describedby="v-email-e"
+          />
+          <span class="err" id="v-email-e"
+            >Enter an email like name@company.com.</span
+          >
+        </div>
+        <div class="field">
+          <label for="v-phone">Phone</label>
+          <input
+            class="input"
+            id="v-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            required
+            aria-describedby="v-phone-e"
+          />
+          <span class="err" id="v-phone-e"
+            >Enter a phone number we can call.</span
+          >
+        </div>
+        <fieldset class="field sm:col-span-2" aria-describedby="v-trades-e">
+          <legend class="legend mb-2">Trades</legend>
+          <div class="chips">
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="general" /><span
+                >General maintenance</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="roofing" /><span
+                >Roofing</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="lawn" /><span
+                >Lawn and landscaping</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="plumbing" /><span
+                >Plumbing</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="electrical" /><span
+                >Electrical</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="hvac" /><span
+                >HVAC</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="cleaning" /><span
+                >Cleaning and debris</span
+              ></label
+            >
+          </div>
+          <span class="err" id="v-trades-e">Pick at least one trade.</span>
+        </fieldset>
+        <div class="field">
+          <label for="v-area">Where you work</label>
+          <input
+            class="input"
+            id="v-area"
+            name="service_area"
+            placeholder="States, counties or ZIP codes"
+            required
+            aria-describedby="v-area-e"
+          />
+          <span class="err" id="v-area-e">Tell us where you take jobs.</span>
+        </div>
+        <div class="field">
+          <span class="legend" id="v-ins-l">Licensed and insured?</span>
+          <div class="chips" role="radiogroup" aria-labelledby="v-ins-l">
+            <label class="chip"
+              ><input type="radio" name="insured" value="yes" checked /><span
+                >Yes</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="radio" name="insured" value="in_progress" /><span
+                >In progress</span
+              ></label
+            >
+          </div>
+        </div>
+        <div class="field sm:col-span-2">
+          <label for="v-msg"
+            >About your crew <span class="opt">(optional)</span></label
+          >
+          <textarea
+            class="input"
+            id="v-msg"
+            name="message"
+            placeholder="Crew size, equipment, years in the trade"></textarea
+          >
+          <span class="help"
+            >We ask for your licence, insurance certificate and W-9 after this.</span
+          >
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="v-web">Website</label>
+          <input id="v-web" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="field sm:col-span-2">
+          <label class="consent">
+            <input
+              type="checkbox"
+              name="consent"
+              required
+              aria-describedby="v-consent-e"
+            />
+            <span
+              >You can contact me about joining the network. I’ve read the
+              privacy policy.</span
+            >
+          </label>
+          <span class="err" id="v-consent-e">Please agree so we can reply.</span>
+        </div>
+        <div class="turnstile sm:col-span-2" aria-hidden="true">
+          <i></i>Security check (Cloudflare Turnstile) appears here
+        </div>
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"
+        >
+          <p class="text-sm text-muted">Vendors are paid net 14 by ACH.</p>
+          <button class="btn btn-ink" type="submit" data-submit>
+            <span data-label>Send application</span>
+            <span class="ic" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="success mt-8 gap-5" id="success" tabindex="-1" aria-live="polite">
+        <span class="ok-badge" aria-hidden="true">✓</span>
+        <div>
+          <h3
+            class="text-[2rem] font-semibold leading-none tracking-[-0.035em]"
+            id="successTitle"
+          >
+            Request received.
+          </h3>
+          <p class="mt-3 max-w-[44ch] text-muted" id="successText">
+            We will confirm coverage for the address and reply by email.
+          </p>
+        </div>
+        <div class="grid gap-2 rounded-2xl bg-paper p-4 text-sm">
+          <div class="flex justify-between">
+            <span class="text-muted">Reference</span>
+            <b class="font-semibold" id="refId">SR-0000</b>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted">Sent to</span>
+            <b class="font-semibold">Stone Ridge leads inbox</b>
+          </div>
+        </div>
+        <p class="text-xs text-muted">
+          Form posts to the Lead Gateway when PUBLIC_LEADS_URL is set. Until then,
+          submit is mocked locally.
+        </p>
+        <button class="btn btn-line justify-self-start" type="button" id="again"
+          >Send another</button
+        >
+      </div>
+    </div>
+  </div>
+</section>

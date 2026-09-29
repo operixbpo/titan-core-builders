@@ -1,0 +1,54 @@
+{
+  "primitive": {
+    "color": {
+      "paper": "#FAFAF7",
+      "surface": "#FFFFFF",
+      "ink": "#1E2227",
+      "muted": "#62676D",
+      "line": "#E5E5DF",
+      "hivis": "#E6DC3A",
+      "hivisSoft": "#F5F1BE",
+      "slate": "#39434E",
+      "danger": "#B42318"
+    },
+    "radius": {
+      "xl": "34px",
+      "lg": "24px",
+      "md": "16px",
+      "pill": "999px"
+    },
+    "font": {
+      "sans": "Outfit Variable"
+    },
+    "ease": {
+      "snap": "cubic-bezier(0.16, 1, 0.3, 1)"
+    }
+  },
+  "semantic": {
+    "color": {
+      "bg": "{primitive.color.paper}",
+      "surface": "{primitive.color.surface}",
+      "fg": "{primitive.color.ink}",
+      "fgMuted": "{primitive.color.muted}",
+      "border": "{primitive.color.line}",
+      "accent": "{primitive.color.hivis}",
+      "accentSoft": "{primitive.color.hivisSoft}",
+      "danger": "{primitive.color.danger}"
+    }
+  },
+  "component": {
+    "button": {
+      "height": "3.25rem",
+      "radius": "{primitive.radius.pill}",
+      "pressScale": "0.96"
+    },
+    "nav": {
+      "blur": "16px",
+      "zIndex": 50
+    },
+    "card": {
+      "radius": "{primitive.radius.xl}",
+      "innerRadius": "22px"
+    }
+  }
+}

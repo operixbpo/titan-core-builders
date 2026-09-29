@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Keepwell Homepage Mockup</title>
+<meta name="description" content="Keepwell Property Services — maintenance, preservation and inspection for vacant and occupied homes. Homepage mockup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3/dist/index.global.js"></script>
+<!--
+  Keepwell homepage mockup — Round 2, locked direction "crews in hi-vis" (moodboard 2).
+  Build notes for the Astro + Tailwind port:
+  - Tailwind v4 tokens live in the @theme block below; copy it into src/styles/global.css.
+  - Component CSS (buttons, marquee, stacking cards, forms) is plain CSS below the theme; it can move to @layer components.
+  - Motion: GSAP 3.12.5 + ScrollTrigger + Lenis. Everything is readable without JS and with prefers-reduced-motion.
+  - Forms post to the Lead Gateway contract (POST /v1/leads, form = quote_request | vendor_application). Here the submit is mocked.
+  Techniques: editorial split hero + highlighter sweep, floating work-order card, velocity marquee, scrubbed word reveal with
+  inline images, sticky stacking cards, pinned split "how it works" with drawn progress line, pinned horizontal gallery,
+  gapless bento with perpetual micro-interactions, magnetic CTAs, hide-on-scroll nav with scrollspy, accordion FAQ,
+  validated tabbed form with loading and success states, footer wordmark rise.
+-->
+<style type="text/tailwindcss">
+  @theme {
+    --color-paper: #FAFAF7;
+    --color-surface: #FFFFFF;
+    --color-ink: #1E2227;
+    --color-muted: #62676D;
+    --color-line: #E5E5DF;
+    --color-hivis: #E6DC3A;
+    --color-hivis-soft: #F5F1BE;
+    --color-slate: #39434E;
+    --color-danger: #B42318;
+    --font-sans: "Outfit", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+    --radius-xl2: 34px;
+    --radius-lg2: 24px;
+    --radius-md2: 16px;
+    --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+</style>
+<style>
+  :root {
+    --paper: #FAFAF7; --surface: #FFFFFF; --ink: #1E2227; --muted: #62676D; --line: #E5E5DF;
+    --hivis: #E6DC3A; --hivis-soft: #F5F1BE; --slate: #39434E; --danger: #B42318;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --gutter: max(1rem, 4vw);
+    color-scheme: light;
+  }
+  html { background: var(--paper); scroll-padding-top: 6rem; }
+  body { background: var(--paper); color: var(--ink); font-family: "Outfit", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  main { overflow-x: clip; }
+  img { display: block; max-width: 100%; }
+  ::selection { background: var(--hivis); color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 10px; }
+  .gutter { padding-inline: var(--gutter); }
+  .photo { outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; }
+
+  /* Buttons */
+  .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem; height: 3.25rem; padding: 0 0.5rem 0 1.4rem; border: 0; border-radius: 999px; font: inherit; font-weight: 500; font-size: 1rem; white-space: nowrap; cursor: pointer; text-decoration: none; transition-property: background-color, box-shadow, color, scale; transition-duration: 160ms; transition-timing-function: var(--ease); }
+  .btn:active { scale: 0.96; }
+  .btn .ic { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; font-size: 1rem; transition: rotate 260ms var(--ease); }
+  .btn:hover .ic { rotate: -45deg; }
+  .btn-hivis { background: var(--hivis); color: var(--ink); }
+  .btn-hivis .ic { background: var(--ink); color: var(--hivis); }
+  .btn-hivis:hover { background: #DCD22C; }
+  .btn-ink { background: var(--ink); color: #fff; }
+  .btn-ink .ic { background: var(--hivis); color: var(--ink); }
+  .btn-ink:hover { background: #2B3037; }
+  .btn-line { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); padding-right: 1.4rem; }
+  .btn-line:hover { box-shadow: inset 0 0 0 1px var(--ink); }
+  .btn[disabled] { cursor: progress; }
+  .dots { display: inline-flex; gap: 3px; }
+  .dots i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: dot 900ms infinite ease-in-out; }
+  .dots i:nth-child(2) { animation-delay: 120ms; } .dots i:nth-child(3) { animation-delay: 240ms; }
+  @keyframes dot { 0%, 80%, 100% { opacity: 0.25; translate: 0 0; } 40% { opacity: 1; translate: 0 -3px; } }
+
+  /* Nav: floating pill, hides on scroll down, scrollspy indicator */
+  .nav { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 0.9rem); left: 50%; z-index: 50; width: min(calc(100% - 1.5rem), 66rem); translate: -50% 0; transition: translate 450ms var(--ease); }
+  .nav.hide { translate: -50% calc(-100% - 1.5rem); }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.4rem 0.4rem 0.4rem 1.1rem; border-radius: 999px; background: rgb(255 255 255 / 0.82); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: inset 0 0 0 1px rgb(30 34 39 / 0.07), 0 12px 32px -20px rgb(30 34 39 / 0.35); }
+  .logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  .logo i { width: 0.8rem; height: 0.8rem; border-radius: 3px; background: var(--hivis); box-shadow: inset 0 0 0 1.5px var(--ink); }
+  .links { position: relative; display: flex; gap: 0.15rem; }
+  .links a { position: relative; z-index: 1; padding: 0.5rem 0.85rem; border-radius: 999px; color: var(--muted); font-size: 0.95rem; text-decoration: none; transition: color 150ms; }
+  .links a:hover, .links a.on { color: var(--ink); }
+  .indicator { position: absolute; top: 0; left: 0; height: 100%; border-radius: 999px; background: var(--hivis-soft); opacity: 0; transition: translate 400ms var(--ease), width 400ms var(--ease), opacity 200ms; }
+  .nav .btn { height: 2.75rem; font-size: 0.92rem; }
+  .nav .btn .ic { width: 1.9rem; height: 1.9rem; }
+  .menu-btn { display: none; height: 2.75rem; padding: 0 1.1rem; border: 0; border-radius: 999px; background: var(--paper); font: inherit; font-weight: 500; cursor: pointer; box-shadow: inset 0 0 0 1px var(--line); }
+  @media (max-width: 900px) { .links { display: none; } .menu-btn { display: inline-flex; align-items: center; } .nav .btn-hivis { display: none; } }
+  .menu { position: fixed; inset: 0; z-index: 45; background: var(--paper); padding: 7rem var(--gutter) 2rem; display: flex; flex-direction: column; justify-content: space-between; visibility: hidden; opacity: 0; transition: opacity 250ms, visibility 0s 250ms; }
+  .menu.open { visibility: visible; opacity: 1; transition: opacity 250ms; }
+  .menu nav a { display: block; padding: 0.35rem 0; font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 600; letter-spacing: -0.04em; color: var(--ink); text-decoration: none; }
+
+  /* Hero */
+  .mark { position: relative; white-space: nowrap; isolation: isolate; }
+  .mark::before { content: ""; position: absolute; left: -0.08em; right: -0.08em; bottom: 0.06em; height: 0.42em; background: var(--hivis); z-index: -1; transform-origin: left; transform: scaleX(var(--sx, 1)); border-radius: 4px; }
+  .order { position: absolute; left: -12%; bottom: 8%; width: min(18.5rem, 72%); padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--surface); box-shadow: 0 30px 60px -30px rgb(30 34 39 / 0.45), inset 0 0 0 1px rgb(30 34 39 / 0.05); }
+  .order li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.45rem 0; font-size: 0.9rem; box-shadow: inset 0 -1px 0 var(--line); }
+  .order li:last-child { box-shadow: none; }
+  .tag { display: inline-flex; align-items: center; padding: 0.1rem 0.6rem; border-radius: 999px; font-size: 0.78rem; font-weight: 500; background: var(--hivis-soft); color: var(--ink); white-space: nowrap; }
+  .tag.done { background: var(--hivis); }
+  .tag.grey { background: #EEF0F2; }
+  @media (max-width: 1023px) { .order { left: 1rem; } }
+
+  /* Marquee */
+  .row { display: flex; width: max-content; }
+  .row span { display: inline-flex; align-items: center; gap: 2.2rem; padding-right: 2.2rem; font-size: clamp(3rem, 8vw, 7.5rem); font-weight: 600; letter-spacing: -0.045em; line-height: 1.05; white-space: nowrap; }
+  .row span i { width: 0.34em; height: 0.34em; border-radius: 50%; background: var(--hivis); flex: none; }
+  .row.outline span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+
+  /* Intro statement */
+  .inline-img { display: inline-block; width: 1.9em; height: 0.92em; border-radius: 999px; overflow: hidden; vertical-align: -0.08em; margin-inline: 0.12em; }
+  .inline-img img { width: 100%; height: 100%; object-fit: cover; }
+  .js .intro .w { opacity: 0.14; }
+
+  /* Stacking cards: outer radius 34 = inner 22 + padding 12 */
+  .card { position: sticky; top: calc(6.5rem + var(--i) * 1.2rem); display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(1.5rem, 3vw, 3rem); min-height: min(70vh, 38rem); margin-bottom: 2rem; padding: 12px; border-radius: 34px; background: var(--surface); box-shadow: 0 -1px 0 var(--line), 0 30px 60px -40px rgb(30 34 39 / 0.35), inset 0 0 0 1px rgb(30 34 39 / 0.05); transform-origin: 50% 0%; }
+  .card figure { margin: 0; border-radius: 22px; overflow: hidden; min-height: 18rem; }
+  .card figure img { width: 100%; height: 100%; object-fit: cover; }
+  .card li { padding-top: 0.6rem; box-shadow: inset 0 1px 0 var(--line); }
+  @media (max-width: 860px) { .card { grid-template-columns: minmax(0, 1fr); position: relative; top: 0; } }
+
+  /* How it works */
+  .rail { position: absolute; left: 1.35rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .rail i { position: absolute; inset: 0; background: var(--ink); transform-origin: top; transform: scaleY(var(--p, 1)); }
+  .step { position: relative; display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: 1.5rem; padding-bottom: clamp(3rem, 7vh, 5rem); }
+  .step .num { position: relative; z-index: 1; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-weight: 600; font-variant-numeric: tabular-nums; transition: background-color 300ms, box-shadow 300ms; }
+  .step.on .num { background: var(--hivis); box-shadow: none; }
+  .js .step { opacity: 0.35; transition: opacity 400ms var(--ease); }
+  .js .step.on { opacity: 1; }
+  .step figure { margin: 1.25rem 0 0; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; max-width: 34rem; }
+  .step figure img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Horizontal gallery */
+  .ptrack { display: flex; align-items: center; gap: 1.25rem; width: max-content; padding-inline: var(--gutter); }
+  .shot { flex: none; position: relative; margin: 0; border-radius: 24px; overflow: hidden; height: clamp(18rem, 52vh, 30rem); }
+  .shot.w1 { width: clamp(16rem, 26vw, 24rem); } .shot.w2 { width: clamp(22rem, 40vw, 38rem); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; }
+  .shot figcaption { position: absolute; left: 0.9rem; right: 0.9rem; bottom: 0.9rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+  .shot figcaption b { padding: 0.45rem 0.85rem; border-radius: 999px; background: rgb(255 255 255 / 0.92); font-weight: 500; font-size: 0.88rem; }
+  .shot figcaption span { padding: 0.45rem 0.7rem; border-radius: 999px; background: var(--hivis); font-size: 0.8rem; font-weight: 500; }
+
+  /* Bento */
+  .bento { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(17rem, auto); grid-auto-flow: dense; }
+  .b { position: relative; border-radius: 28px; background: var(--surface); padding: 1.5rem; overflow: hidden; box-shadow: inset 0 0 0 1px rgb(30 34 39 / 0.05); display: flex; flex-direction: column; justify-content: space-between; gap: 1.25rem; }
+  .b-a { grid-column: span 2; grid-row: span 2; }
+  .b-b { grid-column: span 2; }
+  .b h3 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+  .b p { color: var(--muted); font-size: 0.95rem; }
+  .report { border-radius: 16px; background: var(--paper); padding: 10px; display: grid; gap: 10px; }
+  .report .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .report figure { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; }
+  .report figure img { width: 100%; height: 100%; object-fit: cover; }
+  .report figcaption { position: absolute; left: 6px; top: 6px; }
+  .check { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0.4rem; font-size: 0.92rem; box-shadow: inset 0 -1px 0 var(--line); }
+  .check:last-child { box-shadow: none; }
+  .check .tag { transition: background-color 300ms; }
+  .typer { display: flex; align-items: center; height: 3rem; padding: 0 1rem; border-radius: 12px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.95rem; }
+  .caret { width: 2px; height: 1.2em; margin-left: 2px; background: var(--ink); animation: blink 1s steps(2, start) infinite; }
+  @keyframes blink { to { visibility: hidden; } }
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .cal span { aspect-ratio: 1; border-radius: 6px; background: var(--paper); display: grid; place-items: center; font-size: 0.68rem; color: var(--muted); }
+  .cal span.v { background: var(--hivis); color: var(--ink); font-weight: 600; animation: pulse 2.6s ease-in-out infinite; }
+  .cal span.v:nth-of-type(3n) { animation-delay: 0.6s; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(230 220 58 / 0.0); } 50% { box-shadow: 0 0 0 4px rgb(230 220 58 / 0.35); } }
+  .b-c img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .b-c .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(255 255 255 / 0) 35%, rgb(255 255 255 / 0.94) 82%); }
+  .b-c > div { position: relative; margin-top: auto; }
+  @media (max-width: 1023px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .bento { grid-template-columns: minmax(0, 1fr); } .b-a, .b-b { grid-column: span 1; grid-row: span 1; } }
+
+  /* FAQ */
+  .qa { box-shadow: inset 0 -1px 0 var(--line); }
+  .qa button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.5rem 0; border: 0; background: none; font: inherit; font-size: clamp(1.15rem, 1.8vw, 1.45rem); font-weight: 500; letter-spacing: -0.015em; text-align: left; color: var(--ink); cursor: pointer; }
+  .qa .pm { flex: none; position: relative; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: background-color 250ms, rotate 350ms var(--ease); }
+  .qa .pm::before, .qa .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; background: var(--ink); translate: -50% -50%; border-radius: 2px; }
+  .qa .pm::after { rotate: 90deg; transition: rotate 350ms var(--ease); }
+  .qa[data-open] .pm { background: var(--hivis); box-shadow: none; }
+  .qa[data-open] .pm::after { rotate: 0deg; }
+  .qa .ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 450ms var(--ease); }
+  .qa[data-open] .ans { grid-template-rows: 1fr; }
+  .qa .ans > div { overflow: hidden; }
+  .qa .ans p { padding: 0 3.5rem 1.6rem 0; color: var(--muted); max-width: 62ch; }
+
+  /* Forms */
+  .tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 999px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+  .tabs button { position: relative; z-index: 1; height: 2.9rem; border: 0; border-radius: 999px; background: none; font: inherit; font-weight: 500; color: var(--muted); cursor: pointer; transition: color 200ms; }
+  .tabs button[aria-selected="true"] { color: var(--ink); }
+  .tabs .slide { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--hivis); transition: translate 400ms var(--ease); }
+  .tabs[data-active="1"] .slide { translate: 100% 0; }
+  .field { display: grid; gap: 0.4rem; align-content: start; }
+  .field label, .legend { font-size: 0.9rem; font-weight: 500; }
+  .field label .opt { color: var(--muted); font-weight: 400; }
+  .input { width: 100%; height: 3.1rem; border: 0; border-radius: 14px; padding: 0 1rem; font: inherit; font-size: 1rem; background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow 150ms; }
+  textarea.input { height: auto; min-height: 7rem; padding: 0.85rem 1rem; resize: vertical; }
+  select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 15px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .input:hover { box-shadow: inset 0 0 0 1px #C9C9C1; }
+  .input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--ink); background: var(--surface); }
+  .field[data-error] .input { box-shadow: inset 0 0 0 2px var(--danger); }
+  .field .err { display: none; font-size: 0.82rem; color: var(--danger); }
+  .field[data-error] .err { display: block; }
+  .field .help { font-size: 0.82rem; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span { display: inline-flex; align-items: center; gap: 0.4rem; height: 2.4rem; padding: 0 0.95rem; border-radius: 999px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.92rem; transition: background-color 150ms, box-shadow 150ms; }
+  .chip input:checked + span { background: var(--hivis); box-shadow: none; }
+  .chip input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .chip input:checked + span::before { content: "✓"; font-size: 0.8rem; }
+  .consent { display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.88rem; color: var(--muted); }
+  .consent input { width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; accent-color: var(--ink); flex: none; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .turnstile { display: flex; align-items: center; gap: 0.7rem; height: 3.3rem; padding: 0 1rem; border-radius: 12px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.85rem; color: var(--muted); }
+  .turnstile i { width: 1.1rem; height: 1.1rem; border-radius: 4px; box-shadow: inset 0 0 0 1.5px #A8ABA4; }
+  .banner { display: none; padding: 0.85rem 1rem; border-radius: 12px; background: #FDECEA; color: var(--danger); font-size: 0.9rem; }
+  .banner.show { display: block; }
+  .success { display: none; }
+  .success.show { display: grid; }
+  .ok-badge { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--hivis); display: grid; place-items: center; font-size: 1.4rem; font-weight: 700; }
+
+  /* Footer */
+  .word { font-size: min(19vw, 20rem); font-weight: 700; letter-spacing: -0.065em; line-height: 0.8; white-space: nowrap; }
+  .word em { font-style: normal; background: linear-gradient(transparent 62%, var(--hivis) 62%, var(--hivis) 88%, transparent 88%); }
+
+  @media (max-width: 860px), (pointer: coarse) {
+    .proof-pin { height: auto !important; padding-block: 4rem; }
+    .ptrack { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+    .shot { scroll-snap-align: start; }
+    .shot.w1, .shot.w2 { width: min(80vw, 22rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .js .intro .w, .js .step { opacity: 1; }
+  }
+</style>
+
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top" aria-label="Keepwell home"><i aria-hidden="true"></i>Keepwell</a>
+    <nav class="links" id="links" aria-label="Main">
+      <span class="indicator" id="indicator" aria-hidden="true"></span>
+      <a href="#services">Services</a><a href="#how">How it works</a><a href="#work">Work</a><a href="#vendors">Vendors</a><a href="#faq">FAQ</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a class="btn btn-hivis" href="#quote" data-magnetic>Get a quote <span class="ic" aria-hidden="true">↗</span></a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav aria-label="Mobile">
+    <a href="#services">Services</a><a href="#how">How it works</a><a href="#work">Work</a><a href="#vendors">Vendors</a><a href="#faq">FAQ</a>
+  </nav>
+  <a class="btn btn-ink self-start" href="#quote">Request a quote <span class="ic" aria-hidden="true">↗</span></a>
+</div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="gutter grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-12 pt-32 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+    <div>
+      <p class="mb-6 inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-sm text-muted shadow-[inset_0_0_0_1px_var(--color-line)]" id="heroKick"><span class="h-2 w-2 rounded-full bg-hivis shadow-[0_0_0_3px_rgb(230_220_58/0.3)]"></span>Maintenance · Preservation · Inspection</p>
+      <h1 id="heroTitle" class="max-w-[14ch] text-[clamp(2.8rem,5.7vw,5.9rem)] font-semibold leading-[1] tracking-[-0.04em]">Property care, handled by crews who <span class="mark" id="mark">show up.</span></h1>
+      <p class="hero-sub mt-7 max-w-[44ch] text-lg font-light text-muted">For vacant and occupied homes. Licensed local vendors do the work to one standard, and every job comes back to you as a photo report.</p>
+      <div class="hero-sub mt-9 flex flex-wrap gap-3">
+        <a class="btn btn-ink" href="#quote" data-magnetic>Request a quote <span class="ic" aria-hidden="true">↗</span></a>
+        <a class="btn btn-line" href="#quote" data-vendor-link>Join as a vendor</a>
+      </div>
+    </div>
+    <div class="relative h-[min(76vh,46rem)] min-h-[26rem]">
+      <div class="hero-frame h-full overflow-hidden rounded-[34px]"><img class="photo h-full w-full object-cover object-[40%_50%]" id="heroImg" src="img/roofer-shingles.jpg" alt="Roofer fixing asphalt shingles with a nail gun"></div>
+      <div class="order" id="order" aria-label="Example work order">
+        <div class="flex justify-between text-[0.8rem] text-muted"><span>Work order</span><span>Board-up</span></div>
+        <p class="mb-3 mt-1.5 text-[1.05rem] font-semibold">Secure rear windows</p>
+        <ul>
+          <li>Crew dispatched <span class="tag done">Done</span></li>
+          <li>Before photos <span class="tag done">Done</span></li>
+          <li>Windows boarded <span class="tag done">Done</span></li>
+          <li>After photos <span class="tag" id="orderLast">Sending</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="grid gap-2 py-16 md:py-24" aria-label="What we do">
+    <div class="row" id="r1"><span>Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris removal <i></i></span><span aria-hidden="true">Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris removal <i></i></span></div>
+    <div class="row outline" id="r2" aria-hidden="true"><span>Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i></i></span><span>Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i></i></span></div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="gutter py-24 md:py-40">
+    <p class="intro max-w-[24ch] text-[clamp(2rem,4.3vw,4.5rem)] font-medium leading-[1.08] tracking-[-0.035em]" id="intro">We keep empty houses <span class="inline-img"><img src="img/key-door.jpg" alt=""></span> secure, tidy and documented, so owners and asset managers never have to fly out <span class="inline-img"><img src="img/house-trees-white.jpg" alt=""></span> to check.</p>
+    <div class="facts mt-20 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"><p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]">3</p><p class="mt-6 text-muted">service lines: maintenance, preservation and inspection</p></div>
+      <div class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"><p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]">Every job</p><p class="mt-6 text-muted">photographed before, during and after</p></div>
+      <div class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"><p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]">1 form</p><p class="mt-6 text-muted">for any address, one-off or recurring</p></div>
+      <div class="fact rounded-[24px] bg-hivis p-6"><p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]">Net 14</p><p class="mt-6">vendor pay by ACH direct deposit</p></div>
+    </div>
+  </section>
+
+  <!-- SERVICES: stacking cards -->
+  <section class="gutter pb-16 md:pb-24" id="services">
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+      <h2 class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]">Everything a house needs while nobody lives in it.</h2>
+      <p class="max-w-[36ch] text-muted">Book one visit or a standing schedule. Each job arrives as a work order and leaves as a photo report.</p>
+    </div>
+    <article class="card" style="--i:0">
+      <figure><img class="photo" src="img/snow-street.jpg" alt="Snowy street with a white house behind pine trees" loading="lazy"></figure>
+      <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+        <div><span class="tag px-3 py-1 text-sm">Preservation</span><h3 class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]">Keep it secure and weather-tight.</h3><p class="mt-4 max-w-[38ch] text-muted">For vacant homes between owners, tenants or sales.</p></div>
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]"><li>Winterization</li><li>Lock changes</li><li>Board-up and securing</li><li>Debris removal</li></ul>
+      </div>
+    </article>
+    <article class="card" style="--i:1">
+      <figure><img class="photo" src="img/lawn-mowing-2.jpg" alt="Close view of a lawn mower cutting grass" loading="lazy"></figure>
+      <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+        <div><span class="tag px-3 py-1 text-sm">Maintenance</span><h3 class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]">Keep it looking lived in.</h3><p class="mt-4 max-w-[38ch] text-muted">Recurring cycles so the property never looks abandoned.</p></div>
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]"><li>Lawn and exterior cycles</li><li>Repairs</li><li>Cleaning</li><li>Seasonal upkeep</li></ul>
+      </div>
+    </article>
+    <article class="card" style="--i:2">
+      <figure><img class="photo" src="img/inspector-checklist.jpg" alt="Inspector holding a checklist on a clipboard" loading="lazy"></figure>
+      <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+        <div><span class="tag px-3 py-1 text-sm">Inspection</span><h3 class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]">Know its condition without flying out.</h3><p class="mt-4 max-w-[38ch] text-muted">Standard checklists, photographed and sent back.</p></div>
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]"><li>Occupancy checks</li><li>Condition reports</li><li>Pre-listing</li><li>Insurance</li></ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- HOW IT WORKS: pinned title, steps scroll -->
+  <section class="gutter grid grid-cols-1 gap-12 py-24 md:py-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20" id="how">
+    <div class="how-title self-start lg:sticky lg:top-32">
+      <p class="text-muted">How it works</p>
+      <h2 class="mt-3 max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]">From an address to a photo report.</h2>
+      <p class="mt-6 max-w-[36ch] text-muted">The same five steps for a single lock change or a portfolio of vacant homes.</p>
+      <a class="btn btn-ink mt-8" href="#quote">Start with an address <span class="ic" aria-hidden="true">↗</span></a>
+    </div>
+    <div class="relative" id="steps">
+      <div class="rail" aria-hidden="true"><i id="railFill"></i></div>
+      <div class="step on"><span class="num">1</span><div><h3 class="text-2xl font-semibold tracking-[-0.02em]">Send the address</h3><p class="mt-2 max-w-[44ch] text-muted">Use the quote form. Tell us the property, the job and the deadline.</p><figure><img class="photo" src="img/aerial-street.jpg" alt="Aerial view down a residential street" loading="lazy"></figure></div></div>
+      <div class="step"><span class="num">2</span><div><h3 class="text-2xl font-semibold tracking-[-0.02em]">We quote and schedule</h3><p class="mt-2 max-w-[44ch] text-muted">An itemised quote first, then a local crew booked for a set date.</p></div></div>
+      <div class="step"><span class="num">3</span><div><h3 class="text-2xl font-semibold tracking-[-0.02em]">The crew does the work</h3><p class="mt-2 max-w-[44ch] text-muted">Licensed, insured vendors following the same checklist on every job.</p><figure><img class="photo" src="img/window-repair.jpg" alt="Worker repairing a window frame" loading="lazy" style="object-position:50% 40%"></figure></div></div>
+      <div class="step"><span class="num">4</span><div><h3 class="text-2xl font-semibold tracking-[-0.02em]">Photos come back</h3><p class="mt-2 max-w-[44ch] text-muted">Before, during and after, with notes on anything that needs your decision.</p></div></div>
+      <div class="step !pb-0"><span class="num">5</span><div><h3 class="text-2xl font-semibold tracking-[-0.02em]">One invoice</h3><p class="mt-2 max-w-[44ch] text-muted">Billed per job or per cycle and matched to the report.</p></div></div>
+    </div>
+  </section>
+
+  <!-- WORK: pinned horizontal gallery -->
+  <section id="work">
+    <div class="proof-pin flex h-screen flex-col justify-center gap-10">
+      <div class="gutter flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <h2 class="max-w-[15ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]">The kind of work on our orders.</h2>
+        <p class="max-w-[34ch] text-muted">Real job types, photographed the way every report will be. Project photos replace these at launch.</p>
+      </div>
+      <div class="ptrack" id="ptrack">
+        <figure class="shot w2"><img src="img/roof-repair-crew.jpg" alt="Crew replacing a roof on a brick house" loading="lazy"><figcaption><b>Roof repair</b><span>After photos</span></figcaption></figure>
+        <figure class="shot w1"><img src="img/inspector-window.jpg" alt="Inspector checking a window" loading="lazy"><figcaption><b>Inspection</b></figcaption></figure>
+        <figure class="shot w2"><img src="img/lawn-mowing.jpg" alt="Lawn being mowed" loading="lazy"><figcaption><b>Lawn cycle</b><span>Recurring</span></figcaption></figure>
+        <figure class="shot w1"><img src="img/repair-switch.jpg" alt="Electrician fixing a wall switch" loading="lazy"><figcaption><b>Electrical</b></figcaption></figure>
+        <figure class="shot w2"><img src="img/snow-modern.jpg" alt="Modern house in snow" loading="lazy"><figcaption><b>Winterization</b><span>Seasonal</span></figcaption></figure>
+        <figure class="shot w1"><img src="img/inspector-kneel.jpg" alt="Inspector checking a floor vent" loading="lazy"><figcaption><b>Condition report</b></figcaption></figure>
+        <figure class="shot w2"><img src="img/room-hardwood.jpg" alt="Empty room with hardwood floor" loading="lazy"><figcaption><b>Cleanout</b><span>Broom-clean</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY: gapless bento (4 cols x 2 rows: A 2x2, B 2x1, C 1x1, D 1x1 = 8 cells) -->
+  <section class="gutter py-24 md:py-40" id="why">
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+      <h2 class="max-w-[16ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]">Why owners and asset managers use Keepwell.</h2>
+      <p class="max-w-[36ch] text-muted">Less chasing crews, fewer surprise visits, and a record for every property.</p>
+    </div>
+    <div class="bento">
+      <article class="b b-a">
+        <div><h3>A report after every job</h3><p class="mt-2 max-w-[40ch]">Photos from the same angles, what was done, and what needs your decision.</p></div>
+        <div class="report" aria-label="Example report">
+          <div class="pair">
+            <figure><img class="photo" src="img/room-shadow.jpg" alt="" loading="lazy"><figcaption><span class="tag grey">Before</span></figcaption></figure>
+            <figure><img class="photo" src="img/room-bright.jpg" alt="" loading="lazy"><figcaption><span class="tag done">After</span></figcaption></figure>
+          </div>
+          <div class="rounded-[6px] bg-surface px-2" id="checks">
+            <div class="check">Debris removed <span class="tag">Pending</span></div>
+            <div class="check">Floors swept <span class="tag">Pending</span></div>
+            <div class="check">Locks checked <span class="tag">Pending</span></div>
+            <div class="check">Leak under kitchen sink <span class="tag grey">Needs you</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="b b-b">
+        <div><h3>One order form for any address</h3><p class="mt-2">A single house or three hundred, the request looks the same.</p></div>
+        <div class="grid gap-2 sm:grid-cols-[1fr_auto]">
+          <div class="typer" aria-hidden="true"><span id="typer"></span><span class="caret"></span></div>
+          <span class="btn btn-ink pointer-events-none">Quote <span class="ic">↗</span></span>
+        </div>
+      </article>
+      <article class="b b-c min-h-[17rem]">
+        <img src="img/worker-smile.jpg" alt="Smiling contractor in a hard hat" loading="lazy"><div class="scrim" aria-hidden="true"></div>
+        <div><h3>Licensed, insured crews</h3><p class="mt-1 !text-ink/70">Vetted before their first order.</p></div>
+      </article>
+      <article class="b">
+        <div><h3>Standing schedules</h3><p class="mt-1">Lawn cycles, inspections, winterization, planned ahead.</p></div>
+        <div class="cal" aria-hidden="true">
+          <span>1</span><span>2</span><span class="v">3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+          <span>8</span><span>9</span><span>10</span><span>11</span><span class="v">12</span><span>13</span><span>14</span>
+          <span>15</span><span>16</span><span class="v">17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- VENDORS -->
+  <section class="mx-[var(--gutter)] grid grid-cols-1 items-end gap-10 rounded-[34px] bg-hivis p-8 md:p-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" id="vendors">
+    <div>
+      <h2 class="max-w-[12ch] text-[clamp(2.4rem,5vw,4.8rem)] font-semibold leading-[0.98] tracking-[-0.045em]">Licensed contractor? Get steady work orders.</h2>
+      <p class="mt-5 max-w-[40ch] text-lg">Join a network that sends jobs in your area, pays on a fixed schedule and handles the paperwork.</p>
+      <a class="btn btn-ink mt-8" href="#quote" data-vendor-link data-magnetic>Apply to the network <span class="ic" aria-hidden="true">↗</span></a>
+    </div>
+    <ul class="req grid gap-2.5">
+      <li class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium">Pay terms <span class="font-normal text-slate">Net 14 by ACH</span></li>
+      <li class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium">You bring <span class="font-normal text-slate">Licence and insurance</span></li>
+      <li class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium">Paperwork <span class="font-normal text-slate">W-9 and vendor package</span></li>
+      <li class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium">Trades <span class="text-right font-normal text-slate">General, roofing, lawn, electrical and more</span></li>
+    </ul>
+  </section>
+
+  <!-- FAQ -->
+  <section class="gutter grid grid-cols-1 gap-10 py-24 md:py-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20" id="faq">
+    <div class="self-start lg:sticky lg:top-32">
+      <h2 class="max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]">Questions we get asked.</h2>
+      <p class="mt-5 max-w-[34ch] text-muted">Something else? Ask in the quote form and we will answer with the quote.</p>
+    </div>
+    <div id="faqList">
+      <div class="qa" data-open><button aria-expanded="true" aria-controls="a1" id="q1">Which areas do you cover?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a1" role="region" aria-labelledby="q1"><div><p>We work through licensed local vendors. Send the property address and we confirm a crew covers it before we quote.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="a2" id="q2">Do you work with asset managers and servicers?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a2" role="region" aria-labelledby="q2"><div><p>Yes. Order one-off visits or standing schedules across a portfolio; each property keeps its own schedule and photo history.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="a3" id="q3">How do I see the work?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a3" role="region" aria-labelledby="q3"><div><p>Every job ends with before, during and after photos and a short report of what was done and what needs your decision.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="a4" id="q4">How is pricing set?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a4" role="region" aria-labelledby="q4"><div><p>Each job is quoted from its scope, with materials and labour itemised before work starts. Recurring work is priced per visit.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="a5" id="q5">I’m a contractor. How do I join?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a5" role="region" aria-labelledby="q5"><div><p>Apply with your trades and service area. We ask for your licence, insurance certificate and W-9; approved vendors get work orders nearby.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="a6" id="q6">When do vendors get paid?<span class="pm" aria-hidden="true"></span></button><div class="ans" id="a6" role="region" aria-labelledby="q6"><div><p>Net 14 by ACH direct deposit, once the job’s photos and report are approved.</p></div></div></div>
+    </div>
+  </section>
+
+  <!-- QUOTE / VENDOR FORM -->
+  <section class="gutter grid grid-cols-1 gap-10 pb-24 md:pb-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16" id="quote">
+    <div>
+      <h2 class="max-w-[11ch] text-[clamp(2.4rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]">Tell us the address. We’ll send the crew.</h2>
+      <ol class="mt-10 grid gap-4">
+        <li class="flex gap-4"><span class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis text-sm font-semibold">1</span><p class="text-muted"><b class="font-medium text-ink">We confirm coverage</b> for the address and ask anything missing.</p></li>
+        <li class="flex gap-4"><span class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold">2</span><p class="text-muted"><b class="font-medium text-ink">You get an itemised quote</b> and a date for the crew.</p></li>
+        <li class="flex gap-4"><span class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold">3</span><p class="text-muted"><b class="font-medium text-ink">Photos come back</b> when the job is done.</p></li>
+      </ol>
+      <div class="mt-10 grid gap-1 text-sm text-muted"><p>Phone and email are added at launch.</p><p>Prefer to talk first? Leave a phone number in the form.</p></div>
+    </div>
+
+    <div class="rounded-[34px] bg-surface p-3 shadow-[0_30px_80px_-50px_rgb(30_34_39/0.45),inset_0_0_0_1px_rgb(30_34_39/0.05)]">
+      <div class="rounded-[22px] p-4 md:p-8">
+        <div class="tabs" role="tablist" aria-label="Form type" id="tabs" data-active="0">
+          <span class="slide" aria-hidden="true"></span>
+          <button role="tab" aria-selected="true" aria-controls="formQuote" id="tabQuote">Request a quote</button>
+          <button role="tab" aria-selected="false" aria-controls="formVendor" id="tabVendor" tabindex="-1">Join as a vendor</button>
+        </div>
+
+        <!-- Quote form: posts { form: "quote_request" } to the Lead Gateway -->
+        <form class="lead-form mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2" id="formQuote" role="tabpanel" aria-labelledby="tabQuote" data-form="quote_request" novalidate>
+          <div class="banner sm:col-span-2" role="alert" data-banner>Something went wrong sending this. Check your connection and try again.</div>
+          <div class="field"><label for="q-name">Full name</label><input class="input" id="q-name" name="name" autocomplete="name" required aria-describedby="q-name-e"><span class="err" id="q-name-e">Enter your name.</span></div>
+          <div class="field"><label for="q-company">Company <span class="opt">(optional)</span></label><input class="input" id="q-company" name="company" autocomplete="organization"></div>
+          <div class="field"><label for="q-email">Email</label><input class="input" id="q-email" name="email" type="email" autocomplete="email" required aria-describedby="q-email-e"><span class="err" id="q-email-e">Enter an email like name@company.com.</span></div>
+          <div class="field"><label for="q-phone">Phone <span class="opt">(optional)</span></label><input class="input" id="q-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field sm:col-span-2"><label for="q-address">Property address</label><input class="input" id="q-address" name="property_address" autocomplete="street-address" placeholder="Street, city" required aria-describedby="q-address-e"><span class="err" id="q-address-e">Enter the property address.</span></div>
+          <div class="field"><label for="q-state">State</label>
+            <select class="input" id="q-state" name="state" required aria-describedby="q-state-e"><option value="">Select a state</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select>
+            <span class="err" id="q-state-e">Choose the property’s state.</span></div>
+          <div class="field"><span class="legend" id="q-status-l">Property is</span>
+            <div class="chips" role="radiogroup" aria-labelledby="q-status-l">
+              <label class="chip"><input type="radio" name="occupancy" value="vacant" checked><span>Vacant</span></label>
+              <label class="chip"><input type="radio" name="occupancy" value="occupied"><span>Occupied</span></label>
+              <label class="chip"><input type="radio" name="occupancy" value="unknown"><span>Not sure</span></label>
+            </div></div>
+          <fieldset class="field sm:col-span-2" aria-describedby="q-services-e"><legend class="legend mb-2">Services needed</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="services" value="winterization"><span>Winterization</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="lock_change"><span>Lock change</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="board_up"><span>Board-up</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="debris_removal"><span>Debris removal</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="lawn"><span>Lawn cycles</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="repairs"><span>Repairs</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="inspection"><span>Inspection</span></label>
+            </div><span class="err" id="q-services-e">Pick at least one service.</span></fieldset>
+          <div class="field sm:col-span-2"><label for="q-msg">Anything we should know? <span class="opt">(optional)</span></label><textarea class="input" id="q-msg" name="message" placeholder="Deadlines, access notes, lockbox code arrangements"></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="q-web">Website</label><input id="q-web" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="field sm:col-span-2"><label class="consent"><input type="checkbox" name="consent" required aria-describedby="q-consent-e"><span>You can contact me about this request by email or phone. I’ve read the privacy policy.</span></label><span class="err" id="q-consent-e">Please agree so we can reply.</span></div>
+          <div class="turnstile sm:col-span-2" aria-hidden="true"><i></i>Security check (Cloudflare Turnstile) appears here</div>
+          <div class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"><p class="text-sm text-muted">We reply by email with questions or a quote.</p><button class="btn btn-ink" type="submit" data-submit><span data-label>Send request</span><span class="ic" aria-hidden="true">↗</span></button></div>
+        </form>
+
+        <!-- Vendor form: posts { form: "vendor_application" } to the Lead Gateway -->
+        <form class="lead-form mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2" id="formVendor" role="tabpanel" aria-labelledby="tabVendor" data-form="vendor_application" novalidate hidden>
+          <div class="banner sm:col-span-2" role="alert" data-banner>Something went wrong sending this. Check your connection and try again.</div>
+          <div class="field"><label for="v-name">Full name</label><input class="input" id="v-name" name="name" autocomplete="name" required aria-describedby="v-name-e"><span class="err" id="v-name-e">Enter your name.</span></div>
+          <div class="field"><label for="v-company">Business name <span class="opt">(optional)</span></label><input class="input" id="v-company" name="company" autocomplete="organization"></div>
+          <div class="field"><label for="v-email">Email</label><input class="input" id="v-email" name="email" type="email" autocomplete="email" required aria-describedby="v-email-e"><span class="err" id="v-email-e">Enter an email like name@company.com.</span></div>
+          <div class="field"><label for="v-phone">Phone</label><input class="input" id="v-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="v-phone-e"><span class="err" id="v-phone-e">Enter a phone number we can call.</span></div>
+          <fieldset class="field sm:col-span-2" aria-describedby="v-trades-e"><legend class="legend mb-2">Trades</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="trades" value="general"><span>General maintenance</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="roofing"><span>Roofing</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="lawn"><span>Lawn and landscaping</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="plumbing"><span>Plumbing</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="electrical"><span>Electrical</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="hvac"><span>HVAC</span></label>
+              <label class="chip"><input type="checkbox" name="trades" value="cleaning"><span>Cleaning and debris</span></label>
+            </div><span class="err" id="v-trades-e">Pick at least one trade.</span></fieldset>
+          <div class="field"><label for="v-area">Where you work</label><input class="input" id="v-area" name="service_area" placeholder="States, counties or ZIP codes" required aria-describedby="v-area-e"><span class="err" id="v-area-e">Tell us where you take jobs.</span></div>
+          <div class="field"><span class="legend" id="v-ins-l">Licensed and insured?</span>
+            <div class="chips" role="radiogroup" aria-labelledby="v-ins-l">
+              <label class="chip"><input type="radio" name="insured" value="yes" checked><span>Yes</span></label>
+              <label class="chip"><input type="radio" name="insured" value="in_progress"><span>In progress</span></label>
+            </div></div>
+          <div class="field sm:col-span-2"><label for="v-msg">About your crew <span class="opt">(optional)</span></label><textarea class="input" id="v-msg" name="message" placeholder="Crew size, equipment, years in the trade"></textarea><span class="help">We ask for your licence, insurance certificate and W-9 after this.</span></div>
+          <div class="hp" aria-hidden="true"><label for="v-web">Website</label><input id="v-web" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="field sm:col-span-2"><label class="consent"><input type="checkbox" name="consent" required aria-describedby="v-consent-e"><span>You can contact me about joining the network. I’ve read the privacy policy.</span></label><span class="err" id="v-consent-e">Please agree so we can reply.</span></div>
+          <div class="turnstile sm:col-span-2" aria-hidden="true"><i></i>Security check (Cloudflare Turnstile) appears here</div>
+          <div class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"><p class="text-sm text-muted">Vendors are paid net 14 by ACH.</p><button class="btn btn-ink" type="submit" data-submit><span data-label>Send application</span><span class="ic" aria-hidden="true">↗</span></button></div>
+        </form>
+
+        <div class="success mt-8 gap-5" id="success" tabindex="-1" aria-live="polite">
+          <span class="ok-badge" aria-hidden="true">✓</span>
+          <div><h3 class="text-[2rem] font-semibold leading-none tracking-[-0.035em]" id="successTitle">Request received.</h3><p class="mt-3 max-w-[44ch] text-muted" id="successText">We’ll confirm coverage for the address and reply by email.</p></div>
+          <div class="grid gap-2 rounded-2xl bg-paper p-4 text-sm"><div class="flex justify-between"><span class="text-muted">Reference</span><b class="font-semibold" id="refId">KW-0000</b></div><div class="flex justify-between"><span class="text-muted">Sent to</span><b class="font-semibold">Keepwell leads inbox</b></div></div>
+          <p class="text-xs text-muted">Mockup: nothing was sent. In the build this posts to the Lead Gateway.</p>
+          <button class="btn btn-line justify-self-start" type="button" id="again">Send another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="overflow-hidden bg-surface px-[var(--gutter)] pb-6 pt-20 md:pt-28">
+  <div class="flex flex-wrap items-end justify-between gap-8">
+    <h2 class="max-w-[14ch] text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-none tracking-[-0.04em]">Vacant or occupied, we keep it well.</h2>
+    <nav class="flex flex-wrap gap-x-6 gap-y-2 text-muted" aria-label="Footer"><a class="hover:text-ink" href="#services">Services</a><a class="hover:text-ink" href="#how">How it works</a><a class="hover:text-ink" href="#vendors">Vendors</a><a class="hover:text-ink" href="#faq">FAQ</a><a class="hover:text-ink" href="#top">Privacy</a><a class="hover:text-ink" href="#top">Terms</a></nav>
+  </div>
+  <div class="word mt-14" aria-hidden="true"><span id="word" class="inline-block">Keep<em>well</em></span></div>
+  <div class="mt-6 flex flex-wrap justify-between gap-4 text-sm text-muted"><span>Keepwell Property Services (working name)</span><span>Photos: Pexels, placeholders until project photos exist</span></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia("(pointer: fine)").matches;
+
+  /* ---------- Nav: mobile menu ---------- */
+  var menu = document.getElementById("menu"), menuBtn = document.getElementById("menuBtn");
+  function setMenu(open) {
+    menu.classList.toggle("open", open);
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.textContent = open ? "Close" : "Menu";
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open && window.gsap && !reduce) gsap.from("#menu nav a", { y: 30, opacity: 0, stagger: 0.05, duration: 0.5, ease: "power3.out" });
+  }
+  menuBtn.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
+  menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menu.classList.contains("open")) { setMenu(false); menuBtn.focus(); } });
+
+  /* ---------- Nav: hide on scroll down, scrollspy indicator ---------- */
+  var nav = document.getElementById("nav"), lastY = 0;
+  var links = Array.prototype.slice.call(document.querySelectorAll("#links a"));
+  var indicator = document.getElementById("indicator");
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  function spy() {
+    var y = window.scrollY, dy = y - lastY;
+    if (Math.abs(dy) > 6) {
+      nav.classList.toggle("hide", dy > 0 && y > 400 && !menu.classList.contains("open"));
+      lastY = y;
+    }
+    var active = -1;
+    sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.45) active = i; });
+    links.forEach(function (a, i) { a.classList.toggle("on", i === active); });
+    if (active > -1) {
+      var a = links[active];
+      indicator.style.width = a.offsetWidth + "px";
+      indicator.style.translate = a.offsetLeft + "px 0";
+      indicator.style.opacity = "1";
+    } else { indicator.style.opacity = "0"; }
+  }
+  window.addEventListener("scroll", spy, { passive: true });
+  spy();
+
+  /* ---------- FAQ accordion (no GSAP needed) ---------- */
+  document.querySelectorAll(".qa button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var item = btn.closest(".qa"), open = item.hasAttribute("data-open");
+      if (open) item.removeAttribute("data-open"); else item.setAttribute("data-open", "");
+      btn.setAttribute("aria-expanded", String(!open));
+    });
+  });
+
+  /* ---------- Forms: tabs, validation, loading, success ---------- */
+  var tabs = document.getElementById("tabs");
+  var tabBtns = [document.getElementById("tabQuote"), document.getElementById("tabVendor")];
+  var forms = [document.getElementById("formQuote"), document.getElementById("formVendor")];
+  var success = document.getElementById("success");
+  function selectTab(i, focus) {
+    tabs.setAttribute("data-active", String(i));
+    tabBtns.forEach(function (b, k) { b.setAttribute("aria-selected", String(k === i)); b.tabIndex = k === i ? 0 : -1; });
+    forms.forEach(function (f, k) { f.hidden = k !== i; });
+    success.classList.remove("show");
+    if (focus) tabBtns[i].focus();
+  }
+  tabBtns.forEach(function (b, i) {
+    b.addEventListener("click", function () { selectTab(i); });
+    b.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); selectTab(i === 0 ? 1 : 0, true); }
+    });
+  });
+  document.querySelectorAll("[data-vendor-link]").forEach(function (a) { a.addEventListener("click", function () { selectTab(1); }); });
+
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function validate(form) {
+    var bad = [];
+    form.querySelectorAll(".field").forEach(function (f) { f.removeAttribute("data-error"); });
+    form.querySelectorAll("[required]").forEach(function (el) {
+      var ok = el.type === "checkbox" ? el.checked : el.type === "email" ? emailRe.test(el.value.trim()) : el.value.trim() !== "";
+      el.setAttribute("aria-invalid", String(!ok));
+      if (!ok) { el.closest(".field").setAttribute("data-error", ""); bad.push(el); }
+    });
+    ["services", "trades"].forEach(function (name) {
+      var boxes = form.querySelectorAll('input[name="' + name + '"]');
+      if (boxes.length && !Array.prototype.some.call(boxes, function (b) { return b.checked; })) {
+        boxes[0].closest(".field").setAttribute("data-error", ""); bad.push(boxes[0]);
+      }
+    });
+    return bad;
+  }
+  function payload(form) {
+    var fd = new FormData(form), get = function (k) { return (fd.get(k) || "").toString().trim(); };
+    var fields = {};
+    fd.forEach(function (v, k) {
+      if (["name", "email", "phone", "company", "consent", "website"].indexOf(k) > -1) return;
+      if (k === "services" || k === "trades") fields[k] = fd.getAll(k); else fields[k] = v;
+    });
+    return {
+      site_key: "keepwell",
+      form: form.dataset.form,
+      request_id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
+      contact: { name: get("name"), email: get("email"), phone: get("phone"), company: get("company") },
+      fields: fields,
+      consent: { privacy: !!fd.get("consent"), contact_ok: !!fd.get("consent"), wording_version: "2026-10" },
+      context: { page: location.pathname, referrer: document.referrer },
+      turnstile_token: "(set by Turnstile in the build)"
+    };
+  }
+  forms.forEach(function (form) {
+    form.addEventListener("input", function (e) {
+      var f = e.target.closest(".field");
+      if (f && f.hasAttribute("data-error")) { f.removeAttribute("data-error"); e.target.setAttribute("aria-invalid", "false"); }
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (form.querySelector('input[name="website"]').value) return; // honeypot
+      var bad = validate(form);
+      if (bad.length) { bad[0].focus(); return; }
+      var btn = form.querySelector("[data-submit]"), label = btn.querySelector("[data-label]"), old = label.textContent;
+      btn.disabled = true; label.innerHTML = 'Sending <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+      window.__lastLeadPayload = payload(form); // what the build POSTs to /v1/leads
+      setTimeout(function () {
+        btn.disabled = false; label.textContent = old;
+        var vendor = form.dataset.form === "vendor_application";
+        document.getElementById("successTitle").textContent = vendor ? "Application received." : "Request received.";
+        document.getElementById("successText").textContent = vendor ? "We’ll review your trades and area, then ask for your licence, insurance certificate and W-9." : "We’ll confirm coverage for the address and reply by email with questions or a quote.";
+        document.getElementById("refId").textContent = "KW-" + Math.random().toString(36).slice(2, 7).toUpperCase();
+        form.hidden = true; success.classList.add("show"); success.focus();
+        if (window.gsap && !reduce) gsap.from("#success > *", { y: 16, opacity: 0, stagger: 0.06, duration: 0.5, ease: "power3.out" });
+        form.reset();
+      }, 1300);
+    });
+  });
+  document.getElementById("again").addEventListener("click", function () { selectTab(Number(tabs.getAttribute("data-active"))); });
+
+  /* ---------- Bento micro-interactions ---------- */
+  var addresses = ["1407 Birchwood Ln, Charlotte, NC", "22 Harbor View Ct, Tampa, FL", "915 Elm St, Columbus, OH", "Portfolio: 38 addresses (CSV)"];
+  var typer = document.getElementById("typer");
+  if (reduce) { typer.textContent = addresses[0]; }
+  else {
+    (function type(ai, ci, del) {
+      var s = addresses[ai];
+      typer.textContent = s.slice(0, ci);
+      if (!del && ci < s.length) return setTimeout(function () { type(ai, ci + 1, false); }, 55);
+      if (!del) return setTimeout(function () { type(ai, ci, true); }, 1600);
+      if (ci > 0) return setTimeout(function () { type(ai, ci - 1, true); }, 22);
+      setTimeout(function () { type((ai + 1) % addresses.length, 0, false); }, 300);
+    })(0, 0, false);
+  }
+  var checks = Array.prototype.slice.call(document.querySelectorAll("#checks .check .tag")).slice(0, 3);
+  if (reduce) checks.forEach(function (t) { t.textContent = "Done"; t.classList.add("done"); });
+  else {
+    var ci = 0;
+    setInterval(function () {
+      if (ci < checks.length) { checks[ci].textContent = "Done"; checks[ci].classList.add("done"); ci++; }
+      else { checks.forEach(function (t) { t.textContent = "Pending"; t.classList.remove("done"); }); ci = 0; }
+    }, 1400);
+  }
+
+  /* ---------- Motion (GSAP) ---------- */
+  if (!window.gsap || reduce) return;
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis) {
+    var lenis = new Lenis({ lerp: 0.1 });
+    lenis.on("scroll", ScrollTrigger.update);
+    lenis.on("scroll", spy);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener("click", function (e) { var t = document.querySelector(a.getAttribute("href")); if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -90 }); } });
+    });
+  }
+
+  // Hero
+  gsap.from("#heroKick", { y: 16, opacity: 0, duration: 0.8, ease: "power3.out" });
+  gsap.from("#heroTitle", { y: 40, opacity: 0, duration: 1, ease: "power4.out", delay: 0.05 });
+  gsap.fromTo("#mark", { "--sx": 0 }, { "--sx": 1, duration: 0.9, delay: 0.6, ease: "power3.inOut" });
+  gsap.from(".hero-sub", { y: 20, opacity: 0, duration: 0.9, delay: 0.3, stagger: 0.1, ease: "power3.out" });
+  gsap.from(".hero-frame", { clipPath: "inset(12% 0% 0% 30% round 34px)", duration: 1.4, ease: "power4.out" });
+  gsap.from("#order", { y: 60, opacity: 0, duration: 1.1, delay: 0.6, ease: "back.out(1.4)" });
+  gsap.to("#order", { y: -12, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
+  gsap.delayedCall(2.4, function () { var t = document.getElementById("orderLast"); t.textContent = "Done"; t.classList.add("done"); });
+  gsap.to("#heroImg", { yPercent: 8, scale: 1.08, ease: "none", scrollTrigger: { trigger: "#heroImg", start: "top top", end: "bottom top", scrub: true } });
+
+  // Marquee: base drift, scroll velocity pushes it, direction follows scroll
+  function loop(el, dir) {
+    var half = el.scrollWidth / 2, x = dir > 0 ? 0 : -half, speed = 0.6 * dir;
+    gsap.ticker.add(function () {
+      x -= speed;
+      if (x <= -half) x += half;
+      if (x > 0) x -= half;
+      gsap.set(el, { x: x });
+      speed += (0.6 * dir - speed) * 0.05;
+    });
+    ScrollTrigger.create({ trigger: el, start: "top bottom", end: "bottom top",
+      onUpdate: function (self) { speed = dir * (0.6 + Math.min(Math.abs(self.getVelocity()) / 180, 14)) * self.direction; } });
+  }
+  loop(document.getElementById("r1"), 1);
+  loop(document.getElementById("r2"), -1);
+
+  // Intro: split text nodes into words (inline images stay intact), scrub opacity
+  var intro = document.getElementById("intro");
+  Array.prototype.slice.call(intro.childNodes).forEach(function (n) {
+    if (n.nodeType !== 3 || !n.textContent.trim()) return;
+    var frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(function (part) {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+      var s = document.createElement("span"); s.className = "w"; s.textContent = part; frag.appendChild(s);
+    });
+    n.parentNode.replaceChild(frag, n);
+  });
+  gsap.to("#intro .w", { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: "#intro", start: "top 80%", end: "bottom 45%", scrub: true } });
+  gsap.from("#intro .inline-img", { scale: 0.4, opacity: 0, duration: 0.8, ease: "back.out(2)", stagger: 0.2, scrollTrigger: { trigger: "#intro", start: "top 70%" } });
+  gsap.from(".fact", { y: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: ".facts", start: "top 85%" } });
+
+  var mm = gsap.matchMedia();
+  mm.add("(min-width: 861px)", function () {
+    // Stacking cards
+    var cards = gsap.utils.toArray(".card");
+    cards.forEach(function (card, i) {
+      if (i === cards.length - 1) return;
+      gsap.fromTo(card, { scale: 1, filter: "brightness(1)" }, { scale: 0.92 - (cards.length - 2 - i) * 0.02, filter: "brightness(0.94)", ease: "none",
+        scrollTrigger: { trigger: cards[i + 1], start: "top bottom", end: "top " + (100 + i * 20) + "px", scrub: true } });
+    });
+    // How it works: rail fill + step activation
+    gsap.fromTo("#railFill", { "--p": 0 }, { "--p": 1, ease: "none", scrollTrigger: { trigger: "#steps", start: "top 60%", end: "bottom 60%", scrub: true } });
+    gsap.utils.toArray(".step").forEach(function (s) {
+      ScrollTrigger.create({ trigger: s, start: "top 62%", onEnter: function () { s.classList.add("on"); }, onLeaveBack: function () { if (s !== document.querySelector(".step")) s.classList.remove("on"); } });
+    });
+  });
+  mm.add("(max-width: 860px)", function () { document.querySelectorAll(".step").forEach(function (s) { s.classList.add("on"); }); });
+
+  mm.add("(min-width: 861px) and (pointer: fine)", function () {
+    // Pinned horizontal gallery with centre focus
+    var track = document.getElementById("ptrack");
+    var dist = function () { return track.scrollWidth - window.innerWidth; };
+    var tween = gsap.to(track, { x: function () { return -dist(); }, ease: "none",
+      scrollTrigger: { trigger: ".proof-pin", start: "top top", end: function () { return "+=" + dist() * 1.1; }, pin: true, scrub: 0.8, invalidateOnRefresh: true } });
+    gsap.utils.toArray(".shot").forEach(function (shot) {
+      gsap.fromTo(shot, { scale: 0.86 }, { scale: 1, ease: "none", scrollTrigger: { trigger: shot, containerAnimation: tween, start: "left right", end: "center 55%", scrub: true } });
+      gsap.fromTo(shot.querySelector("img"), { xPercent: -8, scale: 1.18 }, { xPercent: 8, scale: 1.18, ease: "none", scrollTrigger: { trigger: shot, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
+    });
+  });
+
+  gsap.from(".b", { y: 40, opacity: 0, stagger: 0.08, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: ".bento", start: "top 80%" } });
+  gsap.from("#vendors", { clipPath: "inset(20% 10% 20% 10% round 34px)", duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: "#vendors", start: "top 80%" } });
+  gsap.from(".req li", { x: 40, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: ".req", start: "top 85%" } });
+  gsap.from(".qa", { y: 24, opacity: 0, stagger: 0.06, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: "#faqList", start: "top 80%" } });
+  gsap.from("#word", { yPercent: 70, ease: "none", scrollTrigger: { trigger: "footer", start: "top bottom", end: "bottom bottom", scrub: true } });
+
+  // Magnetic CTAs
+  if (fine) {
+    document.querySelectorAll("[data-magnetic]").forEach(function (b) {
+      var xTo = gsap.quickTo(b, "x", { duration: 0.5, ease: "power3.out" }), yTo = gsap.quickTo(b, "y", { duration: 0.5, ease: "power3.out" });
+      b.addEventListener("mousemove", function (e) { var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * 0.18); yTo((e.clientY - r.top - r.height / 2) * 0.3); });
+      b.addEventListener("mouseleave", function () { xTo(0); yTo(0); });
+    });
+  }
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+})();
+</script>
+
+</body>
+</html>

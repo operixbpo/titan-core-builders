@@ -1,0 +1,9 @@
+# Optional: deploy via Wrangler from CI once Cloudflare secrets are configured.
+# Preferred path per plan: connect this repo to Cloudflare Pages (Git integration).
+# Build command: npm run build
+# Output directory: dist
+# Node version: 22
+
+name: "stone-ridge-web"
+compatibility_date: "2026-09-01"
+pages_build_output_dir: dist

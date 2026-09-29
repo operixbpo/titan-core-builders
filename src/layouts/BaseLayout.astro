@@ -1,0 +1,35 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Stone Ridge Constructions LLC",
+  description = "Maintenance, preservation and inspection for vacant and occupied homes. Licensed local vendors, photo reports on every job.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#FAFAF7" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <script>
+      import { initSite } from "../scripts/site";
+      initSite();
+    </script>
+  </body>
+</html>

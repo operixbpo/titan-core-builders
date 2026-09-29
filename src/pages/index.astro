@@ -1,0 +1,768 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import LeadForm from "../components/LeadForm.astro";
+---
+
+{/*
+  Design read: B2B field-services marketing homepage for asset managers,
+  homeowners and licensed vendors. Practical hi-vis energy (locked moodboard 2).
+  Dials: VARIANCE 7 / MOTION 7 / DENSITY 4. Light theme locked (no dark mode).
+  Stack: Astro static + Tailwind v4 + GSAP ScrollTrigger + Lenis (tech-stack doc).
+  Hero: Editorial Split (locked). GSAP: sticky service stack + pinned horizontal gallery.
+  Bento: 4-col dense, A 2x2 + B 2x1 + C 1x1 + D 1x1 = 8 cells, zero empty.
+*/}
+
+<BaseLayout>
+  <Nav />
+
+  <main id="top" class="overflow-x-hidden w-full max-w-full">
+    <!-- HERO: editorial split -->
+    <section
+      class="gutter grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-12 pt-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-24"
+    >
+      <div>
+        <p
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-sm text-muted shadow-[inset_0_0_0_1px_var(--color-line)]"
+          id="heroKick"
+        >
+          <span
+            class="h-2 w-2 rounded-full bg-hivis shadow-[0_0_0_3px_rgb(230_220_58/0.3)]"
+          ></span>
+          Maintenance · Preservation · Inspection
+        </p>
+        <h1
+          id="heroTitle"
+          class="max-w-5xl text-[clamp(2.8rem,5.7vw,5.9rem)] font-semibold leading-[1.05] tracking-[-0.04em]"
+        >
+          Property care, handled by crews who <span class="mark" id="mark"
+            >show up.</span
+          >
+        </h1>
+        <p class="hero-sub mt-7 max-w-[44ch] text-lg font-light text-muted">
+          For vacant and occupied homes. Licensed local vendors do the work to
+          one standard, and every job comes back to you as a photo report.
+        </p>
+        <div class="hero-sub mt-9 flex flex-wrap gap-3">
+          <a class="btn btn-ink" href="#quote" data-magnetic
+            >Request a quote <span class="ic" aria-hidden="true">↗</span></a
+          >
+          <a class="btn btn-line" href="#quote" data-vendor-link
+            >Join as a vendor</a
+          >
+        </div>
+      </div>
+      <div class="relative h-[min(76vh,46rem)] min-h-[26rem]">
+        <div class="hero-frame h-full overflow-hidden rounded-[34px]">
+          <img
+            class="photo h-full w-full object-cover object-[40%_50%]"
+            id="heroImg"
+            src="/img/roofer-shingles.jpg"
+            alt="Roofer fixing asphalt shingles with a nail gun"
+            width="1200"
+            height="1600"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="order" id="order" aria-label="Example work order">
+          <div class="flex justify-between text-[0.8rem] text-muted">
+            <span>Work order</span><span>Board-up</span>
+          </div>
+          <p class="mb-3 mt-1.5 text-[1.05rem] font-semibold">
+            Secure rear windows
+          </p>
+          <ul>
+            <li>Crew dispatched <span class="tag done">Done</span></li>
+            <li>Before photos <span class="tag done">Done</span></li>
+            <li>Windows boarded <span class="tag done">Done</span></li>
+            <li>After photos <span class="tag" id="orderLast">Sending</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="grid gap-2 py-16 md:py-24" aria-label="What we do">
+      <div class="row" id="r1">
+        <span
+          >Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris
+          removal <i></i></span
+        >
+        <span aria-hidden="true"
+          >Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris
+          removal <i></i></span
+        >
+      </div>
+      <div class="row outline" id="r2" aria-hidden="true">
+        <span
+          >Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i
+          ></i></span
+        >
+        <span
+          >Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i
+          ></i></span
+        >
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="gutter py-24 md:py-40">
+      <p
+        class="intro max-w-[24ch] text-[clamp(2rem,4.3vw,4.5rem)] font-medium leading-[1.08] tracking-[-0.035em]"
+        id="intro"
+      >
+        We keep empty houses <span class="inline-img"
+          ><img src="/img/key-door.jpg" alt="" width="200" height="100" /></span
+        > secure, tidy and documented, so owners and asset managers never have to
+        fly out <span class="inline-img"
+          ><img
+            src="/img/house-trees-white.jpg"
+            alt=""
+            width="200"
+            height="100"
+          /></span
+        > to check.
+      </p>
+      <div class="facts mt-20 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
+        >
+          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
+            >3</p
+          >
+          <p class="mt-6 text-muted"
+            >service lines: maintenance, preservation and inspection</p
+          >
+        </div>
+        <div
+          class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
+        >
+          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
+            >Every job</p
+          >
+          <p class="mt-6 text-muted"
+            >photographed before, during and after</p
+          >
+        </div>
+        <div
+          class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
+        >
+          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
+            >1 form</p
+          >
+          <p class="mt-6 text-muted"
+            >for any address, one-off or recurring</p
+          >
+        </div>
+        <div class="fact rounded-[24px] bg-hivis p-6">
+          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
+            >Net 14</p
+          >
+          <p class="mt-6">vendor pay by ACH direct deposit</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="gutter pb-16 md:pb-24" id="services">
+      <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+        <h2
+          class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+        >
+          Everything a house needs while nobody lives in it.
+        </h2>
+        <p class="max-w-[36ch] text-muted">
+          Book one visit or a standing schedule. Each job arrives as a work order
+          and leaves as a photo report.
+        </p>
+      </div>
+      <article class="card" style="--i:0">
+        <figure>
+          <img
+            class="photo"
+            src="/img/snow-street.jpg"
+            alt="Snowy street with a white house behind pine trees"
+            loading="lazy"
+            width="900"
+            height="700"
+          />
+        </figure>
+        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+          <div>
+            <span class="tag px-3 py-1 text-sm">Preservation</span>
+            <h3
+              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+            >
+              Keep it secure and weather-tight.
+            </h3>
+            <p class="mt-4 max-w-[38ch] text-muted">
+              For vacant homes between owners, tenants or sales.
+            </p>
+          </div>
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+            <li>Winterization</li>
+            <li>Lock changes</li>
+            <li>Board-up and securing</li>
+            <li>Debris removal</li>
+          </ul>
+        </div>
+      </article>
+      <article class="card" style="--i:1">
+        <figure>
+          <img
+            class="photo"
+            src="/img/lawn-mowing-2.jpg"
+            alt="Close view of a lawn mower cutting grass"
+            loading="lazy"
+            width="900"
+            height="700"
+          />
+        </figure>
+        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+          <div>
+            <span class="tag px-3 py-1 text-sm">Maintenance</span>
+            <h3
+              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+            >
+              Keep it looking lived in.
+            </h3>
+            <p class="mt-4 max-w-[38ch] text-muted">
+              Recurring cycles so the property never looks abandoned.
+            </p>
+          </div>
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+            <li>Lawn and exterior cycles</li>
+            <li>Repairs</li>
+            <li>Cleaning</li>
+            <li>Seasonal upkeep</li>
+          </ul>
+        </div>
+      </article>
+      <article class="card" style="--i:2">
+        <figure>
+          <img
+            class="photo"
+            src="/img/inspector-checklist.jpg"
+            alt="Inspector holding a checklist on a clipboard"
+            loading="lazy"
+            width="900"
+            height="700"
+          />
+        </figure>
+        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+          <div>
+            <span class="tag px-3 py-1 text-sm">Inspection</span>
+            <h3
+              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+            >
+              Know its condition without flying out.
+            </h3>
+            <p class="mt-4 max-w-[38ch] text-muted">
+              Standard checklists, photographed and sent back.
+            </p>
+          </div>
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+            <li>Occupancy checks</li>
+            <li>Condition reports</li>
+            <li>Pre-listing</li>
+            <li>Insurance</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section
+      class="gutter grid grid-cols-1 gap-12 py-24 md:py-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20"
+      id="how"
+    >
+      <div class="how-title self-start lg:sticky lg:top-32">
+        <h2
+          class="max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+        >
+          From an address to a photo report.
+        </h2>
+        <p class="mt-6 max-w-[36ch] text-muted">
+          The same five steps for a single lock change or a portfolio of vacant
+          homes.
+        </p>
+        <a class="btn btn-ink mt-8" href="#quote"
+          >Start with an address <span class="ic" aria-hidden="true">↗</span></a
+        >
+      </div>
+      <div class="relative" id="steps">
+        <div class="rail" aria-hidden="true"><i id="railFill"></i></div>
+        <div class="step on">
+          <span class="num">1</span>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
+              >Send the address</h3
+            >
+            <p class="mt-2 max-w-[44ch] text-muted">
+              Use the quote form. Tell us the property, the job and the deadline.
+            </p>
+            <figure>
+              <img
+                class="photo"
+                src="/img/aerial-street.jpg"
+                alt="Aerial view down a residential street"
+                loading="lazy"
+                width="800"
+                height="450"
+              />
+            </figure>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
+              >We quote and schedule</h3
+            >
+            <p class="mt-2 max-w-[44ch] text-muted">
+              An itemised quote first, then a local crew booked for a set date.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
+              >The crew does the work</h3
+            >
+            <p class="mt-2 max-w-[44ch] text-muted">
+              Licensed, insured vendors following the same checklist on every job.
+            </p>
+            <figure>
+              <img
+                class="photo"
+                src="/img/window-repair.jpg"
+                alt="Worker repairing a window frame"
+                loading="lazy"
+                style="object-position:50% 40%"
+                width="800"
+                height="450"
+              />
+            </figure>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">4</span>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
+              >Photos come back</h3
+            >
+            <p class="mt-2 max-w-[44ch] text-muted">
+              Before, during and after, with notes on anything that needs your
+              decision.
+            </p>
+          </div>
+        </div>
+        <div class="step !pb-0">
+          <span class="num">5</span>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
+              >One invoice</h3
+            >
+            <p class="mt-2 max-w-[44ch] text-muted">
+              Billed per job or per cycle and matched to the report.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK GALLERY -->
+    <section id="work">
+      <div class="proof-pin flex h-[100dvh] flex-col justify-center gap-10">
+        <div
+          class="gutter flex flex-wrap items-end justify-between gap-x-8 gap-y-4"
+        >
+          <h2
+            class="max-w-[15ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+          >
+            The kind of work on our orders.
+          </h2>
+          <p class="max-w-[34ch] text-muted">
+            Real job types, photographed the way every report will be. Project
+            photos replace these at launch.
+          </p>
+        </div>
+        <div class="ptrack" id="ptrack">
+          <figure class="shot w2">
+            <img
+              src="/img/roof-repair-crew.jpg"
+              alt="Crew replacing a roof on a brick house"
+              loading="lazy"
+              width="900"
+              height="600"
+            />
+            <figcaption
+              ><b>Roof repair</b><span>After photos</span></figcaption
+            >
+          </figure>
+          <figure class="shot w1">
+            <img
+              src="/img/inspector-window.jpg"
+              alt="Inspector checking a window"
+              loading="lazy"
+              width="600"
+              height="600"
+            />
+            <figcaption><b>Inspection</b></figcaption>
+          </figure>
+          <figure class="shot w2">
+            <img
+              src="/img/lawn-mowing.jpg"
+              alt="Lawn being mowed"
+              loading="lazy"
+              width="900"
+              height="600"
+            />
+            <figcaption><b>Lawn cycle</b><span>Recurring</span></figcaption>
+          </figure>
+          <figure class="shot w1">
+            <img
+              src="/img/repair-switch.jpg"
+              alt="Electrician fixing a wall switch"
+              loading="lazy"
+              width="600"
+              height="600"
+            />
+            <figcaption><b>Electrical</b></figcaption>
+          </figure>
+          <figure class="shot w2">
+            <img
+              src="/img/snow-modern.jpg"
+              alt="Modern house in snow"
+              loading="lazy"
+              width="900"
+              height="600"
+            />
+            <figcaption
+              ><b>Winterization</b><span>Seasonal</span></figcaption
+            >
+          </figure>
+          <figure class="shot w1">
+            <img
+              src="/img/inspector-kneel.jpg"
+              alt="Inspector checking a floor vent"
+              loading="lazy"
+              width="600"
+              height="600"
+            />
+            <figcaption><b>Condition report</b></figcaption>
+          </figure>
+          <figure class="shot w2">
+            <img
+              src="/img/room-hardwood.jpg"
+              alt="Empty room with hardwood floor"
+              loading="lazy"
+              width="900"
+              height="600"
+            />
+            <figcaption><b>Cleanout</b><span>Broom-clean</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY / BENTO -->
+    <section class="gutter py-24 md:py-40" id="why">
+      <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+        <h2
+          class="max-w-[16ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+        >
+          Why owners and asset managers use Stone Ridge.
+        </h2>
+        <p class="max-w-[36ch] text-muted">
+          Less chasing crews, fewer surprise visits, and a record for every
+          property.
+        </p>
+      </div>
+      <div class="bento">
+        <article class="b b-a">
+          <div>
+            <h3>A report after every job</h3>
+            <p class="mt-2 max-w-[40ch]">
+              Photos from the same angles, what was done, and what needs your
+              decision.
+            </p>
+          </div>
+          <div class="report" aria-label="Example report">
+            <div class="pair">
+              <figure>
+                <img
+                  class="photo"
+                  src="/img/room-shadow.jpg"
+                  alt=""
+                  loading="lazy"
+                  width="400"
+                  height="300"
+                />
+                <figcaption><span class="tag grey">Before</span></figcaption>
+              </figure>
+              <figure>
+                <img
+                  class="photo"
+                  src="/img/room-bright.jpg"
+                  alt=""
+                  loading="lazy"
+                  width="400"
+                  height="300"
+                />
+                <figcaption><span class="tag done">After</span></figcaption>
+              </figure>
+            </div>
+            <div class="rounded-[6px] bg-surface px-2" id="checks">
+              <div class="check"
+                >Debris removed <span class="tag">Pending</span></div
+              >
+              <div class="check"
+                >Floors swept <span class="tag">Pending</span></div
+              >
+              <div class="check"
+                >Locks checked <span class="tag">Pending</span></div
+              >
+              <div class="check"
+                >Leak under kitchen sink <span class="tag grey">Needs you</span
+                ></div
+              >
+            </div>
+          </div>
+        </article>
+        <article class="b b-b">
+          <div>
+            <h3>One order form for any address</h3>
+            <p class="mt-2">
+              A single house or three hundred, the request looks the same.
+            </p>
+          </div>
+          <div class="grid gap-2 sm:grid-cols-[1fr_auto]">
+            <div class="typer" aria-hidden="true">
+              <span id="typer"></span><span class="caret"></span>
+            </div>
+            <span class="btn btn-ink pointer-events-none"
+              >Quote <span class="ic">↗</span></span
+            >
+          </div>
+        </article>
+        <article class="b b-c min-h-[17rem]">
+          <img
+            src="/img/worker-smile.jpg"
+            alt="Smiling contractor in a hard hat"
+            loading="lazy"
+            width="600"
+            height="600"
+          />
+          <div class="scrim" aria-hidden="true"></div>
+          <div>
+            <h3>Licensed, insured crews</h3>
+            <p class="mt-1 !text-ink/70">Vetted before their first order.</p>
+          </div>
+        </article>
+        <article class="b">
+          <div>
+            <h3>Standing schedules</h3>
+            <p class="mt-1">
+              Lawn cycles, inspections, winterization, planned ahead.
+            </p>
+          </div>
+          <div class="cal" aria-hidden="true">
+            <span>1</span><span>2</span><span class="v">3</span><span>4</span
+            ><span>5</span><span>6</span><span>7</span>
+            <span>8</span><span>9</span><span>10</span><span>11</span
+            ><span class="v">12</span><span>13</span><span>14</span>
+            <span>15</span><span>16</span><span class="v">17</span><span>18</span
+            ><span>19</span><span>20</span><span>21</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- VENDORS -->
+    <section
+      class="mx-[var(--gutter)] grid grid-cols-1 items-end gap-10 rounded-[34px] bg-hivis p-8 md:p-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
+      id="vendors"
+    >
+      <div>
+        <h2
+          class="max-w-[12ch] text-[clamp(2.4rem,5vw,4.8rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
+        >
+          Licensed contractor? Get steady work orders.
+        </h2>
+        <p class="mt-5 max-w-[40ch] text-lg">
+          Join a network that sends jobs in your area, pays on a fixed schedule
+          and handles the paperwork.
+        </p>
+        <a
+          class="btn btn-ink mt-8"
+          href="#quote"
+          data-vendor-link
+          data-magnetic
+          >Apply to the network <span class="ic" aria-hidden="true">↗</span></a
+        >
+      </div>
+      <ul class="req grid gap-2.5">
+        <li
+          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+        >
+          Pay terms <span class="font-normal text-slate">Net 14 by ACH</span>
+        </li>
+        <li
+          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+        >
+          You bring <span class="font-normal text-slate"
+            >Licence and insurance</span
+          >
+        </li>
+        <li
+          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+        >
+          Paperwork <span class="font-normal text-slate"
+            >W-9 and vendor package</span
+          >
+        </li>
+        <li
+          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+        >
+          Trades <span class="text-right font-normal text-slate"
+            >General, roofing, lawn, electrical and more</span
+          >
+        </li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="gutter grid grid-cols-1 gap-10 py-24 md:py-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20"
+      id="faq"
+    >
+      <div class="self-start lg:sticky lg:top-32">
+        <h2
+          class="max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+        >
+          Questions we get asked.
+        </h2>
+        <p class="mt-5 max-w-[34ch] text-muted">
+          Something else? Ask in the quote form and we will answer with the quote.
+        </p>
+      </div>
+      <div id="faqList">
+        <div class="qa" data-open>
+          <button aria-expanded="true" aria-controls="a1" id="q1"
+            >Which areas do you cover?<span class="pm" aria-hidden="true"
+            ></span></button
+          >
+          <div class="ans" id="a1" role="region" aria-labelledby="q1">
+            <div>
+              <p>
+                We work through licensed local vendors. Send the property address
+                and we confirm a crew covers it before we quote.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a2" id="q2"
+            >Do you work with asset managers and servicers?<span
+              class="pm"
+              aria-hidden="true"></span></button
+          >
+          <div class="ans" id="a2" role="region" aria-labelledby="q2">
+            <div>
+              <p>
+                Yes. Order one-off visits or standing schedules across a
+                portfolio; each property keeps its own schedule and photo history.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a3" id="q3"
+            >How do I see the work?<span class="pm" aria-hidden="true"
+            ></span></button
+          >
+          <div class="ans" id="a3" role="region" aria-labelledby="q3">
+            <div>
+              <p>
+                Every job ends with before, during and after photos and a short
+                report of what was done and what needs your decision.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a4" id="q4"
+            >How is pricing set?<span class="pm" aria-hidden="true"></span
+            ></button
+          >
+          <div class="ans" id="a4" role="region" aria-labelledby="q4">
+            <div>
+              <p>
+                Each job is quoted from its scope, with materials and labour
+                itemised before work starts. Recurring work is priced per visit.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a5" id="q5"
+            >I’m a contractor. How do I join?<span class="pm" aria-hidden="true"
+            ></span></button
+          >
+          <div class="ans" id="a5" role="region" aria-labelledby="q5">
+            <div>
+              <p>
+                Apply with your trades and service area. We ask for your licence,
+                insurance certificate and W-9; approved vendors get work orders
+                nearby.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a6" id="q6"
+            >When do vendors get paid?<span class="pm" aria-hidden="true"
+            ></span></button
+          >
+          <div class="ans" id="a6" role="region" aria-labelledby="q6">
+            <div>
+              <p>
+                Net 14 by ACH direct deposit, once the job’s photos and report
+                are approved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadForm />
+  </main>
+
+  <footer class="overflow-hidden bg-surface px-[var(--gutter)] pb-6 pt-20 md:pt-28">
+    <div class="flex flex-wrap items-end justify-between gap-8">
+      <h2
+        class="max-w-[14ch] text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-none tracking-[-0.04em]"
+      >
+        Vacant or occupied, we keep it well.
+      </h2>
+      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-muted" aria-label="Footer">
+        <a class="hover:text-ink" href="#services">Services</a>
+        <a class="hover:text-ink" href="#how">How it works</a>
+        <a class="hover:text-ink" href="#vendors">Vendors</a>
+        <a class="hover:text-ink" href="#faq">FAQ</a>
+        <a class="hover:text-ink" href="/privacy">Privacy</a>
+        <a class="hover:text-ink" href="/terms">Terms</a>
+      </nav>
+    </div>
+    <div class="word mt-14" aria-hidden="true">
+      <span id="word" class="inline-block">Stone<em>Ridge</em></span>
+    </div>
+    <div class="mt-6 flex flex-wrap justify-between gap-4 text-sm text-muted">
+      <span>Stone Ridge Constructions LLC</span>
+      <span>Photos: placeholders until project photos exist</span>
+    </div>
+  </footer>
+</BaseLayout>

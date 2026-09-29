@@ -1,0 +1,41 @@
+---
+const links = [
+  { href: "#services", label: "Services" },
+  { href: "#how", label: "How it works" },
+  { href: "#work", label: "Work" },
+  { href: "#vendors", label: "Vendors" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top" aria-label="Stone Ridge home"
+      ><i aria-hidden="true"></i>Stone Ridge</a
+    >
+    <nav class="links" id="links" aria-label="Main">
+      <span class="indicator" id="indicator" aria-hidden="true"></span>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="flex items-center gap-2">
+      <a class="btn btn-hivis" href="#quote" data-magnetic
+        >Get a quote <span class="ic" aria-hidden="true">↗</span></a
+      >
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-expanded="false"
+        aria-controls="menu">Menu</button
+      >
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav aria-label="Mobile">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+  <a class="btn btn-ink self-start" href="#quote"
+    >Request a quote <span class="ic" aria-hidden="true">↗</span></a
+  >
+</div>
