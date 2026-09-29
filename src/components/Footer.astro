@@ -1,0 +1,99 @@
+---
+interface Props {
+  /** Hide the top CTA row when the page already has a quote form. */
+  showCta?: boolean;
+}
+
+const { showCta = true } = Astro.props;
+
+const explore = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/#about", label: "About" },
+  { href: "/#coverage", label: "Coverage" },
+  { href: "/contact", label: "Contact" },
+  { href: "/contact#vendor", label: "Become a Service Partner" },
+];
+
+const markets = ["Virginia", "Michigan", "New York", "Texas", "Washington"];
+---
+
+<footer class="site-foot">
+  <div class="site-foot-inner gutter">
+    {
+      showCta && (
+        <div class="site-foot-cta">
+          <h2 class="site-foot-cta-title">
+            Tell us what the property needs.
+          </h2>
+          <div class="site-foot-cta-actions">
+            <a class="btn btn-hivis" href="/contact" data-magnetic>
+              Request a Quote <span class="ic" aria-hidden="true">↗</span>
+            </a>
+            <a class="btn btn-ghost" href="/contact#vendor">
+              Become a Service Partner
+            </a>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="site-foot-grid">
+      <div class="site-foot-brand">
+        <p class="site-foot-kicker">Titan Core Builders LLC</p>
+        <p class="site-foot-summary">
+          Property maintenance, preservation, inspection, and repair
+          coordination for residential properties across multiple markets.
+        </p>
+      </div>
+
+      <div>
+        <p class="site-foot-heading">Contact</p>
+        <ul class="site-foot-list">
+          <li>
+            <a href="tel:+17035550148">+1 (703) 555-0148</a>
+            <span class="site-foot-note">placeholder</span>
+          </li>
+          <li>
+            <a href="mailto:info@TitanCoreBuilders.com"
+              >info@TitanCoreBuilders.com</a
+            >
+          </li>
+          <li>
+            1234 Titan Way, Suite 200, Richmond, VA 23219
+            <span class="site-foot-note">placeholder</span>
+          </li>
+          <li>Mon–Sat, 7:00 AM–7:00 PM ET</li>
+          <li class="site-foot-muted">After-hours emergencies accepted</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="site-foot-heading">Explore</p>
+        <nav class="site-foot-nav" aria-label="Footer">
+          {explore.map((l) => <a href={l.href}>{l.label}</a>)}
+        </nav>
+      </div>
+
+      <div>
+        <p class="site-foot-heading">Coverage</p>
+        <ul class="site-foot-markets" aria-label="Launch markets">
+          {markets.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="word word-on-ink" aria-hidden="true">
+      <span id="word" class="inline-block">Titan<em>Core</em></span>
+    </div>
+
+    <div class="site-foot-bar">
+      <p>Copyright © 2026 Titan Core Builders LLC. All rights reserved.</p>
+      <p class="site-foot-legal">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms">Terms of Use</a>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -65,10 +65,37 @@ function initNav(reduce: boolean): void {
     document.querySelectorAll<HTMLAnchorElement>("#links a"),
   );
   const indicator = document.getElementById("indicator");
+
+  function sectionForHref(href: string): Element | null {
+    try {
+      const url = new URL(href, location.href);
+      if (url.pathname !== location.pathname) return null;
+      if (!url.hash) return null;
+      return document.querySelector(url.hash);
+    } catch {
+      return null;
+    }
+  }
+
   const sections = links.map((a) =>
-    document.querySelector(a.getAttribute("href") || ""),
+    sectionForHref(a.getAttribute("href") || ""),
   );
+  const hasInPageSections = sections.some(Boolean);
   let lastY = 0;
+
+  function pathActiveIndex(): number {
+    let match = -1;
+    links.forEach((a, i) => {
+      try {
+        const url = new URL(a.getAttribute("href") || "", location.href);
+        if (url.hash) return;
+        if (url.pathname === location.pathname) match = i;
+      } catch {
+        /* ignore bad href */
+      }
+    });
+    return match;
+  }
 
   function spy(): void {
     const y = window.scrollY;
@@ -81,11 +108,14 @@ function initNav(reduce: boolean): void {
       lastY = y;
     }
     let active = -1;
-    sections.forEach((s, i) => {
-      if (s && s.getBoundingClientRect().top < window.innerHeight * 0.45) {
-        active = i;
-      }
-    });
+    if (hasInPageSections) {
+      sections.forEach((s, i) => {
+        if (s && s.getBoundingClientRect().top < window.innerHeight * 0.45) {
+          active = i;
+        }
+      });
+    }
+    if (active === -1) active = pathActiveIndex();
     links.forEach((a, i) => a.classList.toggle("on", i === active));
     if (indicator) {
       if (active > -1) {
@@ -156,6 +186,8 @@ function initForms(reduce: boolean): void {
   document.querySelectorAll("[data-vendor-link]").forEach((a) => {
     a.addEventListener("click", () => selectTab(1));
   });
+
+  if (location.hash === "#vendor") selectTab(1);
 
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -242,7 +274,7 @@ function initForms(reduce: boolean): void {
       await new Promise((r) => setTimeout(r, 1300));
       return {
         ok: true,
-        leadId: `SR-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
+        leadId: `TCB-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
       };
     }
     try {
@@ -310,18 +342,18 @@ function initForms(reduce: boolean): void {
       const refId = document.getElementById("refId");
       if (title) {
         title.textContent = vendor
-          ? "Application received."
-          : "Request received.";
+          ? "Thank you for your interest in working with Titan Core Builders."
+          : "Thank you. Your request has been received.";
       }
       if (text) {
         text.textContent = vendor
-          ? "We will review your trades and area, then ask for your licence, insurance certificate and W-9."
-          : "We will confirm coverage for the address and reply by email with questions or a quote.";
+          ? "Our team will review your information and contact you if your services match an active market need."
+          : "A member of our team will review the information and contact you about the next step.";
       }
       if (refId) {
         refId.textContent =
           result.leadId ||
-          `SR-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+          `TCB-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
       }
 
       form.hidden = true;
@@ -347,10 +379,11 @@ function initForms(reduce: boolean): void {
 
 function initBentoMicro(reduce: boolean): void {
   const addresses = [
-    "1407 Birchwood Ln, Charlotte, NC",
-    "22 Harbor View Ct, Tampa, FL",
-    "915 Elm St, Columbus, OH",
-    "Portfolio: 38 addresses (CSV)",
+    "2218 Monument Ave, Richmond, VA",
+    "814 Cass Ave, Detroit, MI",
+    "47 Irving Pl, Brooklyn, NY",
+    "1901 Pearl St, Austin, TX",
+    "1201 Pike St, Seattle, WA",
   ];
   const typer = document.getElementById("typer");
   if (!typer) return;
@@ -419,9 +452,17 @@ function initMotion(fine: boolean): void {
   });
   gsap.ticker.lagSmoothing(0);
 
-  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
-      const target = document.querySelector(a.getAttribute("href") || "");
+      const href = a.getAttribute("href") || "";
+      let target: Element | null = null;
+      try {
+        const url = new URL(href, location.href);
+        if (url.pathname !== location.pathname || !url.hash) return;
+        target = document.querySelector(url.hash);
+      } catch {
+        return;
+      }
       if (target) {
         e.preventDefault();
         lenis.scrollTo(target as HTMLElement, { offset: -90 });
@@ -567,7 +608,8 @@ function initMotion(fine: boolean): void {
 
   const mm = gsap.matchMedia();
   mm.add("(min-width: 861px)", () => {
-    const cards = gsap.utils.toArray<HTMLElement>(".card");
+    // Home sticky-stack only — skip .card-flat on /services
+    const cards = gsap.utils.toArray<HTMLElement>(".card:not(.card-flat)");
     cards.forEach((card, i) => {
       if (i === cards.length - 1) return;
       gsap.fromTo(
@@ -679,11 +721,11 @@ function initMotion(fine: boolean): void {
     ease: "power3.out",
     scrollTrigger: { trigger: ".bento", start: "top 80%" },
   });
-  gsap.from("#vendors", {
+  gsap.from("#partners", {
     clipPath: "inset(20% 10% 20% 10% round 34px)",
     duration: 1.2,
     ease: "power3.out",
-    scrollTrigger: { trigger: "#vendors", start: "top 80%" },
+    scrollTrigger: { trigger: "#partners", start: "top 80%" },
   });
   gsap.from(".req li", {
     x: 40,
@@ -701,16 +743,22 @@ function initMotion(fine: boolean): void {
     ease: "power3.out",
     scrollTrigger: { trigger: "#faqList", start: "top 80%" },
   });
-  gsap.from("#word", {
-    yPercent: 70,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "footer",
-      start: "top bottom",
-      end: "bottom bottom",
-      scrub: true,
-    },
-  });
+  const word = document.getElementById("word");
+  if (word) {
+    // Rise completes while the mark is still mid-viewport. Using footer
+    // "bottom bottom" never settles on the long home page (sticky pins).
+    gsap.from(word, {
+      yPercent: 55,
+      ease: "none",
+      scrollTrigger: {
+        trigger: word.parentElement ?? "footer",
+        start: "top 92%",
+        end: "top 48%",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
 
   if (fine) {
     document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((b) => {

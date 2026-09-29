@@ -1,52 +1,76 @@
 ---
 import { US_STATES } from "../lib/site";
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  showContact?: boolean;
+  pretitle?: boolean;
+  sectionId?: string;
+}
+
+const {
+  heading = "Tell Us What the Property Needs",
+  intro = "Share the property location, requested service, and any available photos or scope details. Our team will review the request and contact you about availability and next steps.",
+  showContact = true,
+  pretitle = true,
+  sectionId = "quote",
+} = Astro.props;
 ---
 
 <section
   class="gutter grid grid-cols-1 gap-10 pb-24 md:pb-40 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16"
-  id="quote"
+  id={sectionId}
 >
   <div>
-    <h2
-      class="max-w-[11ch] text-[clamp(2.4rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
-    >
-      Tell us the address. We’ll send the crew.
-    </h2>
-    <ol class="mt-10 grid gap-4">
-      <li class="flex gap-4">
-        <span
-          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis text-sm font-semibold"
-          >1</span
-        >
-        <p class="text-muted">
-          <b class="font-medium text-ink">We confirm coverage</b> for the address
-          and ask anything missing.
-        </p>
-      </li>
-      <li class="flex gap-4">
-        <span
-          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold"
-          >2</span
-        >
-        <p class="text-muted">
-          <b class="font-medium text-ink">You get an itemised quote</b> and a date
-          for the crew.
-        </p>
-      </li>
-      <li class="flex gap-4">
-        <span
-          class="grid h-8 w-8 flex-none place-items-center rounded-full bg-hivis-soft text-sm font-semibold"
-          >3</span
-        >
-        <p class="text-muted">
-          <b class="font-medium text-ink">Photos come back</b> when the job is done.
-        </p>
-      </li>
-    </ol>
-    <div class="mt-10 grid gap-1 text-sm text-muted">
-      <p>Phone and email are added at launch.</p>
-      <p>Prefer to talk first? Leave a phone number in the form.</p>
+    {pretitle && (
+      <h2
+        class="max-w-[16ch] text-[clamp(2.4rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
+      >
+        {heading}
+      </h2>
+    )}
+    <p class="mt-6 max-w-[42ch] text-muted">
+      {intro}
+    </p>
+    {showContact && (
+    <div class="mt-10 grid gap-3 text-sm text-muted">
+      <p class="flex items-start gap-2.5">
+        <span class="fi fi-rr-phone-call mt-0.5 icon-inline" aria-hidden="true"></span>
+        <span>
+          Phone:
+          <a class="text-ink hover:underline" href="tel:+17035550148"
+            >+1 (703) 555-0148</a
+          >
+          <span class="opacity-70">(placeholder)</span>
+        </span>
+      </p>
+      <p class="flex items-start gap-2.5">
+        <span class="fi fi-rr-envelope mt-0.5 icon-inline" aria-hidden="true"></span>
+        <span>
+          Email:
+          <a class="text-ink hover:underline" href="mailto:info@TitanCoreBuilders.com"
+            >info@TitanCoreBuilders.com</a
+          >
+        </span>
+      </p>
+      <p class="flex items-start gap-2.5">
+        <span class="fi fi-rr-clock mt-0.5 icon-inline" aria-hidden="true"></span>
+        <span>Hours: Monday–Saturday, 7:00 AM–7:00 PM ET</span>
+      </p>
+      <p class="flex items-start gap-2.5">
+        <span class="fi fi-rr-bolt mt-0.5 icon-inline" aria-hidden="true"></span>
+        <span>After-hours emergency requests accepted via phone and this form</span>
+      </p>
+      <p class="mt-1 flex items-start gap-2.5">
+        <span class="fi fi-rr-map-marker mt-0.5 icon-inline" aria-hidden="true"></span>
+        <span>
+          1234 Titan Way, Suite 200, Richmond, VA 23219
+          <span class="opacity-70">(placeholder)</span>
+        </span>
+      </p>
     </div>
+    )}
   </div>
 
   <div
@@ -65,14 +89,14 @@ import { US_STATES } from "../lib/site";
           role="tab"
           aria-selected="true"
           aria-controls="formQuote"
-          id="tabQuote">Request a quote</button
+          id="tabQuote">Request a Quote</button
         >
         <button
           role="tab"
           aria-selected="false"
           aria-controls="formVendor"
           id="tabVendor"
-          tabindex="-1">Join as a vendor</button
+          tabindex="-1">Become a Service Partner</button
         >
       </div>
 
@@ -101,7 +125,7 @@ import { US_STATES } from "../lib/site";
         </div>
         <div class="field">
           <label for="q-company"
-            >Company <span class="opt">(optional)</span></label
+            >Company name <span class="opt">(optional)</span></label
           >
           <input
             class="input"
@@ -111,7 +135,7 @@ import { US_STATES } from "../lib/site";
           />
         </div>
         <div class="field">
-          <label for="q-email">Email</label>
+          <label for="q-email">Email address</label>
           <input
             class="input"
             id="q-email"
@@ -126,29 +150,34 @@ import { US_STATES } from "../lib/site";
           >
         </div>
         <div class="field">
-          <label for="q-phone"
-            >Phone <span class="opt">(optional)</span></label
-          >
+          <label for="q-phone">Phone number</label>
           <input
             class="input"
             id="q-phone"
             name="phone"
             type="tel"
             autocomplete="tel"
+            required
+            aria-describedby="q-phone-e"
           />
+          <span class="err" id="q-phone-e"
+            >Enter a phone number we can call.</span
+          >
         </div>
         <div class="field sm:col-span-2">
-          <label for="q-address">Property address</label>
+          <label for="q-address">Property address or ZIP code</label>
           <input
             class="input"
             id="q-address"
             name="property_address"
             autocomplete="street-address"
-            placeholder="Street, city"
+            placeholder="Street, city, or ZIP"
             required
             aria-describedby="q-address-e"
           />
-          <span class="err" id="q-address-e">Enter the property address.</span>
+          <span class="err" id="q-address-e"
+            >Enter the property address or ZIP code.</span
+          >
         </div>
         <div class="field">
           <label for="q-state">State</label>
@@ -163,6 +192,17 @@ import { US_STATES } from "../lib/site";
             {US_STATES.map((s) => <option value={s}>{s}</option>)}
           </select>
           <span class="err" id="q-state-e">Choose the property’s state.</span>
+        </div>
+        <div class="field">
+          <label for="q-timing"
+            >Requested timing <span class="opt">(optional)</span></label
+          >
+          <input
+            class="input"
+            id="q-timing"
+            name="requested_timing"
+            placeholder="e.g. this week, flexible"
+          />
         </div>
         <div class="field">
           <span class="legend" id="q-status-l">Property is</span>
@@ -185,38 +225,16 @@ import { US_STATES } from "../lib/site";
           </div>
         </div>
         <fieldset class="field sm:col-span-2" aria-describedby="q-services-e">
-          <legend class="legend mb-2">Services needed</legend>
+          <legend class="legend mb-2">Service category</legend>
           <div class="chips">
             <label class="chip"
-              ><input type="checkbox" name="services" value="winterization" /><span
-                >Winterization</span
+              ><input type="checkbox" name="services" value="maintenance" /><span
+                >Maintenance</span
               ></label
             >
             <label class="chip"
-              ><input type="checkbox" name="services" value="lock_change" /><span
-                >Lock change</span
-              ></label
-            >
-            <label class="chip"
-              ><input type="checkbox" name="services" value="board_up" /><span
-                >Board-up</span
-              ></label
-            >
-            <label class="chip"
-              ><input
-                type="checkbox"
-                name="services"
-                value="debris_removal"
-              /><span>Debris removal</span></label
-            >
-            <label class="chip"
-              ><input type="checkbox" name="services" value="lawn" /><span
-                >Lawn cycles</span
-              ></label
-            >
-            <label class="chip"
-              ><input type="checkbox" name="services" value="repairs" /><span
-                >Repairs</span
+              ><input type="checkbox" name="services" value="preservation" /><span
+                >Preservation</span
               ></label
             >
             <label class="chip"
@@ -224,19 +242,30 @@ import { US_STATES } from "../lib/site";
                 >Inspection</span
               ></label
             >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="repair" /><span
+                >Repair</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="checkbox" name="services" value="other" /><span
+                >Other</span
+              ></label
+            >
           </div>
-          <span class="err" id="q-services-e">Pick at least one service.</span>
+          <span class="err" id="q-services-e">Pick at least one category.</span>
         </fieldset>
         <div class="field sm:col-span-2">
-          <label for="q-msg"
-            >Anything we should know? <span class="opt">(optional)</span></label
-          >
+          <label for="q-msg">Message and scope details</label>
           <textarea
             class="input"
             id="q-msg"
             name="message"
-            placeholder="Deadlines, access notes, lockbox code arrangements"
+            required
+            aria-describedby="q-msg-e"
+            placeholder="Describe the work needed, access notes, and any deadlines"
           ></textarea>
+          <span class="err" id="q-msg-e">Add a short description of the work.</span>
         </div>
         <div class="hp" aria-hidden="true">
           <label for="q-web">Website</label>
@@ -251,8 +280,8 @@ import { US_STATES } from "../lib/site";
               aria-describedby="q-consent-e"
             />
             <span
-              >You can contact me about this request by email or phone. I’ve
-              read the privacy policy.</span
+              >I agree to the <a href="/privacy-policy" class="underline">Privacy Policy</a
+              > and consent to being contacted about this request.</span
             >
           </label>
           <span class="err" id="q-consent-e">Please agree so we can reply.</span>
@@ -264,10 +293,10 @@ import { US_STATES } from "../lib/site";
           class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"
         >
           <p class="text-sm text-muted">
-            We reply by email with questions or a quote.
+            We reply by email about availability and next steps.
           </p>
           <button class="btn btn-ink" type="submit" data-submit>
-            <span data-label>Send request</span>
+            <span data-label>Submit Inquiry</span>
             <span class="ic" aria-hidden="true">↗</span>
           </button>
         </div>
@@ -285,8 +314,13 @@ import { US_STATES } from "../lib/site";
         <div class="banner sm:col-span-2" role="alert" data-banner>
           Something went wrong sending this. Check your connection and try again.
         </div>
+        <p class="sm:col-span-2 text-sm text-muted">
+          Titan Core Builders works with qualified property maintenance
+          professionals and service companies across selected markets. Completing
+          this form does not guarantee onboarding or work assignments.
+        </p>
         <div class="field">
-          <label for="v-name">Full name</label>
+          <label for="v-name">Contact name</label>
           <input
             class="input"
             id="v-name"
@@ -298,18 +332,19 @@ import { US_STATES } from "../lib/site";
           <span class="err" id="v-name-e">Enter your name.</span>
         </div>
         <div class="field">
-          <label for="v-company"
-            >Business name <span class="opt">(optional)</span></label
-          >
+          <label for="v-company">Legal business name</label>
           <input
             class="input"
             id="v-company"
             name="company"
             autocomplete="organization"
+            required
+            aria-describedby="v-company-e"
           />
+          <span class="err" id="v-company-e">Enter your legal business name.</span>
         </div>
         <div class="field">
-          <label for="v-email">Email</label>
+          <label for="v-email">Email address</label>
           <input
             class="input"
             id="v-email"
@@ -324,7 +359,7 @@ import { US_STATES } from "../lib/site";
           >
         </div>
         <div class="field">
-          <label for="v-phone">Phone</label>
+          <label for="v-phone">Phone number</label>
           <input
             class="input"
             id="v-phone"
@@ -338,8 +373,32 @@ import { US_STATES } from "../lib/site";
             >Enter a phone number we can call.</span
           >
         </div>
+        <div class="field sm:col-span-2">
+          <label for="v-address">Business address</label>
+          <input
+            class="input"
+            id="v-address"
+            name="business_address"
+            autocomplete="street-address"
+            required
+            aria-describedby="v-address-e"
+          />
+          <span class="err" id="v-address-e">Enter your business address.</span>
+        </div>
+        <div class="field sm:col-span-2">
+          <label for="v-area">Coverage states, cities, or ZIP codes</label>
+          <input
+            class="input"
+            id="v-area"
+            name="service_area"
+            placeholder="e.g. VA, Richmond metro; TX — Houston"
+            required
+            aria-describedby="v-area-e"
+          />
+          <span class="err" id="v-area-e">Tell us where you can take work.</span>
+        </div>
         <fieldset class="field sm:col-span-2" aria-describedby="v-trades-e">
-          <legend class="legend mb-2">Trades</legend>
+          <legend class="legend mb-2">Trades and services offered</legend>
           <div class="chips">
             <label class="chip"
               ><input type="checkbox" name="trades" value="general" /><span
@@ -376,27 +435,36 @@ import { US_STATES } from "../lib/site";
                 >Cleaning and debris</span
               ></label
             >
+            <label class="chip"
+              ><input type="checkbox" name="trades" value="painting" /><span
+                >Painting / carpentry</span
+              ></label
+            >
           </div>
           <span class="err" id="v-trades-e">Pick at least one trade.</span>
         </fieldset>
         <div class="field">
-          <label for="v-area">Where you work</label>
-          <input
-            class="input"
-            id="v-area"
-            name="service_area"
-            placeholder="States, counties or ZIP codes"
-            required
-            aria-describedby="v-area-e"
-          />
-          <span class="err" id="v-area-e">Tell us where you take jobs.</span>
+          <label for="v-years"
+            >Years in business <span class="opt">(optional)</span></label
+          >
+          <input class="input" id="v-years" name="years_in_business" type="text" />
         </div>
         <div class="field">
-          <span class="legend" id="v-ins-l">Licensed and insured?</span>
+          <label for="v-license"
+            >License information <span class="opt">(optional)</span></label
+          >
+          <input class="input" id="v-license" name="license_info" type="text" />
+        </div>
+        <div class="field">
+          <span class="legend" id="v-ins-l">Insurance status</span>
           <div class="chips" role="radiogroup" aria-labelledby="v-ins-l">
             <label class="chip"
               ><input type="radio" name="insured" value="yes" checked /><span
                 >Yes</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="radio" name="insured" value="no" /><span>No</span
               ></label
             >
             <label class="chip"
@@ -406,18 +474,33 @@ import { US_STATES } from "../lib/site";
             >
           </div>
         </div>
+        <div class="field">
+          <span class="legend" id="v-w9-l">W-9 available</span>
+          <div class="chips" role="radiogroup" aria-labelledby="v-w9-l">
+            <label class="chip"
+              ><input type="radio" name="w9_available" value="yes" checked /><span
+                >Yes</span
+              ></label
+            >
+            <label class="chip"
+              ><input type="radio" name="w9_available" value="no" /><span
+                >No</span
+              ></label
+            >
+          </div>
+        </div>
         <div class="field sm:col-span-2">
-          <label for="v-msg"
-            >About your crew <span class="opt">(optional)</span></label
-          >
+          <label for="v-msg">Message <span class="opt">(optional)</span></label>
           <textarea
             class="input"
             id="v-msg"
             name="message"
-            placeholder="Crew size, equipment, years in the trade"></textarea
+            placeholder="Crew size, equipment, notes"></textarea
           >
           <span class="help"
-            >We ask for your licence, insurance certificate and W-9 after this.</span
+            >Licenses, insurance certificates, and W-9 forms are requested
+            through an approved secure process after initial contact — not via
+            upload on this form.</span
           >
         </div>
         <div class="hp" aria-hidden="true">
@@ -433,8 +516,8 @@ import { US_STATES } from "../lib/site";
               aria-describedby="v-consent-e"
             />
             <span
-              >You can contact me about joining the network. I’ve read the
-              privacy policy.</span
+              >I certify that the information submitted is accurate and agree to
+              the <a href="/privacy-policy" class="underline">Privacy Policy</a>.</span
             >
           </label>
           <span class="err" id="v-consent-e">Please agree so we can reply.</span>
@@ -445,9 +528,11 @@ import { US_STATES } from "../lib/site";
         <div
           class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2"
         >
-          <p class="text-sm text-muted">Vendors are paid net 14 by ACH.</p>
+          <p class="text-sm text-muted">
+            Payment terms are confirmed during onboarding.
+          </p>
           <button class="btn btn-ink" type="submit" data-submit>
-            <span data-label>Send application</span>
+            <span data-label>Submit Partner Information</span>
             <span class="ic" aria-hidden="true">↗</span>
           </button>
         </div>
@@ -460,20 +545,21 @@ import { US_STATES } from "../lib/site";
             class="text-[2rem] font-semibold leading-none tracking-[-0.035em]"
             id="successTitle"
           >
-            Request received.
+            Thank you. Your request has been received.
           </h3>
           <p class="mt-3 max-w-[44ch] text-muted" id="successText">
-            We will confirm coverage for the address and reply by email.
+            A member of our team will review the information and contact you
+            about the next step.
           </p>
         </div>
         <div class="grid gap-2 rounded-2xl bg-paper p-4 text-sm">
           <div class="flex justify-between">
             <span class="text-muted">Reference</span>
-            <b class="font-semibold" id="refId">SR-0000</b>
+            <b class="font-semibold" id="refId">TCB-0000</b>
           </div>
           <div class="flex justify-between">
             <span class="text-muted">Sent to</span>
-            <b class="font-semibold">Stone Ridge leads inbox</b>
+            <b class="font-semibold">info@TitanCoreBuilders.com</b>
           </div>
         </div>
         <p class="text-xs text-muted">

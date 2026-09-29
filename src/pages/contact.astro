@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import LeadForm from "../components/LeadForm.astro";
+import Footer from "../components/Footer.astro";
+
+const contactDetails = [
+  {
+    label: "Phone",
+    icon: "fi-rr-phone-call",
+    value: "+1 (703) 555-0148",
+    note: "(placeholder)",
+    href: "tel:+17035550148",
+  },
+  {
+    label: "Email",
+    icon: "fi-rr-envelope",
+    value: "info@TitanCoreBuilders.com",
+    href: "mailto:info@TitanCoreBuilders.com",
+  },
+  {
+    label: "Hours",
+    icon: "fi-rr-clock",
+    value: "Mon–Sat, 7:00 AM–7:00 PM ET",
+    detail: "After-hours emergencies accepted via phone or this form.",
+  },
+  {
+    label: "Address",
+    icon: "fi-rr-map-marker",
+    value: "1234 Titan Way, Suite 200, Richmond, VA 23219",
+    note: "(placeholder)",
+  },
+];
+---
+
+{/* Copy source: docs/site-copy.md, Contact Page Copy (30 Sep 2026). */}
+
+<BaseLayout
+  title="Contact Titan Core Builders LLC"
+  description="Contact Titan Core Builders LLC for property maintenance, preservation, inspection, repair coordination, or service partner opportunities."
+>
+  <Nav />
+
+  <main id="top" class="overflow-x-hidden w-full max-w-full">
+    <!-- CONTACT INTRO -->
+    <section
+      class="gutter grid min-h-[52vh] grid-cols-1 items-center gap-10 pb-16 pt-32 lg:pt-36"
+      id="contact-intro"
+    >
+      <div>
+        <p
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-sm text-muted shadow-[inset_0_0_0_1px_var(--color-line)]"
+        >
+          <span class="fi fi-rr-envelope text-[0.95rem]" aria-hidden="true"
+          ></span>
+          Contact us
+        </p>
+        <h1
+          class="max-w-[18ch] text-[clamp(2.6rem,5.4vw,5.2rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
+        >
+          Get in Touch With Titan Core Builders
+        </h1>
+        <p class="mt-7 max-w-[52ch] text-lg font-light text-muted">
+          Reach us by phone or email, or send a request below. Property
+          managers and homeowners can request service, and property
+          maintenance professionals can apply to become a service partner.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT DETAILS -->
+    <section
+      class="gutter grid grid-cols-1 gap-4 pb-20 sm:grid-cols-2 lg:grid-cols-4 md:pb-28"
+      aria-label="Contact details"
+    >
+      {
+        contactDetails.map((item) => (
+          <div class="rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]">
+            <span class="icon-chip soft" aria-hidden="true">
+              <span class={`fi ${item.icon}`} />
+            </span>
+            <p class="mt-4 text-sm font-medium text-muted">{item.label}</p>
+            <p class="mt-3 text-lg font-semibold leading-snug tracking-[-0.02em]">
+              {item.href ? (
+                <a class="hover:underline" href={item.href}>
+                  {item.value}
+                </a>
+              ) : (
+                item.value
+              )}
+              {item.note && (
+                <span class="ml-1 text-sm font-normal opacity-70">
+                  {item.note}
+                </span>
+              )}
+            </p>
+            {item.detail && (
+              <p class="mt-2 text-sm text-muted">{item.detail}</p>
+            )}
+          </div>
+        ))
+      }
+    </section>
+
+    <LeadForm
+      heading="Request Property Service"
+      intro="Tell us where the property is located and what work is needed. Include enough detail for our team to review coverage, scope, and scheduling requirements."
+      showContact={false}
+    />
+  </main>
+
+  <Footer showCta={false} />
+</BaseLayout>

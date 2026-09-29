@@ -4,6 +4,10 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 ---
 
+{/*
+  Canonical privacy URL per site-copy. /privacy remains as an alias with the same content.
+*/}
+
 <BaseLayout
   title="Privacy Policy | Titan Core Builders LLC"
   description="Privacy policy for Titan Core Builders LLC."
@@ -25,7 +29,9 @@ import Footer from "../components/Footer.astro";
       qualified U.S. counsel before publication. Contact:
       info@TitanCoreBuilders.com.
     </p>
-    <a class="btn btn-ink mt-10" href="/">Back to home <span class="ic" aria-hidden="true">↗</span></a>
+    <a class="btn btn-ink mt-10" href="/"
+      >Back to home <span class="ic" aria-hidden="true">↗</span></a
+    >
   </main>
   <Footer />
 </BaseLayout>

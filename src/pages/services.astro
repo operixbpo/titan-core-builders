@@ -1,0 +1,290 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+{/*
+  Copy source: docs/site-copy.md — "Services Page Copy" section (30 Sep 2026).
+  Bullet lists and descriptions preserved verbatim.
+  Design language reuses the committed home system: paper/ink/hivis tokens,
+  Outfit, rounded-[34px] containers, .card / .tag / .btn / .gutter patterns.
+  Motion hooks (#heroTitle, #mark, .hero-frame, #heroImg, .card) match
+  src/scripts/site.ts so this page animates consistently; a small
+  reduced-motion-aware reveal for [data-reveal] handles the extra sections.
+*/}
+
+const services = [
+  {
+    tag: "Maintenance",
+    icon: "fi-rr-wrench-simple",
+    id: "maintenance",
+    heading: "Property Maintenance",
+    body: "Regular maintenance helps protect property condition, address safety concerns, and reduce avoidable damage. We coordinate interior and exterior work for occupied, vacant, and managed residential properties.",
+    img: "/img/window-repair.jpg",
+    alt: "Worker repairing a window frame on a residential property",
+    pos: "50% 40%",
+    items: [
+      { label: "Interior and exterior maintenance", icon: "fi-rr-home" },
+      { label: "General repairs and handyman work", icon: "fi-rr-hammer" },
+      {
+        label: "Plumbing, electrical, and HVAC coordination",
+        icon: "fi-rr-plug",
+      },
+      { label: "Painting and carpentry", icon: "fi-rr-paint-roller" },
+      { label: "Lawn and garden care", icon: "fi-rr-seedling" },
+      {
+        label: "Preventive and seasonal maintenance",
+        icon: "fi-rr-calendar-check",
+      },
+      { label: "Turnover and make-ready work", icon: "fi-rr-broom" },
+      {
+        label: "Customized and recurring service plans",
+        icon: "fi-rr-settings",
+      },
+    ],
+  },
+  {
+    tag: "Preservation",
+    icon: "fi-rr-house-lock",
+    id: "preservation",
+    heading: "Property Preservation",
+    body: "Property preservation services help keep vacant or distressed properties secure, presentable, and ready for the next stage of management, repair, sale, or occupancy.",
+    img: "/img/key-door.jpg",
+    alt: "Hand placing a key into the lock of a front door to secure a vacant property",
+    pos: "50% 50%",
+    items: [
+      { label: "Securing and boarding", icon: "fi-rr-lock" },
+      { label: "Property cleanup and debris removal", icon: "fi-rr-broom" },
+      { label: "Lawn care and exterior upkeep", icon: "fi-rr-seedling" },
+      {
+        label: "Winterization and seasonal preparation",
+        icon: "fi-rr-snowflake",
+      },
+      { label: "Repair and recurring services", icon: "fi-rr-tools" },
+      {
+        label: "Pre-foreclosure preservation support",
+        icon: "fi-rr-shield-check",
+      },
+      { label: "Vacant property maintenance", icon: "fi-rr-house-chimney" },
+    ],
+  },
+  {
+    tag: "Inspection",
+    icon: "fi-rr-clipboard-list-check",
+    id: "inspection",
+    heading: "Property Inspection",
+    body: "Our inspection coordination provides a clear view of visible property conditions and supports maintenance planning, repair decisions, and asset oversight. Reports may include written observations and photo documentation based on the assigned scope.",
+    img: "/img/inspector-checklist.jpg",
+    alt: "Property inspector reviewing a condition checklist on a clipboard",
+    pos: "50% 50%",
+    items: [
+      { label: "Property condition inspections", icon: "fi-rr-search" },
+      { label: "Rental property inspections", icon: "fi-rr-key" },
+      {
+        label: "Pre-listing and pre-purchase inspections",
+        icon: "fi-rr-house-building",
+      },
+      {
+        label: "Insurance and foreclosure inspections",
+        icon: "fi-rr-file-invoice",
+      },
+      {
+        label: "Periodic maintenance inspections",
+        icon: "fi-rr-calendar-clock",
+      },
+      {
+        label:
+          "Occupancy or exterior condition checks when permitted by the assignment",
+        icon: "fi-rr-memo-circle-check",
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Property Maintenance, Preservation, and Inspection Services | Titan Core Builders LLC"
+  description="Explore property maintenance, preservation, inspection, repair, lawn care, debris removal, winterization, and turnover services from Titan Core Builders LLC."
+>
+  <Nav />
+
+  <main id="top" class="overflow-x-hidden w-full max-w-full">
+    <!-- PAGE INTRO / HERO -->
+    <section
+      class="gutter grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-12 pt-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-24"
+    >
+      <div>
+        <p
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-sm text-muted shadow-[inset_0_0_0_1px_var(--color-line)]"
+          id="heroKick"
+        >
+          <span class="fi fi-rr-tools text-[0.95rem]" aria-hidden="true"></span>
+          Property services
+        </p>
+        <h1
+          id="heroTitle"
+          class="max-w-[15ch] text-[clamp(2.6rem,5.2vw,5.4rem)] font-semibold leading-[1.05] tracking-[-0.04em]"
+        >
+          Property Services for Managed and <span class="mark" id="mark"
+            >Residential Assets</span
+          >
+        </h1>
+        <p class="hero-sub mt-7 max-w-[48ch] text-lg font-light text-muted">
+          Titan Core Builders LLC coordinates routine, corrective, and
+          preservation work through qualified service professionals. Each
+          assignment begins with a defined scope and ends with completion
+          details and supporting documentation as required.
+        </p>
+        <div class="hero-sub mt-9 flex flex-wrap gap-3">
+          <a class="btn btn-ink" href="/contact" data-magnetic
+            >Request a Quote <span class="ic" aria-hidden="true"
+              ><span class="fi fi-rr-arrow-up-right"></span></span
+            ></a
+          >
+          <a class="btn btn-line" href="#maintenance"
+            >View services <span class="ic" aria-hidden="true"
+              ><span class="fi fi-rr-arrow-down"></span></span
+            ></a
+          >
+        </div>
+        <ul
+          class="mt-10 flex flex-wrap gap-2"
+          aria-label="Service categories on this page"
+        >
+          <li
+            ><span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-wrench-simple" aria-hidden="true"></span
+              >Maintenance</span
+            ></li
+          >
+          <li
+            ><span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-house-lock" aria-hidden="true"></span
+              >Preservation</span
+            ></li
+          >
+          <li
+            ><span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-clipboard-list-check" aria-hidden="true"
+              ></span>Inspection</span
+            ></li
+          >
+        </ul>
+      </div>
+      <div class="relative h-[min(76vh,46rem)] min-h-[24rem]">
+        <div class="hero-frame h-full overflow-hidden rounded-[34px]">
+          <img
+            class="photo h-full w-full object-cover object-[50%_45%]"
+            id="heroImg"
+            src="/img/house-trees-white.jpg"
+            alt="Two-story white residential house set behind mature trees"
+            width="1200"
+            height="1600"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP SERVICE SECTIONS -->
+    <section class="gutter pb-16 md:pb-24" aria-label="Services in detail">
+      {
+        services.map((s) => (
+          <article class="card card-flat" id={s.id}>
+            <figure>
+              <img
+                class="photo"
+                src={s.img}
+                alt={s.alt}
+                loading="lazy"
+                style={`object-position:${s.pos}`}
+                width="900"
+                height="700"
+              />
+            </figure>
+            <div class="card-flat-body flex flex-col gap-8 p-2 md:p-6 md:pl-0">
+              <div>
+                <span class="tag px-3 py-1 text-sm">
+                  <span class={`fi ${s.icon}`} aria-hidden="true" />
+                  {s.tag}
+                </span>
+                <h2 class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]">
+                  {s.heading}
+                </h2>
+                <p class="mt-4 max-w-[42ch] text-muted">{s.body}</p>
+              </div>
+              <ul class="grid grid-cols-1 gap-x-6 gap-y-2 text-[0.95rem] sm:grid-cols-2">
+                {s.items.map((item) => (
+                  <li class="flex items-start gap-2.5 pt-2">
+                    <span
+                      class={`fi ${item.icon} icon-inline mt-[0.2em] flex-none`}
+                      aria-hidden="true"
+                    />
+                    <span>{item.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <!-- SERVICES CALL TO ACTION -->
+    <section class="mx-[var(--gutter)] pb-24 md:pb-40" data-reveal>
+      <div
+        class="grid grid-cols-1 items-end gap-10 rounded-[34px] bg-ink p-8 text-white md:p-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
+      >
+        <div>
+          <h2
+            class="max-w-[16ch] text-[clamp(2.2rem,4.6vw,4.4rem)] font-semibold leading-[0.99] tracking-[-0.045em]"
+          >
+            Request Service for Your Property
+          </h2>
+          <p class="mt-5 max-w-[46ch] text-lg text-white/70">
+            Send the property address, requested service, photos, and timing
+            requirements. We will confirm coverage and review the scope before
+            providing an estimate or scheduling next steps.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:justify-end">
+          <a class="btn btn-hivis" href="/contact" data-magnetic
+            >Request a Quote <span class="ic" aria-hidden="true"
+              ><span class="fi fi-rr-arrow-up-right"></span></span
+            ></a
+          >
+          <a
+            class="btn btn-line"
+            href="tel:+17035550148"
+            aria-label="Call Titan Core Builders at +1 703 555 0148"
+            ><span class="fi fi-rr-phone-call" aria-hidden="true"></span> Call us</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer showCta={false} />
+
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!reduce) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
+        gsap.from(el, {
+          y: 28,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 85%" },
+        });
+      });
+    }
+  </script>
+</BaseLayout>

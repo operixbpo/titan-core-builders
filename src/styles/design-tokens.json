@@ -1,14 +1,14 @@
 {
   "primitive": {
     "color": {
-      "paper": "#FAFAF7",
+      "paper": "#F7F6F3",
       "surface": "#FFFFFF",
-      "ink": "#1E2227",
-      "muted": "#62676D",
-      "line": "#E5E5DF",
-      "hivis": "#E6DC3A",
-      "hivisSoft": "#F5F1BE",
-      "slate": "#39434E",
+      "ink": "#1A2B4A",
+      "muted": "#5E6878",
+      "line": "#E3E0DA",
+      "hivis": "#8F4E2C",
+      "hivisSoft": "#F4E7DB",
+      "slate": "#3D4A5C",
       "danger": "#B42318"
     },
     "radius": {

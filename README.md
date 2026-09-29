@@ -1,6 +1,6 @@
-# Stone Ridge web
+# TitanCore Builders web
 
-Static marketing site for **Stone Ridge Constructions LLC**. Built from the Round 2 homepage mockup for Cloudflare Pages.
+Static marketing site for **TitanCore Builders** (Titan Core Builders LLC). Built from the Round 2 homepage mockup for Cloudflare Pages.
 
 ## Stack
 
@@ -71,7 +71,8 @@ docs/           blueprint HTML mockup
 
 ## Remaining TODOs
 
-- [ ] Final brand name and domain
+- [x] Final brand name (TitanCore Builders / Titan Core Builders LLC)
+- [ ] Domain
 - [ ] Replace placeholder photos with real job photos
 - [ ] Wire `PUBLIC_LEADS_URL` + Turnstile to `operix-lead-gateway`
 - [ ] Legal copy for Privacy and Terms

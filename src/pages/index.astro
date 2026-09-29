@@ -2,22 +2,20 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import LeadForm from "../components/LeadForm.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 {/*
-  Design read: B2B field-services marketing homepage for asset managers,
-  homeowners and licensed vendors. Practical hi-vis energy (locked moodboard 2).
-  Dials: VARIANCE 7 / MOTION 7 / DENSITY 4. Light theme locked (no dark mode).
-  Stack: Astro static + Tailwind v4 + GSAP ScrollTrigger + Lenis (tech-stack doc).
-  Hero: Editorial Split (locked). GSAP: sticky service stack + pinned horizontal gallery.
-  Bento: 4-col dense, A 2x2 + B 2x1 + C 1x1 + D 1x1 = 8 cells, zero empty.
+  Copy source: docs/site-copy.md (30 Sep 2026).
+  About + Coverage stay as in-page home sections (/#about, /#coverage).
+  Services → /services, Contact → /contact (built as separate pages).
 */}
 
 <BaseLayout>
   <Nav />
 
   <main id="top" class="overflow-x-hidden w-full max-w-full">
-    <!-- HERO: editorial split -->
+    <!-- HERO -->
     <section
       class="gutter grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-12 pt-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-24"
     >
@@ -27,28 +25,33 @@ import LeadForm from "../components/LeadForm.astro";
           id="heroKick"
         >
           <span
-            class="h-2 w-2 rounded-full bg-hivis shadow-[0_0_0_3px_rgb(230_220_58/0.3)]"
+            class="fi fi-rr-tools text-[0.95rem]"
+            aria-hidden="true"
           ></span>
-          Maintenance · Preservation · Inspection
+          Property maintenance and preservation
         </p>
         <h1
           id="heroTitle"
           class="max-w-5xl text-[clamp(2.8rem,5.7vw,5.9rem)] font-semibold leading-[1.05] tracking-[-0.04em]"
         >
-          Property care, handled by crews who <span class="mark" id="mark"
-            >show up.</span
+          Reliable Property Services Across <span class="mark" id="mark"
+            >Multiple Markets</span
           >
         </h1>
         <p class="hero-sub mt-7 max-w-[44ch] text-lg font-light text-muted">
-          For vacant and occupied homes. Licensed local vendors do the work to
-          one standard, and every job comes back to you as a photo report.
+          Titan Core Builders LLC coordinates licensed and insured service
+          professionals for maintenance, preservation, inspection, and repair
+          work. We respond quickly, communicate clearly, and document completed
+          work with photos.
         </p>
         <div class="hero-sub mt-9 flex flex-wrap gap-3">
-          <a class="btn btn-ink" href="#quote" data-magnetic
-            >Request a quote <span class="ic" aria-hidden="true">↗</span></a
+          <a class="btn btn-ink" href="/contact" data-magnetic
+            >Request a Quote <span class="ic" aria-hidden="true"
+              ><span class="fi fi-rr-arrow-up-right"></span></span
+            ></a
           >
-          <a class="btn btn-line" href="#quote" data-vendor-link
-            >Join as a vendor</a
+          <a class="btn btn-line" href="/contact#vendor"
+            >Become a Service Partner</a
           >
         </div>
       </div>
@@ -82,83 +85,99 @@ import LeadForm from "../components/LeadForm.astro";
     </section>
 
     <!-- MARQUEE -->
-    <section class="grid gap-2 py-16 md:py-24" aria-label="What we do">
+    <section class="grid gap-2 py-16 md:py-24" aria-label="Supported trades">
       <div class="row" id="r1">
         <span
-          >Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris
-          removal <i></i></span
+          >Maintenance <i></i> Preservation <i></i> Inspection <i></i> Repair
+          coordination <i></i></span
         >
         <span aria-hidden="true"
-          >Winterization <i></i> Lock changes <i></i> Board-up <i></i> Debris
-          removal <i></i></span
+          >Maintenance <i></i> Preservation <i></i> Inspection <i></i> Repair
+          coordination <i></i></span
         >
       </div>
       <div class="row outline" id="r2" aria-hidden="true">
         <span
-          >Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i
-          ></i></span
+          >Plumbing <i></i> Electrical <i></i> HVAC <i></i> Lawn care <i></i>
+          Winterization <i></i></span
         >
         <span
-          >Lawn cycles <i></i> Repairs <i></i> Inspections <i></i> Cleaning <i
-          ></i></span
+          >Plumbing <i></i> Electrical <i></i> HVAC <i></i> Lawn care <i></i>
+          Winterization <i></i></span
         >
       </div>
     </section>
 
-    <!-- INTRO -->
-    <section class="gutter py-24 md:py-40">
+    <!-- ABOUT -->
+    <section class="gutter py-24 md:py-40" id="about">
       <p
-        class="intro max-w-[24ch] text-[clamp(2rem,4.3vw,4.5rem)] font-medium leading-[1.08] tracking-[-0.035em]"
+        class="intro max-w-[28ch] text-[clamp(2rem,4.3vw,4.5rem)] font-medium leading-[1.08] tracking-[-0.035em]"
         id="intro"
       >
-        We keep empty houses <span class="inline-img"
-          ><img src="/img/key-door.jpg" alt="" width="200" height="100" /></span
-        > secure, tidy and documented, so owners and asset managers never have to
-        fly out <span class="inline-img"
-          ><img
-            src="/img/house-trees-white.jpg"
-            alt=""
-            width="200"
-            height="100"
-          /></span
-        > to check.
+        About Titan Core Builders
+      </p>
+      <p class="mt-8 max-w-[62ch] text-lg text-muted">
+        Titan Core Builders LLC is a Virginia-registered property services
+        company supporting property managers, institutional clients, and
+        homeowners. We coordinate qualified service professionals, clear
+        estimates, and documented completion for routine and urgent work
+        orders. Our goal is simple: complete the approved scope, keep the
+        client informed, and provide a clear record of the work performed.
       </p>
       <div class="facts mt-20 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div
           class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
         >
-          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
-            >3</p
+          <span class="icon-chip soft" aria-hidden="true"
+            ><span class="fi fi-rr-badge-check"></span></span
+          >
+          <p class="text-[1.7rem] font-semibold leading-none tracking-[-0.04em]"
+            >Licensed</p
           >
           <p class="mt-6 text-muted"
-            >service lines: maintenance, preservation and inspection</p
+            >Work coordinated through licensed and insured professionals as
+            required for the service and location.</p
           >
         </div>
         <div
           class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
         >
-          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
-            >Every job</p
+          <span class="icon-chip soft" aria-hidden="true"
+            ><span class="fi fi-rr-camera"></span></span
+          >
+          <p class="text-[1.7rem] font-semibold leading-none tracking-[-0.04em]"
+            >Documented</p
           >
           <p class="mt-6 text-muted"
-            >photographed before, during and after</p
+            >Completed work supported by before, during, and after photos when
+            the assignment requires them.</p
           >
         </div>
         <div
           class="fact rounded-[24px] bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-line)]"
         >
-          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
-            >1 form</p
+          <span class="icon-chip soft" aria-hidden="true"
+            ><span class="fi fi-rr-time-fast"></span></span
+          >
+          <p class="text-[1.7rem] font-semibold leading-none tracking-[-0.04em]"
+            >Responsive</p
           >
           <p class="mt-6 text-muted"
-            >for any address, one-off or recurring</p
+            >We acknowledge requests quickly and coordinate the next practical
+            step — including after-hours urgent needs.</p
           >
         </div>
-        <div class="fact rounded-[24px] bg-hivis p-6">
-          <p class="text-[2.6rem] font-semibold leading-none tracking-[-0.04em]"
-            >Net 14</p
+        <div class="fact rounded-[24px] bg-hivis-soft p-6">
+          <span class="icon-chip on-hivis" aria-hidden="true"
+            ><span class="fi fi-rr-map-marker"></span></span
           >
-          <p class="mt-6">vendor pay by ACH direct deposit</p>
+          <p class="text-[1.7rem] font-semibold leading-none tracking-[-0.04em]"
+            >Multi-state</p
+          >
+          <p class="mt-6"
+            >Service partner network supporting selected markets across five
+            launch states.</p
+          >
         </div>
       </div>
     </section>
@@ -169,11 +188,12 @@ import LeadForm from "../components/LeadForm.astro";
         <h2
           class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
         >
-          Everything a house needs while nobody lives in it.
+          Property Services in One Place
         </h2>
         <p class="max-w-[36ch] text-muted">
-          Book one visit or a standing schedule. Each job arrives as a work order
-          and leaves as a photo report.
+          From routine upkeep to vacant-property preservation and condition
+          reporting, our team coordinates the work required to keep residential
+          properties secure, functional, and ready for occupancy or sale.
         </p>
       </div>
       <article class="card" style="--i:0">
@@ -189,21 +209,38 @@ import LeadForm from "../components/LeadForm.astro";
         </figure>
         <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
           <div>
-            <span class="tag px-3 py-1 text-sm">Preservation</span>
+            <span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-house-lock" aria-hidden="true"></span
+              >Preservation</span
+            >
             <h3
               class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
             >
-              Keep it secure and weather-tight.
+              Keep vacant properties secure and ready.
             </h3>
             <p class="mt-4 max-w-[38ch] text-muted">
-              For vacant homes between owners, tenants or sales.
+              Services for vacant, distressed, and managed properties, including
+              securing, debris removal, lawn maintenance, winterization, repair
+              coordination, and recurring upkeep.
             </p>
           </div>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li>Winterization</li>
-            <li>Lock changes</li>
-            <li>Board-up and securing</li>
-            <li>Debris removal</li>
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-lock icon-inline" aria-hidden="true"
+              ></span>Securing and boarding</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-broom icon-inline" aria-hidden="true"
+              ></span>Debris removal</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-snowflake icon-inline" aria-hidden="true"
+              ></span>Winterization</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-house-chimney icon-inline" aria-hidden="true"
+              ></span>Vacant property upkeep</li
+            >
           </ul>
         </div>
       </article>
@@ -220,21 +257,38 @@ import LeadForm from "../components/LeadForm.astro";
         </figure>
         <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
           <div>
-            <span class="tag px-3 py-1 text-sm">Maintenance</span>
+            <span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-wrench-simple" aria-hidden="true"></span
+              >Maintenance</span
+            >
             <h3
               class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
             >
-              Keep it looking lived in.
+              Routine and corrective property care.
             </h3>
             <p class="mt-4 max-w-[38ch] text-muted">
-              Recurring cycles so the property never looks abandoned.
+              Interior and exterior needs including general repairs, painting,
+              carpentry, plumbing, electrical, HVAC coordination, lawn care, and
+              seasonal service.
             </p>
           </div>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li>Lawn and exterior cycles</li>
-            <li>Repairs</li>
-            <li>Cleaning</li>
-            <li>Seasonal upkeep</li>
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-hammer icon-inline" aria-hidden="true"
+              ></span>General repairs</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-plug icon-inline" aria-hidden="true"
+              ></span>Plumbing &amp; electrical</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-seedling icon-inline" aria-hidden="true"
+              ></span>Lawn and seasonal care</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-home icon-inline" aria-hidden="true"
+              ></span>Turnover / make-ready</li
+            >
           </ul>
         </div>
       </article>
@@ -251,21 +305,38 @@ import LeadForm from "../components/LeadForm.astro";
         </figure>
         <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
           <div>
-            <span class="tag px-3 py-1 text-sm">Inspection</span>
+            <span class="tag px-3 py-1 text-sm"
+              ><span class="fi fi-rr-clipboard-list-check" aria-hidden="true"
+              ></span>Inspection</span
+            >
             <h3
               class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
             >
-              Know its condition without flying out.
+              Clear condition reporting with photos.
             </h3>
             <p class="mt-4 max-w-[38ch] text-muted">
-              Standard checklists, photographed and sent back.
+              Property condition inspections with clear observations and photo
+              documentation to support maintenance decisions, repair planning,
+              and ongoing asset management.
             </p>
           </div>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li>Occupancy checks</li>
-            <li>Condition reports</li>
-            <li>Pre-listing</li>
-            <li>Insurance</li>
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-search icon-inline" aria-hidden="true"
+              ></span>Condition inspections</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-key icon-inline" aria-hidden="true"
+              ></span>Rental / occupancy checks</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-house-building icon-inline" aria-hidden="true"
+              ></span>Pre-listing</li
+            >
+            <li class="flex items-center gap-2"
+              ><span class="fi fi-rr-file-invoice icon-inline" aria-hidden="true"
+              ></span>Insurance &amp; foreclosure</li
+            >
           </ul>
         </div>
       </article>
@@ -280,14 +351,16 @@ import LeadForm from "../components/LeadForm.astro";
         <h2
           class="max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
         >
-          From an address to a photo report.
+          From request to documented completion.
         </h2>
         <p class="mt-6 max-w-[36ch] text-muted">
-          The same five steps for a single lock change or a portfolio of vacant
-          homes.
+          Share the property location and scope. We confirm coverage, review the
+          work, and keep you informed through completion.
         </p>
-        <a class="btn btn-ink mt-8" href="#quote"
-          >Start with an address <span class="ic" aria-hidden="true">↗</span></a
+        <a class="btn btn-ink mt-8" href="/contact"
+          >Request a Quote <span class="ic" aria-hidden="true"
+            ><span class="fi fi-rr-arrow-up-right"></span></span
+          ></a
         >
       </div>
       <div class="relative" id="steps">
@@ -295,11 +368,14 @@ import LeadForm from "../components/LeadForm.astro";
         <div class="step on">
           <span class="num">1</span>
           <div>
-            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
-              >Send the address</h3
+            <h3 class="flex flex-wrap items-center gap-2.5 text-2xl font-semibold tracking-[-0.02em]"
+              ><span class="fi fi-rr-comment icon-inline" aria-hidden="true"
+              ></span>Tell us what the property needs</h3
             >
             <p class="mt-2 max-w-[44ch] text-muted">
-              Use the quote form. Tell us the property, the job and the deadline.
+              Use the quote form or contact us by phone or email. Include the
+              address, requested service, photos when available, and any
+              scheduling requirements.
             </p>
             <figure>
               <img
@@ -316,22 +392,26 @@ import LeadForm from "../components/LeadForm.astro";
         <div class="step">
           <span class="num">2</span>
           <div>
-            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
-              >We quote and schedule</h3
+            <h3 class="flex flex-wrap items-center gap-2.5 text-2xl font-semibold tracking-[-0.02em]"
+              ><span class="fi fi-rr-map-marker icon-inline" aria-hidden="true"
+              ></span>We confirm coverage and review scope</h3
             >
             <p class="mt-2 max-w-[44ch] text-muted">
-              An itemised quote first, then a local crew booked for a set date.
+              Our team checks service availability for the ZIP code and advises
+              on the next practical step.
             </p>
           </div>
         </div>
         <div class="step">
           <span class="num">3</span>
           <div>
-            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
-              >The crew does the work</h3
+            <h3 class="flex flex-wrap items-center gap-2.5 text-2xl font-semibold tracking-[-0.02em]"
+              ><span class="fi fi-rr-file-invoice icon-inline" aria-hidden="true"
+              ></span>Estimate and schedule</h3
             >
             <p class="mt-2 max-w-[44ch] text-muted">
-              Licensed, insured vendors following the same checklist on every job.
+              Estimates separate labor and material costs and identify
+              assumptions or exclusions before work is approved in writing.
             </p>
             <figure>
               <img
@@ -349,30 +429,35 @@ import LeadForm from "../components/LeadForm.astro";
         <div class="step">
           <span class="num">4</span>
           <div>
-            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
-              >Photos come back</h3
+            <h3 class="flex flex-wrap items-center gap-2.5 text-2xl font-semibold tracking-[-0.02em]"
+              ><span
+                class="fi fi-rr-user-helmet-safety icon-inline"
+                aria-hidden="true"></span
+              >Qualified professionals complete the work</h3
             >
             <p class="mt-2 max-w-[44ch] text-muted">
-              Before, during and after, with notes on anything that needs your
-              decision.
+              Licensed and insured service partners carry out the approved
+              scope, with clear updates on scheduling and changes.
             </p>
           </div>
         </div>
         <div class="step !pb-0">
           <span class="num">5</span>
           <div>
-            <h3 class="text-2xl font-semibold tracking-[-0.02em]"
-              >One invoice</h3
+            <h3 class="flex flex-wrap items-center gap-2.5 text-2xl font-semibold tracking-[-0.02em]"
+              ><span class="fi fi-rr-camera icon-inline" aria-hidden="true"
+              ></span>Photo-documented completion</h3
             >
             <p class="mt-2 max-w-[44ch] text-muted">
-              Billed per job or per cycle and matched to the report.
+              Scope, documentation, and completion details are reviewed before a
+              work order is closed.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- WORK GALLERY -->
+    <!-- ILLUSTRATIVE GALLERY (not a published portfolio) -->
     <section id="work">
       <div class="proof-pin flex h-[100dvh] flex-col justify-center gap-10">
         <div
@@ -381,11 +466,12 @@ import LeadForm from "../components/LeadForm.astro";
           <h2
             class="max-w-[15ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
           >
-            The kind of work on our orders.
+            The kinds of work we coordinate.
           </h2>
           <p class="max-w-[34ch] text-muted">
-            Real job types, photographed the way every report will be. Project
-            photos replace these at launch.
+            Illustrative job types across maintenance, preservation, and
+            inspection. Project photos replace these when Titan has approved
+            work it can publish.
           </p>
         </div>
         <div class="ptrack" id="ptrack">
@@ -398,7 +484,7 @@ import LeadForm from "../components/LeadForm.astro";
               height="600"
             />
             <figcaption
-              ><b>Roof repair</b><span>After photos</span></figcaption
+              ><b>Roof repair</b><span>Maintenance</span></figcaption
             >
           </figure>
           <figure class="shot w1">
@@ -419,7 +505,7 @@ import LeadForm from "../components/LeadForm.astro";
               width="900"
               height="600"
             />
-            <figcaption><b>Lawn cycle</b><span>Recurring</span></figcaption>
+            <figcaption><b>Lawn care</b><span>Recurring</span></figcaption>
           </figure>
           <figure class="shot w1">
             <img
@@ -440,7 +526,7 @@ import LeadForm from "../components/LeadForm.astro";
               height="600"
             />
             <figcaption
-              ><b>Winterization</b><span>Seasonal</span></figcaption
+              ><b>Winterization</b><span>Preservation</span></figcaption
             >
           </figure>
           <figure class="shot w1">
@@ -461,32 +547,35 @@ import LeadForm from "../components/LeadForm.astro";
               width="900"
               height="600"
             />
-            <figcaption><b>Cleanout</b><span>Broom-clean</span></figcaption>
+            <figcaption><b>Cleanout</b><span>Debris removal</span></figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- WHY / BENTO -->
+    <!-- WHY CHOOSE US -->
     <section class="gutter py-24 md:py-40" id="why">
       <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
         <h2
           class="max-w-[16ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
         >
-          Why owners and asset managers use Stone Ridge.
+          Dependable Service and Clear Documentation
         </h2>
         <p class="max-w-[36ch] text-muted">
-          Less chasing crews, fewer surprise visits, and a record for every
-          property.
+          Licensed professionals, photo records, and clear updates on estimates,
+          scheduling, and completion.
         </p>
       </div>
       <div class="bento">
         <article class="b b-a">
           <div>
-            <h3>A report after every job</h3>
+            <span class="icon-chip soft" aria-hidden="true"
+              ><span class="fi fi-rr-camera"></span></span
+            >
+            <h3>Photo documentation</h3>
             <p class="mt-2 max-w-[40ch]">
-              Photos from the same angles, what was done, and what needs your
-              decision.
+              Completed work is supported by before, during, and after photos
+              when the assignment requires them.
             </p>
           </div>
           <div class="report" aria-label="Example report">
@@ -533,9 +622,13 @@ import LeadForm from "../components/LeadForm.astro";
         </article>
         <article class="b b-b">
           <div>
-            <h3>One order form for any address</h3>
+            <span class="icon-chip soft" aria-hidden="true"
+              ><span class="fi fi-rr-messages"></span></span
+            >
+            <h3>Reliable communication</h3>
             <p class="mt-2">
-              A single house or three hundred, the request looks the same.
+              Clients receive clear updates on estimates, scheduling, changes,
+              and completion.
             </p>
           </div>
           <div class="grid gap-2 sm:grid-cols-[1fr_auto]">
@@ -543,7 +636,9 @@ import LeadForm from "../components/LeadForm.astro";
               <span id="typer"></span><span class="caret"></span>
             </div>
             <span class="btn btn-ink pointer-events-none"
-              >Quote <span class="ic">↗</span></span
+              >Quote <span class="ic"
+                ><span class="fi fi-rr-arrow-up-right"></span></span
+              ></span
             >
           </div>
         </article>
@@ -557,15 +652,21 @@ import LeadForm from "../components/LeadForm.astro";
           />
           <div class="scrim" aria-hidden="true"></div>
           <div>
-            <h3>Licensed, insured crews</h3>
-            <p class="mt-1 !text-ink/70">Vetted before their first order.</p>
+            <h3>Vetted professionals</h3>
+            <p class="mt-1 !text-ink/70"
+              >Reviewed for experience, coverage, and required documentation.</p
+            >
           </div>
         </article>
         <article class="b">
           <div>
-            <h3>Standing schedules</h3>
+            <span class="icon-chip soft" aria-hidden="true"
+              ><span class="fi fi-rr-check-circle"></span></span
+            >
+            <h3>Quality assurance</h3>
             <p class="mt-1">
-              Lawn cycles, inspections, winterization, planned ahead.
+              Scope, documentation, and completion details are reviewed before a
+              work order is closed.
             </p>
           </div>
           <div class="cal" aria-hidden="true">
@@ -580,54 +681,118 @@ import LeadForm from "../components/LeadForm.astro";
       </div>
     </section>
 
-    <!-- VENDORS -->
+    <!-- COVERAGE -->
+    <section class="gutter py-24 md:py-32" id="coverage">
+      <div class="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+        <div>
+          <h2
+            class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+          >
+            Current Service Coverage
+          </h2>
+          <p class="mt-6 max-w-[52ch] text-muted">
+            Titan Core Builders currently coordinates property services in
+            selected markets across Virginia, Michigan, New York, Texas, and
+            Washington. Contact us with the property ZIP code so we can confirm
+            service availability.
+          </p>
+        </div>
+        <a class="btn btn-line" href="/contact"
+          >Contact Us <span class="ic" aria-hidden="true"
+            ><span class="fi fi-rr-arrow-up-right"></span></span
+          ></a
+        >
+      </div>
+      <ul
+        class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5"
+        aria-label="Launch markets"
+      >
+        {
+          ["Virginia", "Michigan", "New York", "Texas", "Washington"].map(
+            (state) => (
+              <li class="flex flex-col items-center gap-3 rounded-[24px] bg-surface px-5 py-6 text-center font-semibold shadow-[inset_0_0_0_1px_var(--color-line)]">
+                <span class="icon-chip soft" aria-hidden="true">
+                  <span class="fi fi-rr-map-marker" />
+                </span>
+                {state}
+              </li>
+            ),
+          )
+        }
+      </ul>
+      <p class="mt-6 text-sm text-muted">
+        Launch placeholder — confirm each state and any city-level limits before
+        publication.
+      </p>
+    </section>
+
+    <!-- SERVICE PARTNER CTA -->
     <section
-      class="mx-[var(--gutter)] grid grid-cols-1 items-end gap-10 rounded-[34px] bg-hivis p-8 md:p-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
-      id="vendors"
+      class="mx-[var(--gutter)] grid grid-cols-1 items-end gap-10 rounded-[34px] bg-ink p-8 text-white md:p-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
+      id="partners"
     >
       <div>
         <h2
-          class="max-w-[12ch] text-[clamp(2.4rem,5vw,4.8rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
+          class="max-w-[14ch] text-[clamp(2.4rem,5vw,4.8rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
         >
-          Licensed contractor? Get steady work orders.
+          Work With Titan Core Builders
         </h2>
-        <p class="mt-5 max-w-[40ch] text-lg">
-          Join a network that sends jobs in your area, pays on a fixed schedule
-          and handles the paperwork.
+        <p class="mt-5 max-w-[40ch] text-lg text-white/70">
+          Are you an experienced property maintenance professional or service
+          company? Tell us about your trades, coverage area, licenses, and
+          insurance. Our operations team will review your information and
+          contact you if your services match an active market need.
         </p>
         <a
-          class="btn btn-ink mt-8"
-          href="#quote"
-          data-vendor-link
+          class="btn btn-hivis mt-8"
+          href="/contact#vendor"
           data-magnetic
-          >Apply to the network <span class="ic" aria-hidden="true">↗</span></a
+          >Become a Service Partner <span class="ic" aria-hidden="true"
+            ><span class="fi fi-rr-arrow-up-right"></span></span
+          ></a
         >
       </div>
       <ul class="req grid gap-2.5">
         <li
-          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+          class="flex justify-between gap-4 rounded-2xl bg-white/10 px-5 py-4 font-medium shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]"
         >
-          Pay terms <span class="font-normal text-slate">Net 14 by ACH</span>
-        </li>
-        <li
-          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
-        >
-          You bring <span class="font-normal text-slate"
-            >Licence and insurance</span
+          <span class="flex items-center gap-2.5"
+            ><span class="fi fi-rr-diploma text-[var(--color-hivis)]" aria-hidden="true"></span>You bring</span
+          >
+          <span class="font-normal text-white/65"
+            >Licenses and insurance</span
           >
         </li>
         <li
-          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+          class="flex justify-between gap-4 rounded-2xl bg-white/10 px-5 py-4 font-medium shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]"
         >
-          Paperwork <span class="font-normal text-slate"
-            >W-9 and vendor package</span
+          <span class="flex items-center gap-2.5"
+            ><span class="fi fi-rr-tools text-[var(--color-hivis)]" aria-hidden="true"></span>Tell us</span
+          >
+          <span class="font-normal text-white/65"
+            >Trades and coverage area</span
           >
         </li>
         <li
-          class="flex justify-between gap-4 rounded-2xl bg-white/55 px-5 py-4 font-medium"
+          class="flex justify-between gap-4 rounded-2xl bg-white/10 px-5 py-4 font-medium shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]"
         >
-          Trades <span class="text-right font-normal text-slate"
-            >General, roofing, lawn, electrical and more</span
+          <span class="flex items-center gap-2.5"
+            ><span class="fi fi-rr-file-invoice text-[var(--color-hivis)]" aria-hidden="true"
+            ></span
+            >Onboarding</span
+          >
+          <span class="font-normal text-white/65"
+            >W-9 and partner agreement</span
+          >
+        </li>
+        <li
+          class="flex justify-between gap-4 rounded-2xl bg-white/10 px-5 py-4 font-medium shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]"
+        >
+          <span class="flex items-center gap-2.5"
+            ><span class="fi fi-rr-wallet text-[var(--color-hivis)]" aria-hidden="true"></span>Payment</span
+          >
+          <span class="text-right font-normal text-white/65"
+            >Per executed partner agreement</span
           >
         </li>
       </ul>
@@ -642,95 +807,138 @@ import LeadForm from "../components/LeadForm.astro";
         <h2
           class="max-w-[12ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
         >
-          Questions we get asked.
+          Frequently asked questions
         </h2>
         <p class="mt-5 max-w-[34ch] text-muted">
-          Something else? Ask in the quote form and we will answer with the quote.
+          Something else? Ask in the contact form and we will answer with next
+          steps.
         </p>
       </div>
       <div id="faqList">
         <div class="qa" data-open>
           <button aria-expanded="true" aria-controls="a1" id="q1"
-            >Which areas do you cover?<span class="pm" aria-hidden="true"
+            >What services do you provide?<span class="pm" aria-hidden="true"
             ></span></button
           >
           <div class="ans" id="a1" role="region" aria-labelledby="q1">
             <div>
               <p>
-                We work through licensed local vendors. Send the property address
-                and we confirm a crew covers it before we quote.
+                We coordinate property maintenance, preservation, inspection,
+                and general repair work. Supported trades may include plumbing,
+                electrical, HVAC, painting, carpentry, lawn care, debris
+                removal, winterization, turnover work, and related services.
               </p>
             </div>
           </div>
         </div>
         <div class="qa">
           <button aria-expanded="false" aria-controls="a2" id="q2"
-            >Do you work with asset managers and servicers?<span
-              class="pm"
-              aria-hidden="true"></span></button
+            >Which areas do you serve?<span class="pm" aria-hidden="true"
+            ></span></button
           >
           <div class="ans" id="a2" role="region" aria-labelledby="q2">
             <div>
               <p>
-                Yes. Order one-off visits or standing schedules across a
-                portfolio; each property keeps its own schedule and photo history.
+                Our launch coverage includes selected markets in Virginia,
+                Michigan, New York, Texas, and Washington. Service availability
+                depends on the property location and the requested trade. Send
+                us the ZIP code and scope so we can confirm coverage.
               </p>
             </div>
           </div>
         </div>
         <div class="qa">
           <button aria-expanded="false" aria-controls="a3" id="q3"
-            >How do I see the work?<span class="pm" aria-hidden="true"
+            >How do I request an estimate?<span class="pm" aria-hidden="true"
             ></span></button
           >
           <div class="ans" id="a3" role="region" aria-labelledby="q3">
             <div>
               <p>
-                Every job ends with before, during and after photos and a short
-                report of what was done and what needs your decision.
+                Use the Request a Quote form or contact us by phone or email.
+                Include the property address, requested service, photos when
+                available, and any scheduling requirements. We will review the
+                scope and advise on the next step.
               </p>
             </div>
           </div>
         </div>
         <div class="qa">
           <button aria-expanded="false" aria-controls="a4" id="q4"
-            >How is pricing set?<span class="pm" aria-hidden="true"></span
-            ></button
+            >Do you provide emergency support?<span class="pm" aria-hidden="true"
+            ></span></button
           >
           <div class="ans" id="a4" role="region" aria-labelledby="q4">
             <div>
               <p>
-                Each job is quoted from its scope, with materials and labour
-                itemised before work starts. Recurring work is priced per visit.
+                After-hours requests are accepted for urgent property needs.
+                Response time and availability depend on the location, trade,
+                site access, and nature of the issue.
               </p>
             </div>
           </div>
         </div>
         <div class="qa">
           <button aria-expanded="false" aria-controls="a5" id="q5"
-            >I’m a contractor. How do I join?<span class="pm" aria-hidden="true"
-            ></span></button
+            >How do service professionals get started?<span
+              class="pm"
+              aria-hidden="true"></span></button
           >
           <div class="ans" id="a5" role="region" aria-labelledby="q5">
             <div>
               <p>
-                Apply with your trades and service area. We ask for your licence,
-                insurance certificate and W-9; approved vendors get work orders
-                nearby.
+                Complete the Become a Service Partner form with your contact
+                information, coverage area, trades, and business credentials. If
+                your services match a current need, our team will contact you
+                about onboarding requirements.
               </p>
             </div>
           </div>
         </div>
         <div class="qa">
           <button aria-expanded="false" aria-controls="a6" id="q6"
-            >When do vendors get paid?<span class="pm" aria-hidden="true"
+            >Do you use standard pricing?<span class="pm" aria-hidden="true"
             ></span></button
           >
           <div class="ans" id="a6" role="region" aria-labelledby="q6">
             <div>
               <p>
-                Net 14 by ACH direct deposit, once the job’s photos and report
-                are approved.
+                Pricing depends on the approved scope, property condition,
+                labor, materials, access, timing, and local market. Estimates
+                should separate labor and material costs and identify any
+                assumptions or exclusions.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a7" id="q7"
+            >How are service partners paid?<span class="pm" aria-hidden="true"
+            ></span></button
+          >
+          <div class="ans" id="a7" role="region" aria-labelledby="q7">
+            <div>
+              <p>
+                Approved service partners are paid according to the terms in
+                their executed agreement. Payment method, documentation
+                requirements, and timing are confirmed during onboarding.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="qa">
+          <button aria-expanded="false" aria-controls="a8" id="q8"
+            >What documents may be required from a service partner?<span
+              class="pm"
+              aria-hidden="true"></span></button
+          >
+          <div class="ans" id="a8" role="region" aria-labelledby="q8">
+            <div>
+              <p>
+                Requirements depend on the trade and location. Titan Core
+                Builders may request business information, tax documentation,
+                licenses, proof of insurance, coverage details, and a signed
+                service partner agreement before assignments are issued.
               </p>
             </div>
           </div>
@@ -741,28 +949,5 @@ import LeadForm from "../components/LeadForm.astro";
     <LeadForm />
   </main>
 
-  <footer class="overflow-hidden bg-surface px-[var(--gutter)] pb-6 pt-20 md:pt-28">
-    <div class="flex flex-wrap items-end justify-between gap-8">
-      <h2
-        class="max-w-[14ch] text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-none tracking-[-0.04em]"
-      >
-        Vacant or occupied, we keep it well.
-      </h2>
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-muted" aria-label="Footer">
-        <a class="hover:text-ink" href="#services">Services</a>
-        <a class="hover:text-ink" href="#how">How it works</a>
-        <a class="hover:text-ink" href="#vendors">Vendors</a>
-        <a class="hover:text-ink" href="#faq">FAQ</a>
-        <a class="hover:text-ink" href="/privacy">Privacy</a>
-        <a class="hover:text-ink" href="/terms">Terms</a>
-      </nav>
-    </div>
-    <div class="word mt-14" aria-hidden="true">
-      <span id="word" class="inline-block">Stone<em>Ridge</em></span>
-    </div>
-    <div class="mt-6 flex flex-wrap justify-between gap-4 text-sm text-muted">
-      <span>Stone Ridge Constructions LLC</span>
-      <span>Photos: placeholders until project photos exist</span>
-    </div>
-  </footer>
+  <Footer showCta={false} />
 </BaseLayout>
