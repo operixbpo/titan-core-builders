@@ -669,9 +669,11 @@ function initMotion(fine: boolean): void {
       scrollTrigger: {
         trigger: ".proof-pin",
         start: "top top",
-        end: () => `+=${dist() * 1.1}`,
+        end: () => `+=${dist()}`,
         pin: true,
-        scrub: 0.8,
+        scrub: 0.35,
+        anticipatePin: 1,
+        fastScrollEnd: true,
         invalidateOnRefresh: true,
       },
     });
