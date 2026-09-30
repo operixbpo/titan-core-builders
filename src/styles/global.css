@@ -713,13 +713,20 @@ img {
   object-fit: cover;
 }
 
-/* Horizontal gallery */
+/* Horizontal gallery — clip wide track so pin measurements stay stable */
+.proof-pin {
+  overflow: hidden;
+  transition: none;
+}
+
 .ptrack {
   display: flex;
   align-items: center;
   gap: 1.25rem;
   width: max-content;
   padding-inline: var(--gutter);
+  will-change: transform;
+  transition: none;
 }
 
 .shot {

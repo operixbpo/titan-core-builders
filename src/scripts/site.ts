@@ -439,7 +439,7 @@ function initBentoMicro(reduce: boolean): void {
 }
 
 function initMotion(fine: boolean): void {
-  const lenis = new Lenis({ lerp: 0.1 });
+  const lenis = new Lenis({ lerp: 0.1, autoRaf: false });
   lenis.on("scroll", ScrollTrigger.update);
 
   const spyNav = (): void => {
@@ -661,22 +661,45 @@ function initMotion(fine: boolean): void {
 
   mm.add("(min-width: 861px) and (pointer: fine)", () => {
     const track = document.getElementById("ptrack");
-    if (!track) return;
-    const dist = () => track.scrollWidth - window.innerWidth;
-    const tween = gsap.to(track, {
-      x: () => -dist(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".proof-pin",
-        start: "top top",
-        end: () => `+=${dist()}`,
-        pin: true,
-        scrub: 0.35,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
+    const pinEl = document.querySelector<HTMLElement>(".proof-pin");
+    if (!track || !pinEl) return;
+
+    const dist = () => Math.max(1, track.scrollWidth - window.innerWidth);
+    // Flat ease at both ends: pin engages/releases while x is still, so Lenis
+    // inertia can't slam the vertical↔horizontal handoff.
+    const edge = 0.14;
+    const flatEdge = (t: number): number => {
+      if (t <= edge) return 0;
+      if (t >= 1 - edge) return 1;
+      return (t - edge) / (1 - edge * 2);
+    };
+
+    const move = gsap.fromTo(
+      track,
+      { x: 0 },
+      {
+        x: () => -dist(),
+        ease: flatEdge,
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: pinEl,
+          start: "top top",
+          end: () => `+=${dist() / (1 - edge * 2)}`,
+          pin: true,
+          scrub: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
       },
+    );
+
+    ScrollTrigger.create({
+      trigger: "#work",
+      start: "top 140%",
+      once: true,
+      onEnter: () => ScrollTrigger.refresh(),
     });
+
     gsap.utils.toArray<HTMLElement>(".shot").forEach((shot) => {
       gsap.fromTo(
         shot,
@@ -686,7 +709,7 @@ function initMotion(fine: boolean): void {
           ease: "none",
           scrollTrigger: {
             trigger: shot,
-            containerAnimation: tween,
+            containerAnimation: move,
             start: "left right",
             end: "center 55%",
             scrub: true,
@@ -704,7 +727,7 @@ function initMotion(fine: boolean): void {
             ease: "none",
             scrollTrigger: {
               trigger: shot,
-              containerAnimation: tween,
+              containerAnimation: move,
               start: "left right",
               end: "right left",
               scrub: true,
