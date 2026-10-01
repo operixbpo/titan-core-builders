@@ -196,150 +196,188 @@ import Footer from "../components/Footer.astro";
           properties secure, functional, and ready for occupancy or sale.
         </p>
       </div>
-      <article class="card" style="--i:0">
-        <figure>
-          <img
-            class="photo"
-            src="/img/snow-street.jpg"
-            alt="Snowy street with a white house behind pine trees"
-            loading="lazy"
-            width="900"
-            height="700"
-          />
-        </figure>
-        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
-          <div>
-            <span class="tag px-3 py-1 text-sm"
-              ><span class="fi fi-rr-house-lock" aria-hidden="true"></span
-              >Preservation</span
-            >
-            <h3
-              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
-            >
-              Keep vacant properties secure and ready.
-            </h3>
-            <p class="mt-4 max-w-[38ch] text-muted">
-              Services for vacant, distressed, and managed properties, including
-              securing, debris removal, lawn maintenance, winterization, repair
-              coordination, and recurring upkeep.
-            </p>
-          </div>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-lock icon-inline" aria-hidden="true"
-              ></span>Securing and boarding</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-broom icon-inline" aria-hidden="true"
-              ></span>Debris removal</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-snowflake icon-inline" aria-hidden="true"
-              ></span>Winterization</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-house-chimney icon-inline" aria-hidden="true"
-              ></span>Vacant property upkeep</li
-            >
-          </ul>
+      <div class="services-stack">
+        <div
+          class="services-dots"
+          id="servicesDots"
+          role="tablist"
+          aria-label="Service cards"
+        >
+          <button
+            type="button"
+            class="services-dot on"
+            role="tab"
+            aria-label="Preservation"
+            aria-controls="svc-preservation"
+            aria-selected="true"
+            data-service-dot="0"
+          ></button>
+          <button
+            type="button"
+            class="services-dot"
+            role="tab"
+            aria-label="Maintenance"
+            aria-controls="svc-maintenance"
+            aria-selected="false"
+            data-service-dot="1"
+          ></button>
+          <button
+            type="button"
+            class="services-dot"
+            role="tab"
+            aria-label="Inspection"
+            aria-controls="svc-inspection"
+            aria-selected="false"
+            data-service-dot="2"
+          ></button>
         </div>
-      </article>
-      <article class="card" style="--i:1">
-        <figure>
-          <img
-            class="photo"
-            src="/img/lawn-mowing-2.jpg"
-            alt="Close view of a lawn mower cutting grass"
-            loading="lazy"
-            width="900"
-            height="700"
-          />
-        </figure>
-        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
-          <div>
-            <span class="tag px-3 py-1 text-sm"
-              ><span class="fi fi-rr-wrench-simple" aria-hidden="true"></span
-              >Maintenance</span
-            >
-            <h3
-              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
-            >
-              Routine and corrective property care.
-            </h3>
-            <p class="mt-4 max-w-[38ch] text-muted">
-              Interior and exterior needs including general repairs, painting,
-              carpentry, plumbing, electrical, HVAC coordination, lawn care, and
-              seasonal service.
-            </p>
-          </div>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-hammer icon-inline" aria-hidden="true"
-              ></span>General repairs</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-plug icon-inline" aria-hidden="true"
-              ></span>Plumbing &amp; electrical</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-seedling icon-inline" aria-hidden="true"
-              ></span>Lawn and seasonal care</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-home icon-inline" aria-hidden="true"
-              ></span>Turnover / make-ready</li
-            >
-          </ul>
+        <div class="services-cards">
+          <article class="card" style="--i:0" id="svc-preservation">
+            <figure>
+              <img
+                class="photo"
+                src="/img/snow-street.jpg"
+                alt="Snowy street with a white house behind pine trees"
+                loading="lazy"
+                width="900"
+                height="700"
+              />
+            </figure>
+            <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+              <div>
+                <span class="tag px-3 py-1 text-sm"
+                  ><span class="fi fi-rr-house-lock" aria-hidden="true"></span
+                  >Preservation</span
+                >
+                <h3
+                  class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+                >
+                  Keep vacant properties secure and ready.
+                </h3>
+                <p class="mt-4 max-w-[38ch] text-muted">
+                  Services for vacant, distressed, and managed properties, including
+                  securing, debris removal, lawn maintenance, winterization, repair
+                  coordination, and recurring upkeep.
+                </p>
+              </div>
+              <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-lock icon-inline" aria-hidden="true"
+                  ></span>Securing and boarding</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-broom icon-inline" aria-hidden="true"
+                  ></span>Debris removal</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-snowflake icon-inline" aria-hidden="true"
+                  ></span>Winterization</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-house-chimney icon-inline" aria-hidden="true"
+                  ></span>Vacant property upkeep</li
+                >
+              </ul>
+            </div>
+          </article>
+          <article class="card" style="--i:1" id="svc-maintenance">
+            <figure>
+              <img
+                class="photo"
+                src="/img/lawn-mowing-2.jpg"
+                alt="Close view of a lawn mower cutting grass"
+                loading="lazy"
+                width="900"
+                height="700"
+              />
+            </figure>
+            <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+              <div>
+                <span class="tag px-3 py-1 text-sm"
+                  ><span class="fi fi-rr-wrench-simple" aria-hidden="true"></span
+                  >Maintenance</span
+                >
+                <h3
+                  class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+                >
+                  Routine and corrective property care.
+                </h3>
+                <p class="mt-4 max-w-[38ch] text-muted">
+                  Interior and exterior needs including general repairs, painting,
+                  carpentry, plumbing, electrical, HVAC coordination, lawn care, and
+                  seasonal service.
+                </p>
+              </div>
+              <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-hammer icon-inline" aria-hidden="true"
+                  ></span>General repairs</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-plug icon-inline" aria-hidden="true"
+                  ></span>Plumbing &amp; electrical</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-seedling icon-inline" aria-hidden="true"
+                  ></span>Lawn and seasonal care</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-home icon-inline" aria-hidden="true"
+                  ></span>Turnover / make-ready</li
+                >
+              </ul>
+            </div>
+          </article>
+          <article class="card" style="--i:2" id="svc-inspection">
+            <figure>
+              <img
+                class="photo"
+                src="/img/inspector-checklist.jpg"
+                alt="Inspector holding a checklist on a clipboard"
+                loading="lazy"
+                width="900"
+                height="700"
+              />
+            </figure>
+            <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
+              <div>
+                <span class="tag px-3 py-1 text-sm"
+                  ><span class="fi fi-rr-clipboard-list-check" aria-hidden="true"
+                  ></span>Inspection</span
+                >
+                <h3
+                  class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
+                >
+                  Clear condition reporting with photos.
+                </h3>
+                <p class="mt-4 max-w-[38ch] text-muted">
+                  Property condition inspections with clear observations and photo
+                  documentation to support maintenance decisions, repair planning,
+                  and ongoing asset management.
+                </p>
+              </div>
+              <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-search icon-inline" aria-hidden="true"
+                  ></span>Condition inspections</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-key icon-inline" aria-hidden="true"
+                  ></span>Rental / occupancy checks</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-house-building icon-inline" aria-hidden="true"
+                  ></span>Pre-listing</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-file-invoice icon-inline" aria-hidden="true"
+                  ></span>Insurance &amp; foreclosure</li
+                >
+              </ul>
+            </div>
+          </article>
         </div>
-      </article>
-      <article class="card" style="--i:2">
-        <figure>
-          <img
-            class="photo"
-            src="/img/inspector-checklist.jpg"
-            alt="Inspector holding a checklist on a clipboard"
-            loading="lazy"
-            width="900"
-            height="700"
-          />
-        </figure>
-        <div class="flex flex-col justify-between gap-8 p-2 md:p-6 md:pl-0">
-          <div>
-            <span class="tag px-3 py-1 text-sm"
-              ><span class="fi fi-rr-clipboard-list-check" aria-hidden="true"
-              ></span>Inspection</span
-            >
-            <h3
-              class="mt-4 text-[clamp(2rem,3.6vw,3.2rem)] font-semibold leading-none tracking-[-0.04em]"
-            >
-              Clear condition reporting with photos.
-            </h3>
-            <p class="mt-4 max-w-[38ch] text-muted">
-              Property condition inspections with clear observations and photo
-              documentation to support maintenance decisions, repair planning,
-              and ongoing asset management.
-            </p>
-          </div>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-search icon-inline" aria-hidden="true"
-              ></span>Condition inspections</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-key icon-inline" aria-hidden="true"
-              ></span>Rental / occupancy checks</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-house-building icon-inline" aria-hidden="true"
-              ></span>Pre-listing</li
-            >
-            <li class="flex items-center gap-2"
-              ><span class="fi fi-rr-file-invoice icon-inline" aria-hidden="true"
-              ></span>Insurance &amp; foreclosure</li
-            >
-          </ul>
-        </div>
-      </article>
+      </div>
     </section>
 
     <!-- HOW IT WORKS -->
@@ -549,6 +587,9 @@ import Footer from "../components/Footer.astro";
             />
             <figcaption><b>Cleanout</b><span>Debris removal</span></figcaption>
           </figure>
+        </div>
+        <div class="work-scroll-hint" id="workScrollHint" aria-hidden="true">
+          <span class="fi fi-rr-arrow-right" aria-hidden="true"></span>
         </div>
       </div>
     </section>

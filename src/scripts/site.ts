@@ -610,6 +610,16 @@ function initMotion(fine: boolean): void {
   mm.add("(min-width: 861px)", () => {
     // Home sticky-stack only — skip .card-flat on /services
     const cards = gsap.utils.toArray<HTMLElement>(".card:not(.card-flat)");
+    const dots = gsap.utils.toArray<HTMLElement>("[data-service-dot]");
+
+    const setServiceDot = (index: number): void => {
+      dots.forEach((dot, j) => {
+        const on = j === index;
+        dot.classList.toggle("on", on);
+        dot.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    };
+
     cards.forEach((card, i) => {
       if (i === cards.length - 1) return;
       gsap.fromTo(
@@ -628,6 +638,27 @@ function initMotion(fine: boolean): void {
         },
       );
     });
+
+    if (dots.length && cards.length) {
+      setServiceDot(0);
+      cards.forEach((card, i) => {
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 58%",
+          end: "bottom 42%",
+          onEnter: () => setServiceDot(i),
+          onEnterBack: () => setServiceDot(i),
+        });
+      });
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const i = Number(dot.getAttribute("data-service-dot") || "0");
+          const target = cards[i];
+          if (!target) return;
+          lenis.scrollTo(target, { offset: -110 });
+        });
+      });
+    }
 
     gsap.fromTo(
       "#railFill",
@@ -655,8 +686,17 @@ function initMotion(fine: boolean): void {
     });
   });
 
-  mm.add("(max-width: 860px)", () => {
+  mm.add("(max-width: 860px), (pointer: coarse)", () => {
     document.querySelectorAll(".step").forEach((s) => s.classList.add("on"));
+    const track = document.getElementById("ptrack");
+    const hint = document.getElementById("workScrollHint");
+    if (!track || !hint) return;
+    const onScroll = (): void => {
+      hint.classList.toggle("is-faded", track.scrollLeft > 24);
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => track.removeEventListener("scroll", onScroll);
   });
 
   mm.add("(min-width: 861px) and (pointer: fine)", () => {
@@ -665,39 +705,31 @@ function initMotion(fine: boolean): void {
     if (!track || !pinEl) return;
 
     const dist = () => Math.max(1, track.scrollWidth - window.innerWidth);
-    // Flat ease at both ends: pin engages/releases while x is still, so Lenis
-    // inertia can't slam the vertical↔horizontal handoff.
-    const edge = 0.14;
-    const flatEdge = (t: number): number => {
-      if (t <= edge) return 0;
-      if (t >= 1 - edge) return 1;
-      return (t - edge) / (1 - edge * 2);
-    };
+    const baseLerp = lenis.options.lerp;
+    const hint = document.getElementById("workScrollHint");
 
-    const move = gsap.fromTo(
-      track,
-      { x: 0 },
-      {
-        x: () => -dist(),
-        ease: flatEdge,
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: pinEl,
-          start: "top top",
-          end: () => `+=${dist() / (1 - edge * 2)}`,
-          pin: true,
-          scrub: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
+    // transform pin: fixed pins jump inside main { overflow-x: clip }.
+    // Faster Lenis lerp while pinned so inertia can't overshoot the handoff.
+    const move = gsap.to(track, {
+      x: () => -dist(),
+      ease: "none",
+      scrollTrigger: {
+        trigger: pinEl,
+        start: "top top",
+        end: () => `+=${dist()}`,
+        pin: true,
+        pinType: "transform",
+        scrub: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onToggle: (self) => {
+          lenis.options.lerp = self.isActive ? Math.min(0.35, baseLerp * 3) : baseLerp;
+        },
+        onUpdate: (self) => {
+          if (!hint) return;
+          hint.classList.toggle("is-faded", self.progress > 0.08);
         },
       },
-    );
-
-    ScrollTrigger.create({
-      trigger: "#work",
-      start: "top 140%",
-      once: true,
-      onEnter: () => ScrollTrigger.refresh(),
     });
 
     gsap.utils.toArray<HTMLElement>(".shot").forEach((shot) => {

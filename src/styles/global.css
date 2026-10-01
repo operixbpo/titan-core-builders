@@ -59,6 +59,7 @@
 html {
   background: var(--paper);
   scroll-padding-top: 6rem;
+  overflow-x: clip;
 }
 
 /* Lenis: keep layout height natural under smooth scroll */
@@ -86,7 +87,6 @@ body {
 }
 
 main {
-  overflow-x: clip;
   width: 100%;
   max-width: 100%;
 }
@@ -569,6 +569,54 @@ img {
 }
 
 /* Stacking cards */
+.services-stack {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: clamp(0.85rem, 1.6vw, 1.5rem);
+  align-items: start;
+}
+
+.services-dots {
+  position: sticky;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.35rem 0;
+}
+
+.services-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+  cursor: pointer;
+  transition:
+    background 0.35s var(--ease),
+    height 0.35s var(--ease),
+    transform 0.35s var(--ease);
+}
+
+.services-dot:hover {
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.services-dot.on {
+  height: 1.15rem;
+  background: var(--hivis);
+}
+
+.services-dot:focus-visible {
+  outline: 2px solid var(--hivis);
+  outline-offset: 3px;
+}
+
 .card {
   position: sticky;
   top: calc(6.5rem + var(--i) * 1.2rem);
@@ -606,6 +654,14 @@ img {
 }
 
 @media (max-width: 860px) {
+  .services-stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .services-dots {
+    display: none;
+  }
+
   .card {
     grid-template-columns: minmax(0, 1fr);
     position: relative;
@@ -715,6 +771,7 @@ img {
 
 /* Horizontal gallery — clip wide track so pin measurements stay stable */
 .proof-pin {
+  position: relative;
   overflow: hidden;
   transition: none;
 }
@@ -778,6 +835,46 @@ img {
   color: #fff;
   font-size: 0.8rem;
   font-weight: 500;
+}
+
+.work-scroll-hint {
+  position: absolute;
+  right: max(1rem, 3vw);
+  top: 58%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--ink);
+  box-shadow:
+    0 1px 0 var(--line),
+    0 18px 36px -24px rgb(26 43 74 / 0.45);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.45s var(--ease);
+}
+
+.work-scroll-hint .fi {
+  font-size: 1.05rem;
+  line-height: 1;
+  animation: work-hint-nudge 1.6s var(--ease) infinite;
+}
+
+.work-scroll-hint.is-faded {
+  opacity: 0;
+}
+
+@keyframes work-hint-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.28rem);
+  }
 }
 
 /* Bento: 4 cols, A=2x2 B=2x1 C=1x1 D=1x1 = 8 cells, dense, zero gaps */
@@ -1530,6 +1627,11 @@ select.input {
   .shot.w1,
   .shot.w2 {
     width: min(80vw, 22rem);
+  }
+  .work-scroll-hint {
+    top: auto;
+    bottom: 1.25rem;
+    right: max(1rem, var(--gutter));
   }
 }
 
