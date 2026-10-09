@@ -14,7 +14,7 @@ import Footer from "../components/Footer.astro";
 <BaseLayout>
   <Nav />
 
-  <main id="top" class="overflow-x-hidden w-full max-w-full">
+  <main id="top" class="overflow-x-clip w-full max-w-full">
     <!-- HERO -->
     <section
       class="gutter grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-12 pt-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-24"
@@ -175,8 +175,8 @@ import Footer from "../components/Footer.astro";
             >Multi-state</p
           >
           <p class="mt-6"
-            >Service partner network supporting selected markets across five
-            launch states.</p
+            >Service partner network supporting selected markets across eleven
+            states.</p
           >
         </div>
       </div>
@@ -184,18 +184,59 @@ import Footer from "../components/Footer.astro";
 
     <!-- SERVICES -->
     <section class="gutter pb-16 md:pb-24" id="services">
-      <div class="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
         <h2
-          class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
+          class="max-w-[18ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
         >
-          Property Services in One Place
+          Preservation &amp; Maintenance Services
         </h2>
-        <p class="max-w-[36ch] text-muted">
+        <p class="max-w-[40ch] text-muted">
           From routine upkeep to vacant-property preservation and condition
           reporting, our team coordinates the work required to keep residential
           properties secure, functional, and ready for occupancy or sale.
         </p>
       </div>
+      <ul
+        class="mb-12 grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem] sm:grid-cols-3 lg:grid-cols-4"
+        aria-label="Preservation and maintenance services"
+      >
+        {
+          [
+            "Property inspections",
+            "Property securing",
+            "Lock changes",
+            "Board-ups",
+            "Trash-outs",
+            "Cleaning",
+            "Lawn care and landscaping",
+            "Snow removal",
+            "Plumbing",
+            "Electrical",
+            "HVAC",
+            "Roofing",
+            "Flooring",
+            "Painting",
+            "Drywall",
+            "Carpentry",
+            "Fencing",
+            "Windows / doors",
+            "Masonry",
+            "Pest control",
+            "Debris removal",
+            "Emergency repairs",
+            "Winterization",
+            "General property maintenance",
+          ].map((item) => (
+            <li class="flex items-center gap-2 border-t border-[var(--color-line)] pt-2">
+              <span
+                class="fi fi-rr-check icon-inline"
+                aria-hidden="true"
+              ></span>
+              {item}
+            </li>
+          ))
+        }
+      </ul>
       <div class="services-stack">
         <div
           class="services-dots"
@@ -255,27 +296,26 @@ import Footer from "../components/Footer.astro";
                   Keep vacant properties secure and ready.
                 </h3>
                 <p class="mt-4 max-w-[38ch] text-muted">
-                  Services for vacant, distressed, and managed properties, including
-                  securing, debris removal, lawn maintenance, winterization, repair
-                  coordination, and recurring upkeep.
+                  Securing, cleanup, and seasonal protection for vacant,
+                  distressed, and managed properties.
                 </p>
               </div>
               <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
                 <li class="flex items-center gap-2"
                   ><span class="fi fi-rr-lock icon-inline" aria-hidden="true"
-                  ></span>Securing and boarding</li
+                  ></span>Property securing</li
                 >
                 <li class="flex items-center gap-2"
-                  ><span class="fi fi-rr-broom icon-inline" aria-hidden="true"
-                  ></span>Debris removal</li
+                  ><span class="fi fi-rr-key icon-inline" aria-hidden="true"
+                  ></span>Lock changes</li
+                >
+                <li class="flex items-center gap-2"
+                  ><span class="fi fi-rr-shield-check icon-inline" aria-hidden="true"
+                  ></span>Board-ups</li
                 >
                 <li class="flex items-center gap-2"
                   ><span class="fi fi-rr-snowflake icon-inline" aria-hidden="true"
                   ></span>Winterization</li
-                >
-                <li class="flex items-center gap-2"
-                  ><span class="fi fi-rr-house-chimney icon-inline" aria-hidden="true"
-                  ></span>Vacant property upkeep</li
                 >
               </ul>
             </div>
@@ -303,27 +343,26 @@ import Footer from "../components/Footer.astro";
                   Routine and corrective property care.
                 </h3>
                 <p class="mt-4 max-w-[38ch] text-muted">
-                  Interior and exterior needs including general repairs, painting,
-                  carpentry, plumbing, electrical, HVAC coordination, lawn care, and
-                  seasonal service.
+                  Interior and exterior trades, seasonal care, emergency repairs,
+                  and general property maintenance.
                 </p>
               </div>
               <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
                 <li class="flex items-center gap-2"
-                  ><span class="fi fi-rr-hammer icon-inline" aria-hidden="true"
-                  ></span>General repairs</li
+                  ><span class="fi fi-rr-seedling icon-inline" aria-hidden="true"
+                  ></span>Lawn care &amp; landscaping</li
                 >
                 <li class="flex items-center gap-2"
                   ><span class="fi fi-rr-plug icon-inline" aria-hidden="true"
                   ></span>Plumbing &amp; electrical</li
                 >
                 <li class="flex items-center gap-2"
-                  ><span class="fi fi-rr-seedling icon-inline" aria-hidden="true"
-                  ></span>Lawn and seasonal care</li
+                  ><span class="fi fi-rr-house-chimney icon-inline" aria-hidden="true"
+                  ></span>HVAC</li
                 >
                 <li class="flex items-center gap-2"
-                  ><span class="fi fi-rr-home icon-inline" aria-hidden="true"
-                  ></span>Turnover / make-ready</li
+                  ><span class="fi fi-rr-time-fast icon-inline" aria-hidden="true"
+                  ></span>Emergency repairs</li
                 >
               </ul>
             </div>
@@ -351,7 +390,7 @@ import Footer from "../components/Footer.astro";
                   Clear condition reporting with photos.
                 </h3>
                 <p class="mt-4 max-w-[38ch] text-muted">
-                  Property condition inspections with clear observations and photo
+                  Property inspections with clear observations and photo
                   documentation to support maintenance decisions, repair planning,
                   and ongoing asset management.
                 </p>
@@ -359,7 +398,7 @@ import Footer from "../components/Footer.astro";
               <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-[0.95rem]">
                 <li class="flex items-center gap-2"
                   ><span class="fi fi-rr-search icon-inline" aria-hidden="true"
-                  ></span>Condition inspections</li
+                  ></span>Property inspections</li
                 >
                 <li class="flex items-center gap-2"
                   ><span class="fi fi-rr-key icon-inline" aria-hidden="true"
@@ -733,9 +772,10 @@ import Footer from "../components/Footer.astro";
           </h2>
           <p class="mt-6 max-w-[52ch] text-muted">
             Titan Core Builders currently coordinates property services in
-            selected markets across Virginia, Michigan, New York, Texas, and
-            Washington. Contact us with the property ZIP code so we can confirm
-            service availability.
+            selected markets across Pennsylvania, Virginia, Maryland, North
+            Carolina, South Carolina, Georgia, New Jersey, Ohio, Alabama,
+            Kentucky, and Tennessee. Contact us with the property ZIP code so we
+            can confirm service availability.
           </p>
         </div>
         <a class="btn btn-line" href="/contact"
@@ -745,26 +785,32 @@ import Footer from "../components/Footer.astro";
         >
       </div>
       <ul
-        class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5"
+        class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         aria-label="Launch markets"
       >
         {
-          ["Virginia", "Michigan", "New York", "Texas", "Washington"].map(
-            (state) => (
-              <li class="flex flex-col items-center gap-3 rounded-[24px] bg-surface px-5 py-6 text-center font-semibold shadow-[inset_0_0_0_1px_var(--color-line)]">
-                <span class="icon-chip soft" aria-hidden="true">
-                  <span class="fi fi-rr-map-marker" />
-                </span>
-                {state}
-              </li>
-            ),
-          )
+          [
+            "Pennsylvania",
+            "Virginia",
+            "Maryland",
+            "North Carolina",
+            "South Carolina",
+            "Georgia",
+            "New Jersey",
+            "Ohio",
+            "Alabama",
+            "Kentucky",
+            "Tennessee",
+          ].map((state) => (
+            <li class="flex flex-col items-center gap-3 rounded-[24px] bg-surface px-5 py-6 text-center font-semibold shadow-[inset_0_0_0_1px_var(--color-line)]">
+              <span class="icon-chip soft" aria-hidden="true">
+                <span class="fi fi-rr-map-marker" />
+              </span>
+              {state}
+            </li>
+          ))
         }
       </ul>
-      <p class="mt-6 text-sm text-muted">
-        Launch placeholder — confirm each state and any city-level limits before
-        publication.
-      </p>
     </section>
 
     <!-- SERVICE PARTNER CTA -->
@@ -880,10 +926,12 @@ import Footer from "../components/Footer.astro";
           <div class="ans" id="a2" role="region" aria-labelledby="q2">
             <div>
               <p>
-                Our launch coverage includes selected markets in Virginia,
-                Michigan, New York, Texas, and Washington. Service availability
-                depends on the property location and the requested trade. Send
-                us the ZIP code and scope so we can confirm coverage.
+                Our coverage includes selected markets in Pennsylvania,
+                Virginia, Maryland, North Carolina, South Carolina, Georgia, New
+                Jersey, Ohio, Alabama, Kentucky, and Tennessee. Service
+                availability depends on the property location and the requested
+                trade. Send us the ZIP code and scope so we can confirm
+                coverage.
               </p>
             </div>
           </div>

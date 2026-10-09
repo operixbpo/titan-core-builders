@@ -620,6 +620,7 @@ img {
 .card {
   position: sticky;
   top: calc(6.5rem + var(--i) * 1.2rem);
+  z-index: calc(var(--i, 0) + 1);
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   gap: clamp(1.5rem, 3vw, 3rem);
@@ -633,6 +634,13 @@ img {
     0 30px 60px -40px rgb(26 43 74 / 0.35),
     inset 0 0 0 1px rgb(26 43 74 / 0.05);
   transform-origin: 50% 0%;
+}
+
+/* Extra scroll room so each sticky card is fully readable before the next covers it */
+@media (min-width: 861px) {
+  .services-cards > .card:not(:last-child) {
+    margin-bottom: min(22vh, 10rem);
+  }
 }
 
 .card figure {
