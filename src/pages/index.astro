@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
+import CoverageStates from "../components/CoverageStates.astro";
 import LeadForm from "../components/LeadForm.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -762,56 +763,7 @@ import Footer from "../components/Footer.astro";
     </section>
 
     <!-- COVERAGE -->
-    <section class="gutter py-24 md:py-32" id="coverage">
-      <div class="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-        <div>
-          <h2
-            class="max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-none tracking-[-0.04em]"
-          >
-            Current Service Coverage
-          </h2>
-          <p class="mt-6 max-w-[52ch] text-muted">
-            Titan Core Builders currently coordinates property services in
-            selected markets across Pennsylvania, Virginia, Maryland, North
-            Carolina, South Carolina, Georgia, New Jersey, Ohio, Alabama,
-            Kentucky, and Tennessee. Contact us with the property ZIP code so we
-            can confirm service availability.
-          </p>
-        </div>
-        <a class="btn btn-line" href="/contact"
-          >Contact Us <span class="ic" aria-hidden="true"
-            ><span class="fi fi-rr-arrow-up-right"></span></span
-          ></a
-        >
-      </div>
-      <ul
-        class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
-        aria-label="Launch markets"
-      >
-        {
-          [
-            "Pennsylvania",
-            "Virginia",
-            "Maryland",
-            "North Carolina",
-            "South Carolina",
-            "Georgia",
-            "New Jersey",
-            "Ohio",
-            "Alabama",
-            "Kentucky",
-            "Tennessee",
-          ].map((state) => (
-            <li class="flex flex-col items-center gap-3 rounded-[24px] bg-surface px-5 py-6 text-center font-semibold shadow-[inset_0_0_0_1px_var(--color-line)]">
-              <span class="icon-chip soft" aria-hidden="true">
-                <span class="fi fi-rr-map-marker" />
-              </span>
-              {state}
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    <CoverageStates />
 
     <!-- SERVICE PARTNER CTA -->
     <section
