@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "TitanCore Builders (Titan Core Builders LLC) marketing site. Astro static + Tailwind v4.",
+  "description": "TitanCore Services (Titan Core Services LLC) marketing site. Astro static + Tailwind v4.",
   "engines": {
     "node": ">=22.12.0"
   },

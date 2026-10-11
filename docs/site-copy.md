@@ -1,10 +1,10 @@
 ![][image1]
 
-# **Titan Core Builders LLC Website Content**
+# **Titan Core Services LLC Website Content**
 
 Website structure copy design direction and launch requirements
 
-Prepared for Titan Core Builders LLC  
+Prepared for Titan Core Services LLC  
 Virginia United States  
 30 September 2026
 
@@ -12,13 +12,13 @@ This document gives the design and development team the approved brand direction
 
 # **Website Direction**
 
-The launch site will present Titan Core Builders LLC as a professional property maintenance and preservation provider for property managers, institutional clients, and homeowners. It will remain compact and will not include unverified testimonials, project counts, client logos, or leadership profiles.
+The launch site will present Titan Core Services LLC as a professional property maintenance and preservation provider for property managers, institutional clients, and homeowners. It will remain compact and will not include unverified testimonials, project counts, client logos, or leadership profiles.
 
 ## **Approved Launch Decisions**
 
 | Item | Decision |
 | :---- | :---- |
-| Legal name | Titan Core Builders LLC |
+| Legal name | Titan Core Services LLC |
 | Registration | Virginia |
 | Domain | TitanCoreBuilders.com |
 | Email | info@TitanCoreBuilders.com |
@@ -111,7 +111,7 @@ Request a Quote
 
 **Company summary**
 
-Titan Core Builders LLC provides property maintenance, preservation, inspection, and repair coordination for residential properties across multiple markets.
+Titan Core Services LLC provides property maintenance, preservation, inspection, and repair coordination for residential properties across multiple markets.
 
 **Contact**
 
@@ -125,7 +125,7 @@ Home   Services   Contact   Become a Service Partner   Privacy Policy   Terms of
 
 **Copyright**
 
-Copyright © 2026 Titan Core Builders LLC. All rights reserved.
+Copyright © 2026 Titan Core Services LLC. All rights reserved.
 
 ## **Standard Buttons**
 
@@ -139,9 +139,9 @@ Copyright © 2026 Titan Core Builders LLC. All rights reserved.
 
 # **Home Page Copy**
 
-Page title  Titan Core Builders LLC  Property Maintenance and Preservation
+Page title  Titan Core Services LLC  Property Maintenance and Preservation
 
-Meta description  Titan Core Builders LLC provides property maintenance, preservation, inspection, and repair coordination through licensed and insured service professionals across multiple U.S. markets.
+Meta description  Titan Core Services LLC provides property maintenance, preservation, inspection, and repair coordination through licensed and insured service professionals across multiple U.S. markets.
 
 ## **Hero**
 
@@ -155,7 +155,7 @@ Reliable Property Services Across Multiple Markets
 
 **Body**
 
-Titan Core Builders LLC coordinates licensed and insured service professionals for maintenance, preservation, inspection, and repair work. We respond quickly, communicate clearly, and document completed work with photos.
+Titan Core Services LLC coordinates licensed and insured service professionals for maintenance, preservation, inspection, and repair work. We respond quickly, communicate clearly, and document completed work with photos.
 
 **Primary button**
 
@@ -191,11 +191,11 @@ Property condition inspections with clear observations and photo documentation t
 
 **Section heading**
 
-About Titan Core Builders
+About Titan Core Services
 
 **Body**
 
-Titan Core Builders LLC is a Virginia-registered property services company supporting property managers, institutional clients, and homeowners. We coordinate qualified service professionals, clear estimates, and documented completion for routine and urgent work orders. Our goal is simple: complete the approved scope, keep the client informed, and provide a clear record of the work performed.
+Titan Core Services LLC is a Virginia-registered property services company supporting property managers, institutional clients, and homeowners. We coordinate qualified service professionals, clear estimates, and documented completion for routine and urgent work orders. Our goal is simple: complete the approved scope, keep the client informed, and provide a clear record of the work performed.
 
 ## **Why Choose Us**
 
@@ -222,7 +222,7 @@ Current Service Coverage
 
 **Body**
 
-Titan Core Builders currently coordinates property services in selected markets across Virginia, Michigan, New York, Texas, and Washington. Contact us with the property ZIP code so we can confirm service availability.
+Titan Core Services currently coordinates property services in selected markets across Virginia, Michigan, New York, Texas, and Washington. Contact us with the property ZIP code so we can confirm service availability.
 
 **Coverage note**
 
@@ -232,7 +232,7 @@ Launch placeholder  Confirm each state and any city-level limits before publicat
 
 **Section heading**
 
-Work With Titan Core Builders
+Work With Titan Core Services
 
 **Body**
 
@@ -274,7 +274,7 @@ Approved service partners are paid according to the terms in their executed agre
 
 ### **What documents may be required from a service partner**
 
-Requirements depend on the trade and location. Titan Core Builders may request business information, tax documentation, licenses, proof of insurance, coverage details, and a signed service partner agreement before assignments are issued.
+Requirements depend on the trade and location. Titan Core Services may request business information, tax documentation, licenses, proof of insurance, coverage details, and a signed service partner agreement before assignments are issued.
 
 ## **Final Contact Section**
 
@@ -294,7 +294,7 @@ Request a Quote
 
 Page title  Property Maintenance Preservation and Inspection Services
 
-Meta description  Explore property maintenance, preservation, inspection, repair, lawn care, debris removal, winterization, and turnover services from Titan Core Builders LLC.
+Meta description  Explore property maintenance, preservation, inspection, repair, lawn care, debris removal, winterization, and turnover services from Titan Core Services LLC.
 
 ## **Page Introduction**
 
@@ -304,7 +304,7 @@ Property Services for Managed and Residential Assets
 
 **Body**
 
-Titan Core Builders LLC coordinates routine, corrective, and preservation work through qualified service professionals. Each assignment begins with a defined scope and ends with completion details and supporting documentation as required.
+Titan Core Services LLC coordinates routine, corrective, and preservation work through qualified service professionals. Each assignment begins with a defined scope and ends with completion details and supporting documentation as required.
 
 ## **Property Maintenance**
 
@@ -364,9 +364,9 @@ Request a Quote
 
 # **Contact Page Copy**
 
-Page title  Contact Titan Core Builders LLC
+Page title  Contact Titan Core Services LLC
 
-Meta description  Contact Titan Core Builders LLC for property maintenance, preservation, inspection, repair coordination, or service partner opportunities.
+Meta description  Contact Titan Core Services LLC for property maintenance, preservation, inspection, repair coordination, or service partner opportunities.
 
 ## **Client Inquiry**
 
@@ -414,7 +414,7 @@ Become a Service Partner
 
 **Body**
 
-Titan Core Builders works with qualified property maintenance professionals and service companies across selected markets. Submit your information for review. Completing the form does not guarantee onboarding or work assignments.
+Titan Core Services works with qualified property maintenance professionals and service companies across selected markets. Submit your information for review. Completing the form does not guarantee onboarding or work assignments.
 
 ### **Service Partner Form**
 
@@ -438,7 +438,7 @@ Submit Partner Information
 
 **Success message**
 
-Thank you for your interest in working with Titan Core Builders. Our team will review your information and contact you if your services match an active market need.
+Thank you for your interest in working with Titan Core Services. Our team will review your information and contact you if your services match an active market need.
 
 Ignore from here—-
 
@@ -486,7 +486,7 @@ Ignore from here—-
 
 ## **Privacy Policy**
 
-The Privacy Policy should identify Titan Core Builders LLC, the effective date, and the approved business contact details. It should explain the information collected through client and service partner forms, how the company uses that information, service providers that may process it, retention, security, cookies or analytics, user choices, and the method for privacy requests.
+The Privacy Policy should identify Titan Core Services LLC, the effective date, and the approved business contact details. It should explain the information collected through client and service partner forms, how the company uses that information, service providers that may process it, retention, security, cookies or analytics, user choices, and the method for privacy requests.
 
 Because the partner form may collect business credentials and insurance status, the final policy should be reviewed by qualified U.S. counsel before publication.
 
@@ -524,7 +524,7 @@ Ignore from here —---
 
 # **Reference Review**
 
-The site structure was informed by the two supplied reference websites. Their shared pattern is a simple property-services presentation built around maintenance, preservation, inspection, trust points, coverage, FAQs, contact details, and a quotation or partner inquiry. Titan Core Builders uses that scope with original copy and a smaller site map.
+The site structure was informed by the two supplied reference websites. Their shared pattern is a simple property-services presentation built around maintenance, preservation, inspection, trust points, coverage, FAQs, contact details, and a quotation or partner inquiry. Titan Core Services uses that scope with original copy and a smaller site map.
 
 | Reference | Use in this specification |
 | :---- | :---- |

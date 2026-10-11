@@ -342,7 +342,7 @@ function initForms(reduce: boolean): void {
       const refId = document.getElementById("refId");
       if (title) {
         title.textContent = vendor
-          ? "Thank you for your interest in working with Titan Core Builders."
+          ? "Thank you for your interest in working with Titan Core Services."
           : "Thank you. Your request has been received.";
       }
       if (text) {

@@ -1,6 +1,6 @@
-# TitanCore Builders web
+# TitanCore Services web
 
-Static marketing site for **TitanCore Builders** (Titan Core Builders LLC). Built from the Round 2 homepage mockup for Cloudflare Pages.
+Static marketing site for **TitanCore Services** (Titan Core Services LLC). Built from the Round 2 homepage mockup for Cloudflare Pages.
 
 ## Stack
 
@@ -71,7 +71,7 @@ docs/           blueprint HTML mockup
 
 ## Remaining TODOs
 
-- [x] Final brand name (TitanCore Builders / Titan Core Builders LLC)
+- [x] Final brand name (TitanCore Services / Titan Core Services LLC)
 - [ ] Domain
 - [ ] Replace placeholder photos with real job photos
 - [ ] Wire `PUBLIC_LEADS_URL` + Turnstile to `operix-lead-gateway`
