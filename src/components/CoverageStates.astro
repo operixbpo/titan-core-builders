@@ -1,0 +1,294 @@
+---
+/**
+ * CoverageStates.astro
+ * State-code board for the home coverage section.
+ * Tokens: paper, ink, muted, line, hivis, hivis-soft from @theme.
+ * No icons, no SVG. Zero JS except the small state-check filter.
+ */
+interface State {
+  code: string;
+  name: string;
+  zone: string;
+  href: string;
+}
+
+interface Props {
+  states?: State[];
+  askHref?: string;
+}
+
+const defaultStates: State[] = [
+  { code: "AL", name: "Alabama", zone: "Central time", href: "/contact?state=AL" },
+  { code: "GA", name: "Georgia", zone: "Eastern time", href: "/contact?state=GA" },
+  { code: "KY", name: "Kentucky", zone: "Eastern + Central", href: "/contact?state=KY" },
+  { code: "MD", name: "Maryland", zone: "Eastern time", href: "/contact?state=MD" },
+  { code: "NC", name: "North Carolina", zone: "Eastern time", href: "/contact?state=NC" },
+  { code: "NJ", name: "New Jersey", zone: "Eastern time", href: "/contact?state=NJ" },
+  { code: "OH", name: "Ohio", zone: "Eastern time", href: "/contact?state=OH" },
+  { code: "PA", name: "Pennsylvania", zone: "Eastern time", href: "/contact?state=PA" },
+  { code: "SC", name: "South Carolina", zone: "Eastern time", href: "/contact?state=SC" },
+  { code: "TN", name: "Tennessee", zone: "Eastern + Central", href: "/contact?state=TN" },
+  { code: "VA", name: "Virginia", zone: "Eastern time", href: "/contact?state=VA" },
+];
+
+const { states = defaultStates, askHref = "/contact" } = Astro.props;
+---
+
+<section id="coverage" class="bg-paper px-6 pt-24 pb-28 text-ink">
+  <div class="mx-auto flex max-w-[1280px] flex-col gap-12">
+    <div class="flex flex-wrap items-end justify-between gap-8">
+      <div class="flex max-w-[640px] flex-col gap-4">
+        <h2
+          class="text-[clamp(2.25rem,4.4vw,3.75rem)] leading-[1.02] font-semibold tracking-[-0.04em]"
+        >
+          Crews on the ground in {states.length} states.
+        </h2>
+        <p class="max-w-[46ch] text-lg leading-normal font-light text-muted">
+          Licensed local vendors do every job. Check a state, then send us the
+          property ZIP so we can confirm availability.
+        </p>
+      </div>
+
+      <div class="flex w-full max-w-[340px] flex-col gap-2" data-state-check>
+        <label for="state-check" class="text-sm font-medium">Check your state</label>
+        <input
+          id="state-check"
+          type="text"
+          autocomplete="off"
+          placeholder="Code or name, like VA"
+          class="h-13 w-full rounded-2xl border border-[#CFCFC7] bg-surface px-[18px] text-[17px] font-medium tracking-[-0.01em] placeholder:text-[#6E737A] focus:border-ink focus:shadow-[0_0_0_4px_var(--color-hivis-soft)] focus:outline-none"
+        />
+        <p class="min-h-5 text-sm text-slate" aria-live="polite" data-status></p>
+      </div>
+    </div>
+
+    <!-- 12 cells = 11 states + ask cell. 2 / 3 / 4 / 6 columns all divide 12.
+         No overflow-hidden: corner radii live on the corner cells so content is never clipped. -->
+    <div
+      class="coverage-board grid grid-cols-2 gap-px rounded-[34px] border border-line bg-line sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+    >
+      {
+        states.map((s, i) => (
+          <a
+            href={s.href}
+            aria-label={`${s.name} coverage`}
+            data-code={s.code.toLowerCase()}
+            data-name={s.name.toLowerCase()}
+            style={`--i:${i}`}
+            class="state-cell group relative flex min-h-[212px] min-w-0 flex-col justify-between gap-7 bg-surface px-[22px] pt-[22px] pb-5 transition-[background-color,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-hivis-soft focus-visible:bg-hivis-soft focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-ink active:scale-[0.985]"
+          >
+            <span class="flex items-center justify-between gap-2">
+              <span class="text-[13px] font-medium tracking-[0.01em] text-muted">
+                {s.zone}
+              </span>
+              <span
+                aria-hidden="true"
+                class="state-go inline-flex size-9 scale-[0.6] -rotate-45 items-center justify-center rounded-full bg-ink text-base text-hivis opacity-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:rotate-0 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:rotate-0 group-focus-visible:opacity-100"
+              >
+                →
+              </span>
+            </span>
+            <span>
+              <span class="state-code block pb-1 text-[clamp(4rem,6.4vw,6rem)] leading-[0.82] font-semibold tracking-[-0.06em]">
+                <span class="state-mark">{s.code}</span>
+              </span>
+              <span class="mt-2.5 block text-base font-medium tracking-[-0.01em]">
+                {s.name}
+              </span>
+            </span>
+          </a>
+        ))
+      }
+
+      <div
+        class="ask-cell flex min-h-[212px] min-w-0 flex-col justify-between gap-6 bg-ink p-6 text-paper"
+      >
+        <p
+          class="text-[26px] leading-[1.1] font-semibold tracking-[-0.03em]"
+          data-tail
+        >
+          Not on the list?
+        </p>
+        <a
+          href={askHref}
+          class="inline-flex min-h-11 w-full max-w-full items-center gap-2 rounded-full bg-paper py-1.5 pr-1.5 pl-4 text-[13px] font-semibold leading-snug text-ink transition-transform duration-300 hover:-translate-y-px active:scale-[0.96]"
+        >
+          <span class="min-w-0 flex-1 text-left">Ask about coverage</span>
+          <span
+            aria-hidden="true"
+            class="inline-flex h-8 w-8 shrink-0 self-center items-center justify-center rounded-full bg-hivis text-sm leading-none text-white"
+            >→</span
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Corner radii on cells — avoids overflow:hidden clipping the ask CTA. */
+  .coverage-board > :first-child {
+    border-top-left-radius: 33px;
+  }
+  .coverage-board > .ask-cell {
+    border-bottom-right-radius: 33px;
+  }
+  @media (min-width: 40rem) {
+    /* sm: 3 cols — clear 2-col corners, then set 3-col corners */
+    .coverage-board > :nth-child(2) {
+      border-top-right-radius: 0;
+    }
+    .coverage-board > :nth-child(11) {
+      border-bottom-left-radius: 0;
+    }
+    .coverage-board > :nth-child(3) {
+      border-top-right-radius: 33px;
+    }
+    .coverage-board > :nth-child(10) {
+      border-bottom-left-radius: 33px;
+    }
+  }
+  @media (min-width: 64rem) {
+    /* lg: 4 cols — reset sm corners that are no longer corners */
+    .coverage-board > :nth-child(3),
+    .coverage-board > :nth-child(10) {
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .coverage-board > :nth-child(4) {
+      border-top-right-radius: 33px;
+    }
+    .coverage-board > :nth-child(9) {
+      border-bottom-left-radius: 33px;
+    }
+  }
+  @media (min-width: 80rem) {
+    /* xl: 6 cols */
+    .coverage-board > :nth-child(4),
+    .coverage-board > :nth-child(9) {
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .coverage-board > :nth-child(6) {
+      border-top-right-radius: 33px;
+    }
+    .coverage-board > :nth-child(7) {
+      border-bottom-left-radius: 33px;
+    }
+  }
+  @media (max-width: 39.999rem) {
+    /* 2 cols */
+    .coverage-board > :nth-child(2) {
+      border-top-right-radius: 33px;
+    }
+    .coverage-board > :nth-child(11) {
+      border-bottom-left-radius: 33px;
+    }
+  }
+
+  .state-mark {
+    display: inline-block;
+    padding: 0 0.06em 0 0.02em;
+    background: linear-gradient(var(--color-hivis), var(--color-hivis)) no-repeat
+      0 88% / 0% 38%;
+    transition: background-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .state-cell:hover .state-mark,
+  .state-cell:focus-visible .state-mark,
+  .state-cell.is-hit .state-mark {
+    background-size: 100% 38%;
+  }
+  .state-cell.is-hit {
+    background: var(--color-hivis-soft);
+  }
+  .state-cell.is-hit .state-go {
+    opacity: 1;
+    transform: none;
+  }
+  .state-cell.is-dim {
+    opacity: 0.32;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-board-ready] .state-code {
+      animation: tcb-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--i) * 40ms);
+    }
+    [data-board-armed]:not([data-board-ready]) .state-code {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .state-cell,
+    .state-mark,
+    .state-go {
+      transition: none;
+    }
+  }
+  @keyframes tcb-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const section = document.getElementById("coverage");
+  if (section) {
+    section.setAttribute("data-board-armed", "");
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          section.setAttribute("data-board-ready", "");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(section);
+
+    const input = section.querySelector<HTMLInputElement>("#state-check");
+    const status = section.querySelector<HTMLElement>("[data-status]");
+    const tail = section.querySelector<HTMLElement>("[data-tail]");
+    const cells = Array.from(
+      section.querySelectorAll<HTMLElement>(".state-cell"),
+    );
+
+    input?.addEventListener("input", () => {
+      const raw = input.value.trim();
+      const q = raw.toLowerCase();
+      const hits: string[] = [];
+
+      cells.forEach((cell) => {
+        const hit =
+          !!q &&
+          (cell.dataset.code!.startsWith(q) ||
+            cell.dataset.name!.startsWith(q));
+        cell.classList.toggle("is-hit", hit);
+        cell.classList.toggle("is-dim", !!q && !hit);
+        if (hit)
+          hits.push(cell.getAttribute("aria-label")!.replace(" coverage", ""));
+      });
+
+      if (!status || !tail) return;
+      if (!q) {
+        status.textContent = "";
+        tail.textContent = "Not on the list?";
+      } else if (hits.length === 1) {
+        status.textContent = `Yes. Crews work in ${hits[0]}.`;
+        tail.textContent = "Not on the list?";
+      } else if (hits.length > 1) {
+        status.textContent = `${hits.length} states match.`;
+        tail.textContent = "Not on the list?";
+      } else {
+        status.textContent = "No match yet.";
+        tail.textContent = `Not in ${raw} yet. Ask us.`;
+      }
+    });
+  }
+</script>
