@@ -21,23 +21,23 @@ The launch site will present Titan Core Services LLC as a professional property 
 | Legal name | Titan Core Services LLC |
 | Registration | Virginia |
 | Domain | TitanCoreBuilders.com |
-| Email | info@TitanCoreBuilders.com |
-| Address | Placeholder Virginia address until the registered public address is approved |
-| Phone | Placeholder Virginia number until a virtual number is selected |
+| Email | info@titancorellc.com |
+| Address | 6110 Craft Rd, Alexandria, VA 22310 |
+| Phone | (757) 767-6353 |
 | Coverage | Virginia, Michigan, New York, Texas, and Washington shown as tentative launch markets |
 | Audience | Property managers, institutional property clients, homeowners, and prospective service partners |
 | Partner wording | Become a Service Partner |
 | Leadership | No leadership or team profile at launch |
 
-## **Placeholder Contact Details**
+## **Contact Details**
 
-The following details are examples for design and development only. Replace them before the site is published.
+Approved public contact details for the live site.
 
 | Item | Decision |
 | :---- | :---- |
-| Sample address | 1234 Titan Way, Suite 200, Richmond, VA 23219 |
-| Sample phone | \+1 (703) 555-0148 |
-| Business email | info@TitanCoreBuilders.com |
+| Address | 6110 Craft Rd, Alexandria, VA 22310 |
+| Phone | (757) 767-6353 |
+| Business email | info@titancorellc.com |
 | Sample hours | Monday through Saturday, 7:00 AM to 7:00 PM Eastern Time |
 | After hours | Emergency requests accepted after hours through the main phone and contact form |
 
@@ -95,7 +95,7 @@ After-hours emergency support available
 
 **Phone**
 
-\+1 (703) 555-0148  Placeholder
+(757) 767-6353
 
 ## **Header**
 
@@ -115,9 +115,9 @@ Titan Core Services LLC provides property maintenance, preservation, inspection,
 
 **Contact**
 
-1234 Titan Way, Suite 200, Richmond, VA 23219  Placeholder  
-\+1 (703) 555-0148  Placeholder  
-info@TitanCoreBuilders.com
+6110 Craft Rd, Alexandria, VA 22310  
+(757) 767-6353  
+info@titancorellc.com
 
 **Links**
 
@@ -380,10 +380,10 @@ Tell us where the property is located and what work is needed. Include enough de
 
 **Contact**
 
-Phone  \+1 (703) 555-0148  Placeholder  
-Email  info@TitanCoreBuilders.com  
+Phone  (757) 767-6353  
+Email  info@titancorellc.com  
 Hours  Monday through Saturday  7:00 AM to 7:00 PM ET  
-Address  1234 Titan Way, Suite 200, Richmond, VA 23219  Placeholder
+Address  6110 Craft Rd, Alexandria, VA 22310
 
 ### **Client Inquiry Form**
 
@@ -456,8 +456,8 @@ Ignore from here—-
 
 ## **Forms and Email Routing**
 
-* Send client form notifications to info@TitanCoreBuilders.com unless a dedicated operations address is approved.  
-* Send service partner form notifications to info@TitanCoreBuilders.com until a dedicated vendor address is created.  
+* Send client form notifications to info@titancorellc.com unless a dedicated operations address is approved.  
+* Send service partner form notifications to info@titancorellc.com until a dedicated vendor address is created.  
 * Use clear subject lines such as New Client Inquiry and New Service Partner Inquiry.  
 * Store the form submission securely or send it through the selected form service. Do not expose email credentials in website code.  
 * Add spam protection, server-side validation, rate limiting, and a hidden bot field or comparable anti-spam control.  
@@ -507,7 +507,7 @@ Ignore from here —---
 * Verify current company licensing, insurance, and any state-specific trade requirements.  
 * Confirm that the licensed and insured wording accurately describes the company and service delivery model.  
 * Approve the final logo and obtain vector versions in SVG and PDF from a designer if required for signage or print.  
-* Configure info@TitanCoreBuilders.com and test inbound and outbound email.  
+* Configure info@titancorellc.com and test inbound and outbound email.  
 * Choose the form service, spam protection, confirmation email, and data-retention period.  
 * Have U.S. counsel review the Privacy Policy, Terms of Use, subcontractor wording, and advertised claims.  
 * Test the website on current mobile and desktop browsers.  
