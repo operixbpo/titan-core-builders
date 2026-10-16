@@ -325,14 +325,15 @@ img {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  padding: 0.35rem 0.95rem;
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: 0.65rem;
   overflow: hidden;
 }
 
 .logo img {
   display: block;
-  height: 2.5rem;
+  height: 2.65rem;
   width: auto;
 }
 
